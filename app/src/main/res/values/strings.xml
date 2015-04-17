@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Ski Judging Steno</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="mainmenuskijudgingbuttontext">Ski Judging</string>
+    <string name="mainmenusnowboardjudgingbutton">Snowboard Judging</string>
+    <string name="mainmenuappsettingsbuttontext">Settings</string>
+    <string name="title_activity_tutorial">Tutorial</string>
+    <string name="skijudgingtutorialintroductiontext">Welcome to the Ski Judging Steno app!\nHere you can see how the app works, and what you can do with it!</string>
+    <string name="title_activity_ski_judging">Ski Judging</string>
+</resources>
