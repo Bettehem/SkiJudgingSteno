@@ -30,6 +30,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
     public void intents(){
         openTutorial = new Intent(this, Tutorial.class);
+        openSkiJudging = new Intent(this, SkiJudging.class);
     }
 
     public void sharedPreferences(){
@@ -79,7 +80,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.mainMenuSkiJudgingButton:
-
+                startActivity(openSkiJudging);
                 break;
             case R.id.mainMenuSnowboardJudgingButton:
 
