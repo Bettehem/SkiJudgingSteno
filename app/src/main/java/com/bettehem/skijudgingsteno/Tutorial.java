@@ -4,15 +4,43 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.*;
+import android.widget.*;
+import android.view.*;
 
 
-public class Tutorial extends ActionBarActivity {
-
-    @Override
+public class Tutorial extends ActionBarActivity implements View.OnClickListener
+{
+    Intent restart;
+	SharedPreferencesSavingAndLoading savingAndLoading;
+	Button tutorialEndingButton;
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
+		variables();
     }
+	
+	public void variables(){
+		intents();
+		sharedPreferences();
+		buttons();
+	}
+	
+	public void intents(){
+		restart = new Intent(this, Tutorial.class);
+	}
+	
+	public void sharedPreferences(){
+		savingAndLoading = new SharedPreferencesSavingAndLoading();
+	}
+	
+	public void buttons(){
+		tutorialEndingButton = (Button) findViewById(R.id.tutorialEndingButton);
+		
+		tutorialEndingButton.setOnClickListener(this);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,4 +63,24 @@ public class Tutorial extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+	
+	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId()){
+			case R.id.tutorialEndingButton:
+				savingAndLoading.saveBoolean(this, "isTutorialCompleted", true);
+				finish();
+				break;
+		}
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		super.onBackPressed();
+		startActivity(restart);
+		finish();
+	}
+	
 }

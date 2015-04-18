@@ -1,12 +1,10 @@
 package com.bettehem.skijudgingsteno;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.content.*;
+import android.os.*;
+import android.support.v7.app.*;
+import android.view.*;
+import android.widget.*;
 
 
 public class MainMenu extends ActionBarActivity implements View.OnClickListener{
