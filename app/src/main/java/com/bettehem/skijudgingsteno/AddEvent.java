@@ -19,6 +19,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     Intent intent;
     TextView addingEventText;
     Button createProfile;
+    RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         createProfile = new Button(this);
         createProfile.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         createProfile.setText(getString(R.string.createnewprofilebutton));
+        layout.addView(createProfile);
     }
 
     public void variables(){
