@@ -34,6 +34,8 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
     public void sharedPreferences(){
         savingAndLoading = new SharedPreferencesSavingAndLoading();
+        savingAndLoading.preferenceFilename = "Settings";
+        savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
         isTutorialCompleted = savingAndLoading.loadBoolean(this, "isTutorialCompleted");
         if (!isTutorialCompleted){
             startActivity(openTutorial);

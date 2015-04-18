@@ -6,7 +6,39 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.bettehem.skijudgingsteno.SkiJudging">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skijudgingselecteventtext"
+                android:id="@+id/skiJudgingSelectEventText"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/skijudgingslopestylebuttontext"
+                android:id="@+id/skiJudgingSlopestyleButton"
+                android:layout_below="@+id/skiJudgingSelectEventText"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/skijudginghalfpipebuttontext"
+                android:id="@+id/skiJudgingHalfPipeButton"
+                android:layout_below="@+id/skiJudgingSlopestyleButton"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

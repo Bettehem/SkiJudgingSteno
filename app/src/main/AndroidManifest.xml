@@ -24,6 +24,14 @@
             android:name=".SkiJudging"
             android:label="@string/title_activity_ski_judging" >
         </activity>
+        <activity
+            android:name=".SkiSlopestyleEvent"
+            android:label="@string/title_activity_ski_slopestyle_event" >
+        </activity>
+        <activity
+            android:name=".AddEvent"
+            android:label="@string/title_activity_add_event" >
+        </activity>
     </application>
 
 </manifest>
