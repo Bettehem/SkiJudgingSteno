@@ -46,7 +46,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     public void createProfileButton(){
         createProfile = new Button(this);
-        createProfile.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         createProfile.setText(getString(R.string.createnewprofilebutton));
         layout.addView(createProfile);
     }
