@@ -24,7 +24,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        layout = (RelativeLayout) findViewById(R.id.testi);
+        setContentView(layout);
         variables();
         startup();
     }
