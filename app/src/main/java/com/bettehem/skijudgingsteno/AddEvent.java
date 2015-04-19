@@ -140,7 +140,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                 profileName = profileNameEditText.getText().toString();
                 profiles = new String[]{profileName};
 
-                savingAndLoading.saveStringArray(this, "Profiles", profiles);
+                savingAndLoading.preferenceFilename = "Profiles";
+                savingAndLoading.saveStringArray(this, "profile_list", profiles);
 
                 Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
                 addEventViewFlipper.setVisibility(View.GONE);
