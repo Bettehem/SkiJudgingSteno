@@ -174,4 +174,33 @@ public class SharedPreferencesSavingAndLoading extends Activity {
         editor.apply();
     }
 
+
+    //-----     Saving Arrays      ------
+
+    public void saveStringArray(Context context, String valueName, String[] array){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < array.length; i++){
+            stringBuilder.append(array[i]).append(",");
+        }
+
+        sharedPreferences = context.getSharedPreferences(preferenceFilename, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        editor.putString(valueName, stringBuilder.toString());
+
+        editor.apply();
+
+    }
+
+
+    //-----     Loading Arrays      ------
+
+    public String[] loadStringArray(Context context, String valueName){
+        sharedPreferences = context.getSharedPreferences(preferenceFilename, MODE_PRIVATE);
+
+        String[] array = sharedPreferences.getString(valueName, "").split(",");
+
+        return array;
+    }
+
 }

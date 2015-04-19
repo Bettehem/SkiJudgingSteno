@@ -13,7 +13,15 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/profileNameEditText"
         android:layout_below="@+id/addProfileInfoText"
         android:hint="@string/enterprofilenamehint"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/saveprofilebuttontext"
+        android:id="@+id/saveProfileButton"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

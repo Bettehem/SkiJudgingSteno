@@ -8,19 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
 public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     SharedPreferencesSavingAndLoading savingAndLoading;
-    String eventType;
+    String eventType, profileName;
     Intent intent;
-    TextView addingEventText;
+    TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
-    Button addProfileInEventScreen;
+    Button addProfileInEventScreen, saveProfile;
+    String[] profiles;
+    EditText profileNameEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         textViews();
         buttons();
         viewFlippers();
+        editTexts();
     }
 
     public void intents(){
@@ -67,16 +72,23 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     public void textViews(){
         addingEventText = (TextView) findViewById(R.id.addingEventText);
+        newEventAddInfoTextView = (TextView) findViewById(R.id.newEventAddInfoTextView);
     }
 
     public void buttons(){
         addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
+        saveProfile = (Button) findViewById(R.id.saveProfileButton);
 
         addProfileInEventScreen.setOnClickListener(this);
+        saveProfile.setOnClickListener(this);
     }
 
     public void viewFlippers(){
         addEventViewFlipper = (ViewFlipper) findViewById(R.id.addEventViewFlipper);
+    }
+
+    public void editTexts(){
+        profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
     }
 
     @Override
@@ -105,10 +117,38 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.addProfileInEventScreenButton:
-                addEventViewFlipper.setVisibility(View.VISIBLE);
-                addEventViewFlipper.setDisplayedChild(0);
-                addProfileInEventScreen.setVisibility(View.GONE);
+
+                switch (addEventViewFlipper.getDisplayedChild()){
+                    case 0:
+                        addEventViewFlipper.setVisibility(View.VISIBLE);
+                        addEventViewFlipper.setDisplayedChild(0);
+                        addProfileInEventScreen.setVisibility(View.GONE);
+                        break;
+
+                    case 1:
+                        addEventViewFlipper.setVisibility(View.VISIBLE);
+                        addEventViewFlipper.setDisplayedChild(0);
+                        addProfileInEventScreen.setVisibility(View.GONE);
+                        String[] lel = savingAndLoading.loadStringArray(this, "Profiles");
+                        newEventAddInfoTextView.setText(lel.toString());
+                        break;
+                }
+
+                break;
+
+            case R.id.saveProfileButton:
+                profileName = profileNameEditText.getText().toString();
+                profiles = new String[]{profileName};
+
+                savingAndLoading.saveStringArray(this, "Profiles", profiles);
+
+                Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
+                addEventViewFlipper.setVisibility(View.GONE);
+                addEventViewFlipper.setDisplayedChild(1);
+                addProfileInEventScreen.setText("Create new event");
+                addProfileInEventScreen.setVisibility(View.VISIBLE);
                 break;
         }
     }
+
 }
