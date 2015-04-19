@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 
 public class AddEvent extends ActionBarActivity implements View.OnClickListener{
@@ -18,6 +19,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     String eventType;
     Intent intent;
     TextView addingEventText;
+    ViewFlipper addEventViewFlipper;
+    Button addProfileInEventScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         strings();
         sharedPreferences();
         textViews();
+        buttons();
+        viewFlippers();
     }
 
     public void intents(){
@@ -62,6 +67,16 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     public void textViews(){
         addingEventText = (TextView) findViewById(R.id.addingEventText);
+    }
+
+    public void buttons(){
+        addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
+
+        addProfileInEventScreen.setOnClickListener(this);
+    }
+
+    public void viewFlippers(){
+        addEventViewFlipper = (ViewFlipper) findViewById(R.id.addEventViewFlipper);
     }
 
     @Override
@@ -88,6 +103,12 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.addProfileInEventScreenButton:
+                addEventViewFlipper.setVisibility(View.VISIBLE);
+                addEventViewFlipper.setDisplayedChild(0);
+                addProfileInEventScreen.setVisibility(View.GONE);
+                break;
+        }
     }
 }

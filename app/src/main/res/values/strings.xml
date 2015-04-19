@@ -18,4 +18,6 @@
     <string name="creatingfirsteventtext">Now you will create your first event. Since this is the first time, you will also create a profile that you can use later to make creating similar events faster and easier. You can give an event any name, and then fill in other details, and when you are done, press the save button at the bottom.</string>
     <string name="createnewprofilebutton">Create a new Profile</string>
     <string name="neweventbuttontext">Add new event</string>
+    <string name="addingProfileText">Please fill in all of the details below</string>
+    <string name="enterprofilenamehint">Enter a profile name</string>
 </resources>
