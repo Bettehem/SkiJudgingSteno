@@ -18,7 +18,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     String eventType;
     Intent intent;
     TextView addingEventText;
-    Button createProfile;
     RelativeLayout layout;
 
     @Override
@@ -34,7 +33,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         savingAndLoading.preferenceFilename = "Settings";
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
-            createProfileButton();
+
         }
 
         if (eventType.contentEquals("skiSlopestyle")){
@@ -42,12 +41,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         }else{
 
         }
-    }
-
-    public void createProfileButton(){
-        createProfile = new Button(this);
-        createProfile.setText(getString(R.string.createnewprofilebutton));
-        layout.addView(createProfile);
     }
 
     public void variables(){
