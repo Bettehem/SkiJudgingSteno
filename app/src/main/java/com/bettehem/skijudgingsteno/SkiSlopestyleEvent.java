@@ -57,7 +57,7 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
 
     public void intents(){
         openNewEvent = new Intent(this, AddEvent.class);
-        openNewEvent.putExtra("eventType", "skiSlopestyle");
+        openNewEvent.putExtra("eventType", "Slopestyle");
     }
 
 

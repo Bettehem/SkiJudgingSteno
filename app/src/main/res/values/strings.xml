@@ -24,5 +24,7 @@
 	<string name="addnewprofileselecteventtypetext">Select an event type below:</string>
 	<string name="slopestyle_event">Slopestyle</string>
 	<string name="half_pipe_event">Half Pipe</string>
+	<string name="profile_saved_text">Profile Saved</string>
+	<string name="invalid_profile_name">You can\'t use this as a profile name! Try something else!</string>
 	
 </resources>

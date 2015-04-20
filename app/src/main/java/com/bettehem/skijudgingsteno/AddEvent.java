@@ -19,6 +19,7 @@ import android.widget.*;
 public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
     SharedPreferencesSavingAndLoading savingAndLoading;
+	SavingAndLoadingProfiles savingAndLoadingProfiles;
     String eventType, profileName;
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
@@ -49,7 +50,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
         }
 
-        if (eventType.contentEquals("skiSlopestyle")){
+        if (eventType.contentEquals("Slopestyle")){
 			addNewProfileSelectEventTypeSpinner.setSelection(0);
 			addNewProfileSelectEventTypeSpinner.setClickable(false);
         }else{
@@ -66,6 +67,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         viewFlippers();
         editTexts();
 		spinners();
+		profileSaverAndLoader();
     }
 
     public void intents(){
@@ -107,6 +109,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
 			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
 			));
+	}
+	
+	public void profileSaverAndLoader(){
+		savingAndLoadingProfiles = new SavingAndLoadingProfiles();
 	}
 
     @Override
@@ -156,15 +162,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
-                profiles = new String[]{profileName};
-
-                savingAndLoading.preferenceFilename = "Profiles";
-                savingAndLoading.saveStringArray(this, "profile_list", profiles);
-
-                Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
-				savingAndLoading.saveBoolean(this, "has_created_profiles", true);
-                addEventViewFlipper.setVisibility(View.GONE);
+                savingAndLoadingProfiles.addProfile(this, profileName, eventType);
+                savingAndLoading.saveBoolean(this, "has_created_profiles", true);
+                
+				
+				addEventViewFlipper.setVisibility(View.GONE);
                 addEventViewFlipper.setDisplayedChild(1);
+				
+				
                 addProfileInEventScreen.setText("Create new event");
                 addProfileInEventScreen.setVisibility(View.VISIBLE);
                 break;
