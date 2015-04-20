@@ -35,6 +35,12 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     }
 
     public void startup(){
+		savingAndLoading.preferenceFilename = "Profiles";
+		if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
+			addEventViewFlipper.setDisplayedChild(1);
+			addProfileInEventScreen.setText("Create new event");
+		}
+		
         savingAndLoading.preferenceFilename = "Settings";
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
@@ -129,6 +135,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                         addEventViewFlipper.setVisibility(View.VISIBLE);
                         addEventViewFlipper.setDisplayedChild(1);
                         addProfileInEventScreen.setVisibility(View.GONE);
+						savingAndLoading.preferenceFilename = "Profiles";
                         String[] lel = savingAndLoading.loadStringArray(this, "profile_list");
                         newEventAddInfoTextView.setText(lel[0]);
                         break;
@@ -144,6 +151,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                 savingAndLoading.saveStringArray(this, "profile_list", profiles);
 
                 Toast.makeText(this, "Profile Saved", Toast.LENGTH_SHORT).show();
+				savingAndLoading.saveBoolean(this, "has_created_profiles", true);
                 addEventViewFlipper.setVisibility(View.GONE);
                 addEventViewFlipper.setDisplayedChild(1);
                 addProfileInEventScreen.setText("Create new event");
