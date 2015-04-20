@@ -44,6 +44,14 @@ public class SavingAndLoadingProfiles
 		}
 	}
 	
+	
+	public String loadProfile(Context context, String profileName, String eventType){
+		
+		
+		return eventType;
+	}
+	
+	
 	public void deleteProfile(Context context, String profileName){
 		
 	}

@@ -16,8 +16,9 @@ import android.widget.ViewFlipper;
 import android.widget.*;
 
 
-public class AddEvent extends ActionBarActivity implements View.OnClickListener{
-
+public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
+{
+	
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
     String eventType, profileName;
@@ -52,7 +53,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 
         if (eventType.contentEquals("Slopestyle")){
 			addNewProfileSelectEventTypeSpinner.setSelection(0);
-			addNewProfileSelectEventTypeSpinner.setClickable(false);
         }else{
 
         }
@@ -105,6 +105,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
 	
 	public void spinners(){
 		addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
+		addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
 		savingAndLoading.preferenceFilename = "Settings";
 		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
 			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
@@ -175,5 +176,20 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                 break;
         }
     }
+	
+	
+	
+	
+	@Override
+	public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4)
+	{
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> p1)
+	{
+		// TODO: Implement this method
+	}
 
 }
