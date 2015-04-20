@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+import android.widget.*;
 
 
 public class AddEvent extends ActionBarActivity implements View.OnClickListener{
@@ -25,6 +26,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     Button addProfileInEventScreen, saveProfile;
     String[] profiles;
     EditText profileNameEditText;
+	Spinner addNewProfileSelectEventTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         }
 
         if (eventType.contentEquals("skiSlopestyle")){
-
+			addNewProfileSelectEventTypeSpinner.setSelection(0);
+			addNewProfileSelectEventTypeSpinner.setClickable(false);
         }else{
 
         }
@@ -62,6 +65,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
         buttons();
         viewFlippers();
         editTexts();
+		spinners();
     }
 
     public void intents(){
@@ -96,6 +100,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
     public void editTexts(){
         profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
     }
+	
+	public void spinners(){
+		addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
+		savingAndLoading.preferenceFilename = "Settings";
+		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
+			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
+			));
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,8 +148,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                         addEventViewFlipper.setDisplayedChild(1);
                         addProfileInEventScreen.setVisibility(View.GONE);
 						savingAndLoading.preferenceFilename = "Profiles";
-                        String[] lel = savingAndLoading.loadStringArray(this, "profile_list");
-                        newEventAddInfoTextView.setText(lel[0]);
+                        newEventAddInfoTextView.setText(savingAndLoading.loadStringArray(this, "profile_list")[0]);
                         break;
                 }
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="events_list_array">
+		<item>@string/slopestyle_event</item>
+		<item>@string/half_pipe_event</item>
+	</string-array>
+</resources>

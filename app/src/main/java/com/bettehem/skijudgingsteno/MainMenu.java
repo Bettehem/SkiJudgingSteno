@@ -13,6 +13,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
     boolean isTutorialCompleted;
     Button mainMenuSkiJudgingButton, mainMenuSnowboardJudgingButton, mainMenuSettingsButton;
     Intent openTutorial, openSkiJudging, openSnowboardJudging, openSettings;
+	String[] eventTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +24,24 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
     public void variables(){
         intents();
+		arrays();
         sharedPreferences();
         buttons();
-
     }
 
     public void intents(){
         openTutorial = new Intent(this, Tutorial.class);
         openSkiJudging = new Intent(this, SkiJudging.class);
     }
+	
+	public void arrays(){
+		eventTypes = getResources().getStringArray(R.array.events_list_array);
+	}
 
     public void sharedPreferences(){
         savingAndLoading = new SharedPreferencesSavingAndLoading();
         savingAndLoading.preferenceFilename = "Settings";
+		savingAndLoading.saveStringArray(this, "eventTypes", eventTypes);
         savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
         isTutorialCompleted = savingAndLoading.loadBoolean(this, "isTutorialCompleted");
         if (!isTutorialCompleted){

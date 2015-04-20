@@ -21,4 +21,8 @@
     <string name="addingProfileText">Please fill in all of the details below</string>
     <string name="enterprofilenamehint">Enter a profile name</string>
     <string name="saveprofilebuttontext">Save Profile</string>
+	<string name="addnewprofileselecteventtypetext">Select an event type below:</string>
+	<string name="slopestyle_event">Slopestyle</string>
+	<string name="half_pipe_event">Half Pipe</string>
+	
 </resources>

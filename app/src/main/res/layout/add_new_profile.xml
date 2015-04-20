@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/addingProfileText"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/addProfileInfoText"/>
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/addingProfileText"
+		android:layout_centerHorizontal="true"
+		android:layout_alignParentTop="true"
+		android:id="@+id/addProfileInfoText"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/profileNameEditText"
-        android:layout_below="@+id/addProfileInfoText"
-        android:hint="@string/enterprofilenamehint"/>
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/profileNameEditText"
+		android:layout_below="@+id/addProfileInfoText"
+		android:hint="@string/enterprofilenamehint"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/saveprofilebuttontext"
-        android:id="@+id/saveProfileButton"
-        android:layout_below="@+id/profileNameEditText"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="@string/addnewprofileselecteventtypetext"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/profileNameEditText"
+		android:layout_centerHorizontal="true"
+		android:gravity="center_horizontal"
+		android:id="@+id/addNewProfileSelectEventTypeTextView"/>
+
+	<Spinner
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_below="@id/addNewProfileSelectEventTypeTextView"
+		android:id="@+id/addNewProfileSelectEventTypeSpinner"/>
+	
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/saveprofilebuttontext"
+		android:id="@+id/saveProfileButton"
+		android:layout_below="@+id/addNewProfileSelectEventTypeSpinner"/>
 
 </RelativeLayout>
+
