@@ -9,19 +9,28 @@ import android.widget.*;
 
 public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
+	//Variables
     SharedPreferencesSavingAndLoading savingAndLoading;
     boolean isTutorialCompleted;
     Button mainMenuSkiJudgingButton, mainMenuSnowboardJudgingButton, mainMenuSettingsButton;
     Intent openTutorial, openSkiJudging, openSnowboardJudging, openSettings;
 	String[] eventTypes;
 
+	//Called when the activity is launched/created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+		
+		//sets the view to a layout
         setContentView(R.layout.activity_main_menu);
+		
+		//calls the "variables" method
         variables();
     }
 
+	//this method is for setting up all of the variables.
+	//All different types of variables are been set up in different methods, to make them easier to find,
+	//and makes the code easier to understand.
     public void variables(){
         intents();
 		arrays();
@@ -60,6 +69,8 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
     }
 
 
+	
+	//The two following methods are for the options menu.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -82,8 +93,14 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
+	
+	//When something with an OnClickListener is clicked, this method is called.
+	//In this case, the buttons call this method
     @Override
     public void onClick(View v) {
+		
+		//this switch case statement checks what the id of the item was that called this method,
+		//and if it matches any of the cases, a corresponding action will be performed
         switch (v.getId()){
             case R.id.mainMenuSkiJudgingButton:
                 startActivity(openSkiJudging);
