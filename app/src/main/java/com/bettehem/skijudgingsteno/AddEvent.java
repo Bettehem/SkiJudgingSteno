@@ -129,9 +129,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener{
                         addEventViewFlipper.setVisibility(View.VISIBLE);
                         addEventViewFlipper.setDisplayedChild(1);
                         addProfileInEventScreen.setVisibility(View.GONE);
-                        String[] lel = savingAndLoading.loadStringArray(this, "Profiles");
-						String lol = lel[0];
-                        newEventAddInfoTextView.setText(lol);
+                        String[] lel = savingAndLoading.loadStringArray(this, "profile_list");
+                        newEventAddInfoTextView.setText(lel[0]);
                         break;
                 }
 
