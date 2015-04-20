@@ -10,3 +10,8 @@ Here are some of the features that ithis app will have
 -You will be able to analyze each run later
 -You can display scores you gave each skier/snowboarder separately, or all at once
 -While giving scores to the competitor, the app will assist you with the score and ranking
+-You will be able to send results via email
+
+
+
+For the best experience, a device with a relatively large screen is recommended.
