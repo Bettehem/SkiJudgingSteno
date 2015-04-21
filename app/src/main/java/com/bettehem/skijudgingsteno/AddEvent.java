@@ -183,13 +183,17 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4)
 	{
+		Toast.makeText(this, "" + p1.getId(), Toast.LENGTH_SHORT).show();
 		
+		switch (p1.getId()){
+			
+		}
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> p1)
 	{
-		// TODO: Implement this method
+		
 	}
 
 }
