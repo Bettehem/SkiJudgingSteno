@@ -4,4 +4,10 @@
 		<item>@string/slopestyle_event</item>
 		<item>@string/half_pipe_event</item>
 	</string-array>
+	
+	<string-array name="competitors_use_list_array">
+		<item>@string/competitorsUseSkis</item>
+		<item>@string/competitorsUseSnowboards</item>
+		<item>@string/competitorsUseBoth</item>
+	</string-array>
 </resources>

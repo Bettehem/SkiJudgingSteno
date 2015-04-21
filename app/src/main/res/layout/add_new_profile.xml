@@ -34,12 +34,26 @@
 		android:layout_below="@id/addNewProfileSelectEventTypeTextView"
 		android:id="@+id/addNewProfileSelectEventTypeSpinner"/>
 	
+	<TextView
+		android:layout_height="wrap_content"
+		android:text="@string/addNewProfileCompetitorsUse"
+		android:layout_width="wrap_content"
+		android:layout_below="@id/addNewProfileSelectEventTypeSpinner"
+		android:id="@+id/addNewProfileSkiOrSnowboardText"
+		android:layout_centerHorizontal="true"/>
+	
+	<Spinner
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:layout_below="@id/addNewProfileSkiOrSnowboardText"
+		android:id="@+id/addNewProfileSelectWhatCompetitorsUseSpinner"/>
+	
 	<Button
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/saveprofilebuttontext"
 		android:id="@+id/saveProfileButton"
-		android:layout_below="@+id/addNewProfileSelectEventTypeSpinner"/>
+		android:layout_below="@+id/addNewProfileSelectWhatCompetitorsUseSpinner"/>
 
 </RelativeLayout>
 

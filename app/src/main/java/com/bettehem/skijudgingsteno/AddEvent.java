@@ -28,7 +28,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
     String[] profiles;
     EditText profileNameEditText;
-	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner;
+	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         if (eventType.contentEquals("Slopestyle")){
 			addNewProfileSelectEventTypeSpinner.setSelection(0);
         }else{
-
+			addNewProfileSelectEventTypeSpinner.setSelection(1);
         }
     }
 
@@ -108,6 +108,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	public void spinners(){
 		addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
 		addNewEventLoadExistingProfileSelectionSpinner = (Spinner) findViewById(R.id.addNewEventLoadExistingProfileSelectionSpinner);
+		addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
 		
 		
 		addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
@@ -117,6 +118,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 			));
 			
 		addNewEventLoadExistingProfileSelectionSpinner.setOnItemSelectedListener(this);
+		
+		addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
+		addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<String>(
+			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
+			));
 		
 	}
 	
@@ -170,6 +176,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
                 savingAndLoadingProfiles.addProfile(this, profileName, eventType);
+				savingAndLoading.preferenceFilename = "Profiles";
                 savingAndLoading.saveBoolean(this, "has_created_profiles", true);
                 
 				

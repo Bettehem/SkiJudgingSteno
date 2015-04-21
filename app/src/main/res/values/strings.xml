@@ -30,5 +30,10 @@
 	<string name="new_profile_slopestyle_only">You can\'t Select anything else but Slopestyle right now, since you are creating this profile for a Slopestyle event. You can add a profile for Half Pipe later.</string>
 	<string name="new_event_text">Please fill in all of the details below.\nYou can use a profile that you have already created. When you are done, press the Save button at the bottom.</string>
 	<string name="load_existing_profile_button_text">Use an existing profile</string>
-
+	<string name="addNewEventEditText">Enter event name</string>
+	<string name="addNewProfileCompetitorsUse">What will the competitors be using?</string>
+	<string name="competitorsUseSkis">Skis</string>
+	<string name="competitorsUseSnowboards">Snowboards</string>
+	<string name="competitorsUseBoth">Both</string>
+	
 </resources>

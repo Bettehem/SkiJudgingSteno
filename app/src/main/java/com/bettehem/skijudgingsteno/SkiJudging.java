@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 public class SkiJudging extends ActionBarActivity implements View.OnClickListener{
 
+	SharedPreferencesSavingAndLoading savingAndLoading;
     Button skiJudgingSlopestyle, skiJudgingHalfPipe;
     Intent openSkiSlopestyleEvent, openSkiHalfPipeEvent;
 
@@ -23,9 +24,16 @@ public class SkiJudging extends ActionBarActivity implements View.OnClickListene
     }
 
     public void variables(){
+		sharedPreferences();
         intents();
         buttons();
     }
+	
+	public void sharedPreferences(){
+		savingAndLoading = new SharedPreferencesSavingAndLoading();
+		savingAndLoading.preferenceFilename = "Settings";
+		savingAndLoading.saveString(this, "competitorsUseCurrent", getString(R.string.competitorsUseSkis));
+	}
 
     public void intents(){
         openSkiSlopestyleEvent = new Intent(this, SkiSlopestyleEvent.class);
