@@ -93,11 +93,11 @@ public class SharedPreferencesSavingAndLoading extends Activity {
             sharedPreferences = context.getSharedPreferences(preferenceFilename, MODE_PRIVATE);
 
             String loadedStringValue;
-            loadedStringValue = sharedPreferences.getString(valueName, "getString(R.string.shared_preferences_loading_error)");
+            loadedStringValue = sharedPreferences.getString(valueName, "Error! Not Found!");
 
             return loadedStringValue;
         } else {
-            return "getString(R.string.shared_preferences_key_loading_error)";
+            return "Error! Not Found!";
         }
     }
 

@@ -25,10 +25,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
-    Button addProfileInEventScreen, saveProfile;
+    Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
     String[] profiles;
     EditText profileNameEditText;
-	Spinner addNewProfileSelectEventTypeSpinner;
+	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +90,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     public void buttons(){
         addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
         saveProfile = (Button) findViewById(R.id.saveProfileButton);
+		addEventLoadExistingProfileButton = (Button) findViewById(R.id.addEventLoadExistingProfileButton);
 
         addProfileInEventScreen.setOnClickListener(this);
         saveProfile.setOnClickListener(this);
+		addEventLoadExistingProfileButton.setOnClickListener(this);
     }
 
     public void viewFlippers(){
@@ -105,11 +107,17 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
 	public void spinners(){
 		addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
+		addNewEventLoadExistingProfileSelectionSpinner = (Spinner) findViewById(R.id.addNewEventLoadExistingProfileSelectionSpinner);
+		
+		
 		addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
 		savingAndLoading.preferenceFilename = "Settings";
 		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
 			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
 			));
+			
+		addNewEventLoadExistingProfileSelectionSpinner.setOnItemSelectedListener(this);
+		
 	}
 	
 	public void profileSaverAndLoader(){
@@ -154,8 +162,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                         addEventViewFlipper.setVisibility(View.VISIBLE);
                         addEventViewFlipper.setDisplayedChild(1);
                         addProfileInEventScreen.setVisibility(View.GONE);
-						savingAndLoading.preferenceFilename = "Profiles";
-                        newEventAddInfoTextView.setText(savingAndLoading.loadStringArray(this, "profile_list")[0]);
                         break;
                 }
 
@@ -174,7 +180,16 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 addProfileInEventScreen.setText("Create new event");
                 addProfileInEventScreen.setVisibility(View.VISIBLE);
                 break;
+				
+			case R.id.addEventLoadExistingProfileButton:
+				savingAndLoading.preferenceFilename = "Profiles";
+				addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<String>(
+																				  this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
+						));
+				addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
+				break;
         }
+		
     }
 	
 	
@@ -183,13 +198,22 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4)
 	{
-		Toast.makeText(this, "" + p1.getId(), Toast.LENGTH_SHORT).show();
-		
 		switch (p1.getId()){
-			
+			case R.id.addNewProfileSelectEventTypeSpinner:
+				switch (p3){
+					case 0:
+						
+						break;
+					case 1:
+						addNewProfileSelectEventTypeSpinner.setSelection(0);
+						Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
+						break;
+				}
+				break;
 		}
 	}
 
+	//This method is called when nothing is selected, but it's useless in this case, where this will never happen.
 	@Override
 	public void onNothingSelected(AdapterView<?> p1)
 	{

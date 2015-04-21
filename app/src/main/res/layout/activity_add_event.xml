@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView android:text="" android:layout_width="wrap_content"
+            <TextView android:text="@string/new_event_text" android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/addingEventText"
                 android:layout_centerHorizontal="true"
@@ -48,10 +48,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/addingProfileText"
+                        android:text="@string/new_event_text"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentTop="true"
                         android:id="@+id/newEventAddInfoTextView"/>
+					
+					<Button
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:id="@+id/addEventLoadExistingProfileButton"
+						android:text="@string/load_existing_profile_button_text"
+						android:layout_below="@+id/newEventAddInfoTextView"/>
+					
+					<Spinner
+						android:layout_height="wrap_content"
+						android:layout_width="match_parent"
+						android:layout_below="@id/addEventLoadExistingProfileButton"
+						android:id="@+id/addNewEventLoadExistingProfileSelectionSpinner"
+						android:visibility="gone"/>
 
                 </RelativeLayout>
 

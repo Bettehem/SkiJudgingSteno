@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Ski Judging Steno</string>
 
     <string name="hello_world">Hello world!</string>
@@ -26,5 +27,8 @@
 	<string name="half_pipe_event">Half Pipe</string>
 	<string name="profile_saved_text">Profile Saved</string>
 	<string name="invalid_profile_name">You can\'t use this as a profile name! Try something else!</string>
-	
+	<string name="new_profile_slopestyle_only">You can\'t Select anything else but Slopestyle right now, since you are creating this profile for a Slopestyle event. You can add a profile for Half Pipe later.</string>
+	<string name="new_event_text">Please fill in all of the details below.\nYou can use a profile that you have already created. When you are done, press the Save button at the bottom.</string>
+	<string name="load_existing_profile_button_text">Use an existing profile</string>
+
 </resources>

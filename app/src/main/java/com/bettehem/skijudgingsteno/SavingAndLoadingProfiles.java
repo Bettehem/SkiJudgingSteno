@@ -2,6 +2,7 @@ package com.bettehem.skijudgingsteno;
 import android.content.*;
 import android.widget.*;
 
+//This class requires SharedPreferencesSavingAndLoading to function correctly
 public class SavingAndLoadingProfiles
 {
 	public String profileDetailsFileName = "Profiles";
@@ -17,19 +18,13 @@ public class SavingAndLoadingProfiles
 		}else{
 
 			savingAndLoading.preferenceFilename = profileDetailsFileName;
-
-
-			String[] existingProfilesArray = savingAndLoading.loadStringArray(context, profileListName);
-			StringBuilder stringBuilder = new StringBuilder();
-			for(String string : existingProfilesArray) {
-				stringBuilder.append(string);
-			}
-			String existingProfiles = stringBuilder.toString();
+			String existingProfiles = savingAndLoading.loadString(context, profileListName);
+			
 			String[] newProfile;
-			if (existingProfiles.contentEquals("Error! Not Found!")){
+			if (existingProfiles.toString().contentEquals("Error! Not Found!")){
 				newProfile = new String[]{profileName};
 			}else{
-				newProfile = new String[]{existingProfiles, profileName};
+				newProfile = new String[]{existingProfiles + profileName};
 			}
 			savingAndLoading.saveStringArray(context, profileListName, newProfile);
 
