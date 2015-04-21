@@ -1,6 +1,6 @@
 # SkiJudgingSteno
 This android app is intended to make judging at Skiing events(support for snowboard events will be implemeted at a later stage, when everything is working regarding the skiing part of things) a lot easier. The aim is to possibly one day, do judging at Slopestyle and half pipe events without paper!
-This apps target users, are people that do judging, and have done it before, and this app will not teach you how to judge!
+This app targets users, who are people that do judging, and have done it before, and this app will not teach you how to judge!
 Here are some of the features that ithis app will have
 
 -You can add events and save them for later use.
