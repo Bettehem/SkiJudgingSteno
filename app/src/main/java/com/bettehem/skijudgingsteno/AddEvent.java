@@ -221,6 +221,22 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 						break;
 				}
 				break;
+
+            case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
+                switch (p3){
+                    case 0:
+
+                        break;
+                    case 1:
+                        addNewProfileSelectEventTypeSpinner.setSelection(0);
+                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        addNewProfileSelectEventTypeSpinner.setSelection(0);
+                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        break;
+                }
+                break;
 		}
 	}
 

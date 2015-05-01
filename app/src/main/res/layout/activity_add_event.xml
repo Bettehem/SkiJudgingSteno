@@ -45,43 +45,9 @@
 					layout="@layout/add_new_profile"
 					android:id="@+id/addEventProfileCreationLayout"/>
 
-				<RelativeLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:id="@+id/addEventEventCreationLayout">
-
-					<TextView
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="@string/new_event_text"
-						android:layout_centerHorizontal="true"
-						android:layout_alignParentTop="true"
-						android:id="@+id/newEventAddInfoTextView"/>
-
-					<Button
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:id="@+id/addEventLoadExistingProfileButton"
-						android:text="@string/load_existing_profile_button_text"
-						android:layout_below="@+id/newEventAddInfoTextView"/>
-
-					<Spinner
-						android:layout_height="wrap_content"
-						android:layout_width="match_parent"
-						android:layout_below="@id/addEventLoadExistingProfileButton"
-						android:id="@+id/addNewEventLoadExistingProfileSelectionSpinner"
-						android:visibility="gone"/>
-
-					<EditText
-						android:layout_height="wrap_content"
-						android:ems="10"
-						android:layout_width="match_parent"
-						android:layout_below="@id/addNewEventLoadExistingProfileSelectionSpinner"
-						android:id="@+id/addEventNewEventNameEditText"
-						android:singleLine="true"
-						android:hint="@string/addNewEventEditText"/>
-
-				</RelativeLayout>
+				<include
+					layout="@layout/add_new_event_layout"
+					android:id="@+id/addEventEventCreationLayout"/>
 
 			</ViewFlipper>
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/new_event_text"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/newEventAddInfoTextView"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addEventLoadExistingProfileButton"
+        android:text="@string/load_existing_profile_button_text"
+        android:layout_below="@+id/newEventAddInfoTextView"/>
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/addEventLoadExistingProfileButton"
+        android:id="@+id/addNewEventLoadExistingProfileSelectionSpinner"
+        android:visibility="gone"/>
+
+    <EditText
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_width="match_parent"
+        android:layout_below="@id/addNewEventLoadExistingProfileSelectionSpinner"
+        android:id="@+id/addEventNewEventNameEditText"
+        android:singleLine="true"
+        android:hint="@string/addNewEventEditText"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_event_select_event_type_text"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/addEventNewEventNameEditText"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/addNewEventSelectEventTypeTextView"/>
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/addNewEventSelectEventTypeTextView"
+        android:id="@+id/addNewEventSelectEventTypeSpinner"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:text="@string/addNewProfileCompetitorsUse"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/addNewEventSelectEventTypeSpinner"
+        android:id="@+id/addNewEventSkiOrSnowboardText"
+        android:layout_centerHorizontal="true"/>
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/addNewEventSkiOrSnowboardText"
+        android:id="@+id/addNewEventSelectWhatCompetitorsUseSpinner"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_event_button_text"
+        android:id="@+id/saveEventButton"
+        android:layout_below="@+id/addNewEventSelectWhatCompetitorsUseSpinner"/>
+
+</RelativeLayout>
