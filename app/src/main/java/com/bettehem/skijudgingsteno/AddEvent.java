@@ -21,7 +21,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
-    String eventType, profileName, competitorsUse;
+    String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile;
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
@@ -29,6 +29,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
+    String[] profileDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,6 +253,56 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                         Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                 }
+                break;
+
+
+            case R.id.addNewEventSelectEventTypeSpinner:
+                switch (p3){
+                    case 0:
+
+                        break;
+                    case 1:
+                        addNewEventSelectEventTypeSpinner.setSelection(0);
+                        Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
+                        break;
+                }
+                break;
+
+            case R.id.addNewEventSelectWhatCompetitorsUseSpinner:
+                switch (p3){
+                    case 0:
+
+                        break;
+                    case 1:
+                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        break;
+                    case 2:
+                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        break;
+                }
+                break;
+
+            case R.id.addNewEventLoadExistingProfileSelectionSpinner:
+                profileDetails = savingAndLoadingProfiles.loadProfile(this, savingAndLoading.loadStringArray(this, "profile_list")[p3]);
+
+                loadedEventTypeFromProfile = profileDetails[0];
+                if (loadedEventTypeFromProfile.contentEquals("Slopestyle")) {
+                    addNewEventSelectEventTypeSpinner.setSelection(0);
+                }else if (loadedEventTypeFromProfile.contentEquals("Half Pipe")){
+                    addNewEventSelectEventTypeSpinner.setSelection(1);
+                }
+
+                loadedCompetitorsUseFromProfile = profileDetails[1];
+                if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSkis))){
+                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSnowboards))){
+                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(1);
+                }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseBoth))){
+                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(2);
+                }
+
                 break;
 		}
 	}
