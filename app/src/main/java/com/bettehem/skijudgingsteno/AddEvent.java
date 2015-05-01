@@ -29,7 +29,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     String[] profiles;
     boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText;
-	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
+	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
         if (eventType.contentEquals("Slopestyle")){
 			addNewProfileSelectEventTypeSpinner.setSelection(0);
+            addNewEventSelectEventTypeSpinner.setSelection(0);
         }else{
 			addNewProfileSelectEventTypeSpinner.setSelection(1);
+            addNewEventSelectEventTypeSpinner.setSelection(1);
         }
     }
 
@@ -110,20 +112,33 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 		addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
 		addNewEventLoadExistingProfileSelectionSpinner = (Spinner) findViewById(R.id.addNewEventLoadExistingProfileSelectionSpinner);
 		addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
-		
-		
-		addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
+        addNewEventSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewEventSelectEventTypeSpinner);
+        addNewEventSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewEventSelectWhatCompetitorsUseSpinner);
+
+
+        addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
 		savingAndLoading.preferenceFilename = "Settings";
 		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
-			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
-			));
+                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
+        ));
 			
 		addNewEventLoadExistingProfileSelectionSpinner.setOnItemSelectedListener(this);
 		
 		addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
 		addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<String>(
-			this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
-			));
+                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
+        ));
+
+        addNewEventSelectEventTypeSpinner.setOnItemSelectedListener(this);
+        savingAndLoading.preferenceFilename = "Settings";
+        addNewEventSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
+        ));
+
+        addNewEventSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
+        addNewEventSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
+        ));
 		
 	}
 	
