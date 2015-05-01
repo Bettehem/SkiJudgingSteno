@@ -21,12 +21,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
-    String eventType, profileName;
+    String eventType, profileName, competitorsUse;
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
-    String[] profiles;
     boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
@@ -63,8 +62,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     public void variables(){
         intents();
-        strings();
         sharedPreferences();
+        strings();
         textViews();
         buttons();
         viewFlippers();
@@ -79,6 +78,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     public void strings(){
         eventType = intent.getExtras().getString("eventType");
+        savingAndLoading.preferenceFilename = "Settings";
+        competitorsUse = savingAndLoading.loadString(this, "competitorsUseCurrent");
     }
 
     public void sharedPreferences(){
@@ -191,7 +192,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
-                savingAndLoadingProfiles.addProfile(this, profileName, eventType);
+                savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse);
 				savingAndLoading.preferenceFilename = "Profiles";
                 savingAndLoading.saveBoolean(this, "has_created_profiles", true);
                 
@@ -243,11 +244,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
                         break;
                     case 1:
-                        addNewProfileSelectEventTypeSpinner.setSelection(0);
+                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
                         Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                     case 2:
-                        addNewProfileSelectEventTypeSpinner.setSelection(0);
+                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
                         Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                 }
