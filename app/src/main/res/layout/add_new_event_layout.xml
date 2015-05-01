@@ -62,11 +62,18 @@
         android:layout_below="@id/addNewEventSkiOrSnowboardText"
         android:id="@+id/addNewEventSelectWhatCompetitorsUseSpinner"/>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eventEventLocationEditText"
+        android:layout_below="@+id/addNewEventSelectWhatCompetitorsUseSpinner"
+        android:hint="@string/enter_event_location"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save_event_button_text"
         android:id="@+id/saveEventButton"
-        android:layout_below="@+id/addNewEventSelectWhatCompetitorsUseSpinner"/>
+        android:layout_below="@+id/eventEventLocationEditText"/>
 
 </RelativeLayout>

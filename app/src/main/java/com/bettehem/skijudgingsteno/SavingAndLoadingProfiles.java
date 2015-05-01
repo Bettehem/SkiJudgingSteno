@@ -10,10 +10,11 @@ public class SavingAndLoadingProfiles
 	
 	private String eventTypeKey = "event_type";
 	private String competitorsUseKey = "competitors_use";
+	private String eventLocationKey = "event_location";
 	
 	SharedPreferencesSavingAndLoading savingAndLoading = new SharedPreferencesSavingAndLoading();
 	
-	public void addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse){
+	public void addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse, String eventLocation){
 		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("")){
 			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 		}else{
@@ -34,6 +35,7 @@ public class SavingAndLoadingProfiles
 			savingAndLoading.preferenceFilename = profileName;
 			savingAndLoading.saveString(context, eventTypeKey, eventType);
 			savingAndLoading.saveString(context, competitorsUseKey, whatCompetitorsUse);
+			savingAndLoading.saveString(context, eventLocationKey, eventLocation);
 
 
 			Toast.makeText(context, context.getString(R.string.profile_saved_text), Toast.LENGTH_SHORT).show();
@@ -46,7 +48,8 @@ public class SavingAndLoadingProfiles
 		savingAndLoading.preferenceFilename = profileName;
 		String eventType = savingAndLoading.loadString(context, eventTypeKey);
 		String competitorsUse = savingAndLoading.loadString(context, competitorsUseKey);
-		return new String[]{eventType, competitorsUse};
+		String eventLocation = savingAndLoading.loadString(context, eventLocationKey);
+		return new String[]{eventType, competitorsUse, eventLocation};
 	}
 	
 	

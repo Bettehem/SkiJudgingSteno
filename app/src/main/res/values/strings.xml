@@ -40,5 +40,6 @@
     <string name="save_event_button_text">Save Event</string>
     <string name="new_event_slopestyle_only">You can\'t Select anything else but Slopestyle right now, since you are creating a Slopestyle Event. You can add an event for Half Pipe later.</string>
     <string name="new_event_skis_only">You can\'t Select anything else but Skis right now, since you are creating a Skiing event. You can add a an event for Snowboards and other later.</string>
-
+    <string name="enter_event_location_optional">Enter event location(Optional):</string>
+    <string name="enter_event_location">Enter event location:</string>
 </resources>

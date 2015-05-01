@@ -47,13 +47,20 @@
 		android:layout_width="match_parent"
 		android:layout_below="@id/addNewProfileSkiOrSnowboardText"
 		android:id="@+id/addNewProfileSelectWhatCompetitorsUseSpinner"/>
-	
-	<Button
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/saveprofilebuttontext"
-		android:id="@+id/saveProfileButton"
-		android:layout_below="@+id/addNewProfileSelectWhatCompetitorsUseSpinner"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileEventLocationEditText"
+        android:layout_below="@+id/addNewProfileSelectWhatCompetitorsUseSpinner"
+        android:hint="@string/enter_event_location_optional"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/saveprofilebuttontext"
+        android:id="@+id/saveProfileButton"
+        android:layout_below="@+id/profileEventLocationEditText"/>
 
 </RelativeLayout>
 

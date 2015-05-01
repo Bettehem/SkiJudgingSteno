@@ -21,13 +21,13 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
-    String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile;
+    String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile, eventLocation;
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
     boolean isUseExistingProfileButtonClicked = false;
-    EditText profileNameEditText;
+    EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
 
@@ -108,6 +108,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     public void editTexts(){
         profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
+        eventEventLocationEditText = (EditText) findViewById(R.id.eventEventLocationEditText);
+        profileEventLocationEditText = (EditText) findViewById(R.id.profileEventLocationEditText);
     }
 	
 	public void spinners(){
@@ -193,7 +195,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
-                savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse);
+                eventLocation = profileEventLocationEditText.getText().toString();
+                savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
 				savingAndLoading.preferenceFilename = "Profiles";
                 savingAndLoading.saveBoolean(this, "has_created_profiles", true);
                 
@@ -302,6 +305,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseBoth))){
                     addNewEventSelectWhatCompetitorsUseSpinner.setSelection(2);
                 }
+
+                eventEventLocationEditText.setText(profileDetails[2]);
 
                 break;
 		}
