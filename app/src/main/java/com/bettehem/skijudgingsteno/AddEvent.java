@@ -263,7 +263,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                         break;
                     case 1:
                         addNewEventSelectEventTypeSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.new_event_slopestyle_only), Toast.LENGTH_LONG).show();
                         break;
                 }
                 break;
@@ -275,11 +275,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                         break;
                     case 1:
                         addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.new_event_skis_only), Toast.LENGTH_LONG).show();
                         break;
                     case 2:
                         addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.new_event_skis_only), Toast.LENGTH_LONG).show();
                         break;
                 }
                 break;
