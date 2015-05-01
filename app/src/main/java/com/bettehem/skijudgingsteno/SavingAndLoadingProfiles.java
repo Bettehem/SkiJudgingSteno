@@ -8,14 +8,15 @@ public class SavingAndLoadingProfiles
 	public String profileDetailsFileName = "Profiles";
 	public String profileListName = "profile_list";
 	
-	private String eventTypeKey = "event_type";
-	private String competitorsUseKey = "competitors_use";
-	private String eventLocationKey = "event_location";
+	private static final String eventTypeKey = "event_type";
+	private static final String competitorsUseKey = "competitors_use";
+	private static final String eventLocationKey = "event_location";
 	
 	SharedPreferencesSavingAndLoading savingAndLoading = new SharedPreferencesSavingAndLoading();
+	SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
 	
 	public void addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse, String eventLocation){
-		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("")){
+		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName)){
 			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 		}else{
 

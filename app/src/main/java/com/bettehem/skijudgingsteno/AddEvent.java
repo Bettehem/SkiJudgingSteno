@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -21,13 +19,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
+    SavingAndLoadingEvents savingAndLoadingEvents;
     String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile, eventLocation;
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton, saveEventButton;
     boolean isUseExistingProfileButtonClicked = false;
-    EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText;
+    EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText, addEventNewEventNameEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
 
@@ -72,6 +71,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         editTexts();
 		spinners();
 		profileSaverAndLoader();
+        eventSaverAndLoader();
     }
 
     public void intents(){
@@ -113,6 +113,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
         eventEventLocationEditText = (EditText) findViewById(R.id.eventEventLocationEditText);
         profileEventLocationEditText = (EditText) findViewById(R.id.profileEventLocationEditText);
+        addEventNewEventNameEditText = (EditText) findViewById(R.id.addEventNewEventNameEditText);
     }
 	
 	public void spinners(){
@@ -152,6 +153,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	public void profileSaverAndLoader(){
 		savingAndLoadingProfiles = new SavingAndLoadingProfiles();
 	}
+
+    public void eventSaverAndLoader(){
+        savingAndLoadingEvents = new SavingAndLoadingEvents();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -224,7 +229,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 				break;
 
             case R.id.saveEventButton:
-
+                String[] eventList = savingAndLoading.loadStringArray(this, "eventTypes");
+                String[] whatCompetitorsUse = savingAndLoading.loadStringArray(this, "competitorsUse");
+                savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
                 break;
         }
 		
