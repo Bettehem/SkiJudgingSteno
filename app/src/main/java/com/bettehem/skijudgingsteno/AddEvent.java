@@ -244,11 +244,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
                         break;
                     case 1:
-                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
                         Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                     case 2:
-                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
                         Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                 }
