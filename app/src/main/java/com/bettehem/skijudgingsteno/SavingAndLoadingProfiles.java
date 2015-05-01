@@ -14,14 +14,14 @@ public class SavingAndLoadingProfiles
 	
 	public void addProfile(Context context, String profileName, String eventType){
 		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("")){
-			Toast.makeText(context, context.getString(R.string.profile_saved_text), Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 		}else{
 
 			savingAndLoading.preferenceFilename = profileDetailsFileName;
 			String existingProfiles = savingAndLoading.loadString(context, profileListName);
 			
 			String[] newProfile;
-			if (existingProfiles.toString().contentEquals("Error! Not Found!")){
+			if (existingProfiles.contentEquals("Error! Not Found!")){
 				newProfile = new String[]{profileName};
 			}else{
 				newProfile = new String[]{existingProfiles + profileName};

@@ -27,6 +27,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     ViewFlipper addEventViewFlipper;
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
     String[] profiles;
+    boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
 
@@ -189,11 +190,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 break;
 				
 			case R.id.addEventLoadExistingProfileButton:
-				savingAndLoading.preferenceFilename = "Profiles";
-				addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<String>(
-																				  this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
-						));
-				addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
+                if (!isUseExistingProfileButtonClicked){
+                    savingAndLoading.preferenceFilename = "Profiles";
+                    addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<String>(
+                            this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
+                    ));
+                    addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
+                    isUseExistingProfileButtonClicked = true;
+                }
 				break;
         }
 		
