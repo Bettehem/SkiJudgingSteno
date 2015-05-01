@@ -54,6 +54,11 @@ public class SavingAndLoadingProfiles
 	
 	
 	public void deleteProfile(Context context, String profileName){
-		
+		savingAndLoading.preferenceFilename = profileName;
+		savingAndLoading.deleteAllValues(context);
+		CharSequence charSequence = profileName + ",";
+		String profileList = savingAndLoading.loadString(context, profileListName);
+		profileList.replace(charSequence, "");
+		savingAndLoading.saveString(context, profileListName, profileList);
 	}
 }

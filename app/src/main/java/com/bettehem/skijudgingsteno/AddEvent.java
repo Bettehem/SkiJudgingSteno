@@ -25,7 +25,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     Intent intent;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
-    Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton;
+    Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton, saveEventButton;
     boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
@@ -49,7 +49,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         savingAndLoading.preferenceFilename = "Settings";
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
-
+        }else{
+            addingEventText.setVisibility(View.GONE);
         }
 
         if (eventType.contentEquals("Slopestyle")){
@@ -96,10 +97,12 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
         saveProfile = (Button) findViewById(R.id.saveProfileButton);
 		addEventLoadExistingProfileButton = (Button) findViewById(R.id.addEventLoadExistingProfileButton);
+        saveEventButton = (Button) findViewById(R.id.saveEventButton);
 
         addProfileInEventScreen.setOnClickListener(this);
         saveProfile.setOnClickListener(this);
 		addEventLoadExistingProfileButton.setOnClickListener(this);
+        saveEventButton.setOnClickListener(this);
     }
 
     public void viewFlippers(){
@@ -219,6 +222,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                     isUseExistingProfileButtonClicked = true;
                 }
 				break;
+
+            case R.id.saveEventButton:
+
+                break;
         }
 		
     }
