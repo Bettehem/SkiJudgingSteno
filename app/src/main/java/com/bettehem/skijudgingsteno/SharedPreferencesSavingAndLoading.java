@@ -198,9 +198,11 @@ public class SharedPreferencesSavingAndLoading extends Activity {
     public String[] loadStringArray(Context context, String valueName){
         sharedPreferences = context.getSharedPreferences(preferenceFilename, MODE_PRIVATE);
 
-        String loadedArray = sharedPreferences.getString(valueName, "Error! Not Found!");
-		String[] array = new String[]{loadedArray};
+        //String loadedArray = sharedPreferences.getString(valueName, "Error! Not Found!");
+		//String[] array = new String[]{loadedArray};
 
+		String[] array = sharedPreferences.getString(valueName, "Error! Not Found!").split(",");
+		
         return array;
     }
 
