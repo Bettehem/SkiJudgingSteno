@@ -1,6 +1,7 @@
 package com.bettehem.skijudgingsteno;
 import android.content.*;
 import android.widget.*;
+import java.util.*;
 
 //This class requires SharedPreferencesSavingAndLoading to function correctly
 public class SavingAndLoadingProfiles
@@ -17,8 +18,7 @@ public class SavingAndLoadingProfiles
 	
 	public boolean addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse, String eventLocation){
 		SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
-		savingAndLoading.preferenceFilename = profileDetailsFileName;
-		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName)){
+		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName) || Arrays.asList(savingAndLoading.loadStringArray(context, profileListName)).contains(profileName)){
 			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 			isInvalidProfileName = true;
 		}else{
