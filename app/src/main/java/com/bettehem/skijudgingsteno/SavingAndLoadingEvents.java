@@ -10,23 +10,26 @@ public class SavingAndLoadingEvents {
     private static final String eventTypeKey = "event_type";
     private static final String competitorsUseKey = "competitors_use";
     private static final String eventLocationKey = "event_location";
+	private boolean isInvalidEventName = false;
 
     SharedPreferencesSavingAndLoading savingAndLoading = new SharedPreferencesSavingAndLoading();
-    SavingAndLoadingProfiles savingAndLoadingProfiles = new SavingAndLoadingProfiles();
 
-    public void saveEvent(Context context, String eventName, String eventType, String whatCompetitorsUse, String eventLocation){
+    public boolean saveEvent(Context context, String eventName, String eventType, String whatCompetitorsUse, String eventLocation){
+		SavingAndLoadingProfiles savingAndLoadingProfiles = new SavingAndLoadingProfiles();
+		savingAndLoading.preferenceFilename = eventDetailsFileName;
         if (eventName.contentEquals(eventDetailsFileName) || eventName.contentEquals(savingAndLoading.preferenceFilename) || eventName.contentEquals("") || eventName.contentEquals(savingAndLoadingProfiles.profileDetailsFileName)){
             Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
+			isInvalidEventName = true;
         }else{
 
             savingAndLoading.preferenceFilename = eventDetailsFileName;
-            String existingProfiles = savingAndLoading.loadString(context, eventListName);
+            String existingEvents = savingAndLoading.loadString(context, eventListName);
 
             String[] newEvent;
-            if (existingProfiles.contentEquals("Error! Not Found!")){
+            if (existingEvents.contentEquals("Error! Not Found!")){
                 newEvent = new String[]{eventName};
             }else{
-                newEvent = new String[]{existingProfiles + eventName};
+                newEvent = new String[]{existingEvents + eventName};
             }
             savingAndLoading.saveStringArray(context, eventListName, newEvent);
 
@@ -39,7 +42,8 @@ public class SavingAndLoadingEvents {
 
 
             Toast.makeText(context, context.getString(R.string.event_saved_text), Toast.LENGTH_SHORT).show();
-
+			isInvalidEventName = false;
         }
+		return isInvalidEventName;
     }
 }

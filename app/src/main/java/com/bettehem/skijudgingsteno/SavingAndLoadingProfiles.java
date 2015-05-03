@@ -11,13 +11,16 @@ public class SavingAndLoadingProfiles
 	private static final String eventTypeKey = "event_type";
 	private static final String competitorsUseKey = "competitors_use";
 	private static final String eventLocationKey = "event_location";
+	private boolean isInvalidProfileName = false;
 	
 	SharedPreferencesSavingAndLoading savingAndLoading = new SharedPreferencesSavingAndLoading();
-	SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
 	
-	public void addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse, String eventLocation){
+	public boolean addProfile(Context context, String profileName, String eventType, String whatCompetitorsUse, String eventLocation){
+		SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
+		savingAndLoading.preferenceFilename = profileDetailsFileName;
 		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName)){
 			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
+			isInvalidProfileName = true;
 		}else{
 
 			savingAndLoading.preferenceFilename = profileDetailsFileName;
@@ -40,8 +43,9 @@ public class SavingAndLoadingProfiles
 
 
 			Toast.makeText(context, context.getString(R.string.profile_saved_text), Toast.LENGTH_SHORT).show();
-			
+			isInvalidProfileName = false;
 		}
+		return isInvalidProfileName;
 	}
 	
 	

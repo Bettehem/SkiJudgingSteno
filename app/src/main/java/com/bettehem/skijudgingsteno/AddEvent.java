@@ -29,6 +29,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText, addEventNewEventNameEditText;
 	Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
+	boolean isInvalidProfileName = false;
+	boolean isInvalidEventName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,17 +206,19 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
                 eventLocation = profileEventLocationEditText.getText().toString();
-                savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
-				savingAndLoading.preferenceFilename = "Profiles";
-                savingAndLoading.saveBoolean(this, "has_created_profiles", true);
-                
-				
-				addEventViewFlipper.setVisibility(View.GONE);
-                addEventViewFlipper.setDisplayedChild(1);
-				
-				
-                addProfileInEventScreen.setText("Create new event");
-                addProfileInEventScreen.setVisibility(View.VISIBLE);
+                isInvalidProfileName = savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
+				if (!isInvalidProfileName){
+					savingAndLoading.preferenceFilename = "Profiles";
+					savingAndLoading.saveBoolean(this, "has_created_profiles", true);
+
+
+					addEventViewFlipper.setVisibility(View.GONE);
+					addEventViewFlipper.setDisplayedChild(1);
+
+
+					addProfileInEventScreen.setText("Create new event");
+					addProfileInEventScreen.setVisibility(View.VISIBLE);
+				}
                 break;
 				
 			case R.id.addEventLoadExistingProfileButton:
@@ -321,7 +325,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 }
 
                 eventEventLocationEditText.setText(profileDetails[2]);
-
                 break;
 		}
 	}
