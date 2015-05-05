@@ -17,7 +17,8 @@ public class SavingAndLoadingEvents {
 
     public boolean saveEvent(Context context, String eventName, String eventType, String whatCompetitorsUse, String eventLocation){
 		SavingAndLoadingProfiles savingAndLoadingProfiles = new SavingAndLoadingProfiles();
-        if (eventName.contentEquals(eventDetailsFileName) || eventName.contentEquals(savingAndLoading.preferenceFilename) || eventName.contentEquals("") || eventName.contentEquals(savingAndLoadingProfiles.profileDetailsFileName) || Arrays.asList(savingAndLoading.loadStringArray(context, eventListName)).contains(eventName)){
+		savingAndLoading.preferenceFilename = "Settings";
+        if (eventName.contentEquals(eventDetailsFileName) || eventName.contentEquals(savingAndLoading.preferenceFilename) || eventName.contentEquals("") || eventName.contentEquals(savingAndLoadingProfiles.profileDetailsFileName) || Arrays.asList(savingAndLoading.loadStringArray(context, eventListName)).contains(eventName) || Arrays.asList(savingAndLoading.loadStringArray(context, savingAndLoadingProfiles.profileListName)).contains(eventName)){
             Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 			isInvalidEventName = true;
         }else{

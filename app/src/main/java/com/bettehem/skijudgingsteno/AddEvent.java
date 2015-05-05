@@ -235,8 +235,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.saveEventButton:
                 String[] eventList = savingAndLoading.loadStringArray(this, "eventTypes");
                 String[] whatCompetitorsUse = savingAndLoading.loadStringArray(this, "competitorsUse");
-                savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
-                break;
+                isInvalidEventName = savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
+                if (!isInvalidProfileName){
+					
+				}
+				break;
         }
 		
     }
