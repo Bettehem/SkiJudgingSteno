@@ -33,6 +33,7 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
     }
 
     public void startup(){
+		
         savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
         if (savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             skiSlopestyleExistingEventTextView.setVisibility(View.VISIBLE);
@@ -76,6 +77,7 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
     public void intents(){
         openNewEvent = new Intent(this, AddEvent.class);
         openNewEvent.putExtra("eventType", "Slopestyle");
+		openNewEvent.putExtra("whatClass", "SkiSlopestyleEvent");
     }
 
     public void eventSaverAndLoader(){
@@ -120,6 +122,7 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
         switch (v.getId()){
             case R.id.newEventButton:
                 startActivity(openNewEvent);
+				finish();
                 break;
         }
     }

@@ -21,7 +21,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
     SavingAndLoadingEvents savingAndLoadingEvents;
     String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile, eventLocation;
-    Intent intent;
+    Intent intent, goBack;
     TextView addingEventText, newEventAddInfoTextView;
     ViewFlipper addEventViewFlipper;
     Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton, saveEventButton;
@@ -77,7 +77,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 
     public void intents(){
+		
         intent = getIntent();
+		if (intent.getExtras().getString("whatClass").contentEquals("SkiSlopestyleEvent")){
+			goBack = new Intent(this, SkiSlopestyleEvent.class);
+		}
     }
 
     public void strings(){
@@ -338,6 +342,13 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	public void onNothingSelected(AdapterView<?> p1)
 	{
 		
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		super.onBackPressed();
+		startActivity(goBack);
 	}
 
 }
