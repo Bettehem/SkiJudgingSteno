@@ -41,13 +41,13 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 
     public void startup(){
-		savingAndLoading.preferenceFilename = "Profiles";
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
 		if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
 			addEventViewFlipper.setDisplayedChild(1);
 			addProfileInEventScreen.setText("Create new event");
 		}
 		
-        savingAndLoading.preferenceFilename = "Settings";
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
         }else{
@@ -82,7 +82,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     public void strings(){
         eventType = intent.getExtras().getString("eventType");
-        savingAndLoading.preferenceFilename = "Settings";
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         competitorsUse = savingAndLoading.loadString(this, "competitorsUseCurrent");
     }
 
@@ -127,7 +127,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
 
         addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
-		savingAndLoading.preferenceFilename = "Settings";
+		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
         ));
@@ -140,7 +140,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         ));
 
         addNewEventSelectEventTypeSpinner.setOnItemSelectedListener(this);
-        savingAndLoading.preferenceFilename = "Settings";
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         addNewEventSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
         ));
@@ -223,7 +223,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 				
 			case R.id.addEventLoadExistingProfileButton:
                 if (!isUseExistingProfileButtonClicked){
-                    savingAndLoading.preferenceFilename = "Profiles";
+                    savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
                     addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<String>(
                             this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
                     ));
@@ -239,7 +239,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 if (!isInvalidProfileName){
 					savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
                     savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
-
 				}
 				break;
         }

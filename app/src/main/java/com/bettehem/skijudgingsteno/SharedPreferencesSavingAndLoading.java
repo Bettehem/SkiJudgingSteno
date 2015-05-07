@@ -23,9 +23,10 @@ import android.content.SharedPreferences;
 public class SharedPreferencesSavingAndLoading extends Activity {
 
     //Variables are first created here.
-    public SharedPreferences sharedPreferences;
-    public SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     public String preferenceFilename = "Settings";
+    public static final String originalPreferenceFilename = "Settings";
 
 
 

@@ -27,6 +27,22 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newEventButton"
+                android:id="@+id/skiSlopestyleExistingEventTextView"
+                android:visibility="gone"
+                android:text="@string/select_existing_event_text"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/skiSlopestyleExistingEventTextView"
+                android:visibility="gone"
+                android:id="@+id/skiSlopestyleEventSelectExistingEventSpinner"/>
+
+
             </RelativeLayout>
 
         </ScrollView>

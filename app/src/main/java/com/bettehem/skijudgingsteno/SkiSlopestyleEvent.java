@@ -6,23 +6,38 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
-public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClickListener{
+public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     SharedPreferencesSavingAndLoading savingAndLoading;
     TextView amountOfJudgedEvents;
     boolean hasOpenedBefore;
     Button newEventButton;
     Intent openNewEvent;
+    Spinner skiSlopestyleEventSelectExistingEventSpinner;
+    SavingAndLoadingEvents savingAndLoadingEvents;
+    TextView skiSlopestyleExistingEventTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ski_slopestyle_event);
         variables();
+        startup();
+    }
+
+    public void startup(){
+        savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
+        if (savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
+            skiSlopestyleExistingEventTextView.setVisibility(View.VISIBLE);
+            skiSlopestyleEventSelectExistingEventSpinner.setVisibility(View.VISIBLE);
+        }
     }
 
     public void variables(){
@@ -30,10 +45,13 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
         sharedPreferences();
         buttons();
         intents();
+        eventSaverAndLoader();
+        spinners();
     }
 
     public void textViews(){
         amountOfJudgedEvents = (TextView) findViewById(R.id.amountOfJudgedEvents);
+        skiSlopestyleExistingEventTextView = (TextView) findViewById(R.id.skiSlopestyleExistingEventTextView);
     }
 
     public void sharedPreferences(){
@@ -58,6 +76,19 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
     public void intents(){
         openNewEvent = new Intent(this, AddEvent.class);
         openNewEvent.putExtra("eventType", "Slopestyle");
+    }
+
+    public void eventSaverAndLoader(){
+        savingAndLoadingEvents = new SavingAndLoadingEvents();
+    }
+
+    public void spinners(){
+        skiSlopestyleEventSelectExistingEventSpinner = (Spinner) findViewById(R.id.skiSlopestyleEventSelectExistingEventSpinner);
+
+        skiSlopestyleEventSelectExistingEventSpinner.setOnItemSelectedListener(this);
+        skiSlopestyleEventSelectExistingEventSpinner.setAdapter(new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, savingAndLoadingEvents.eventListName)
+        ));
     }
 
 
@@ -91,5 +122,19 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
                 startActivity(openNewEvent);
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()){
+            case R.id.skiSlopestyleEventSelectExistingEventSpinner:
+
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
