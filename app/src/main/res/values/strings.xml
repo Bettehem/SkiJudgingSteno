@@ -43,4 +43,5 @@
     <string name="enter_event_location_optional">Enter event location(Optional):</string>
     <string name="enter_event_location">Enter event location:</string>
     <string name="event_saved_text">Event Saved</string>
+    <string name="invalid_event_name">You can\'t use this as an event name! Try something else!</string>
 </resources>

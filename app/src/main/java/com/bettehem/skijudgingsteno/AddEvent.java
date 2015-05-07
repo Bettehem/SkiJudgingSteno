@@ -208,7 +208,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 eventLocation = profileEventLocationEditText.getText().toString();
                 isInvalidProfileName = savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
 				if (!isInvalidProfileName){
-					savingAndLoading.preferenceFilename = "Profiles";
+					savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
 					savingAndLoading.saveBoolean(this, "has_created_profiles", true);
 
 
@@ -237,7 +237,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 String[] whatCompetitorsUse = savingAndLoading.loadStringArray(this, "competitorsUse");
                 isInvalidEventName = savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
                 if (!isInvalidProfileName){
-					
+					savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
+                    savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
+
 				}
 				break;
         }
