@@ -243,6 +243,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 if (!isInvalidProfileName){
 					savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
                     savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
+					startActivity(goBack);
+					finish();
 				}
 				break;
         }
