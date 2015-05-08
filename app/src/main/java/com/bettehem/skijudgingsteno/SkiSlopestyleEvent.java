@@ -39,8 +39,8 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
             skiSlopestyleExistingEventTextView.setVisibility(View.VISIBLE);
 			
 			skiSlopestyleEventSelectExistingEventSpinner.setAdapter(new ArrayAdapter<String>(
-																		this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, savingAndLoadingEvents.eventListName)
-																	));
+                    this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, savingAndLoadingEvents.eventListName)
+            ));
             skiSlopestyleEventSelectExistingEventSpinner.setVisibility(View.VISIBLE);
         }
     }

@@ -54,7 +54,9 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 		savingAndLoading.saveStringArray(this, "eventTypes", eventTypes);
 		savingAndLoading.saveStringArray(this, "competitorsUse", competitorsUse);
         savingAndLoading.preferenceFilename = "Events";
-        savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
+        if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
+            savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
+        }
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         isTutorialCompleted = savingAndLoading.loadBoolean(this, "isTutorialCompleted");
         if (!isTutorialCompleted){
