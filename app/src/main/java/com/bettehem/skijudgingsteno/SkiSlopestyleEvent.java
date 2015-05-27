@@ -23,6 +23,7 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
     Spinner skiSlopestyleEventSelectExistingEventSpinner;
     SavingAndLoadingEvents savingAndLoadingEvents;
     TextView skiSlopestyleExistingEventTextView;
+    //ES
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
