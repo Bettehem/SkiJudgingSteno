@@ -26,7 +26,7 @@ public class SharedPreferencesSavingAndLoading extends Activity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     public String preferenceFilename = "Settings";
-    public static final String originalPreferenceFilename = "Settings";
+    public final String originalPreferenceFilename = "Settings";
 
 
 
@@ -202,9 +202,9 @@ public class SharedPreferencesSavingAndLoading extends Activity {
         //String loadedArray = sharedPreferences.getString(valueName, "Error! Not Found!");
 		//String[] array = new String[]{loadedArray};
 
-		String[] array = sharedPreferences.getString(valueName, "Error! Not Found!").split(",");
+		//String[] array = sharedPreferences.getString(valueName, "Error! Not Found!").split(",");
 		
-        return array;
+        return sharedPreferences.getString(valueName, "Error! Not Found!").split(",");
     }
 
 }

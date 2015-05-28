@@ -1,5 +1,18 @@
 package com.bettehem.skijudgingsteno;
 
+/*
+    Copyright 2015 Chris Mustola
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 
 //imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
 //Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
@@ -184,25 +197,25 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
         addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
 		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
+		addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
         ));
 			
 		addNewEventLoadExistingProfileSelectionSpinner.setOnItemSelectedListener(this);
 		
 		addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
-		addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<String>(
+		addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
         ));
 
         addNewEventSelectEventTypeSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-        addNewEventSelectEventTypeSpinner.setAdapter(new ArrayAdapter<String>(
+        addNewEventSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
         ));
 
         addNewEventSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
-        addNewEventSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<String>(
+        addNewEventSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
         ));
 		
@@ -280,7 +293,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 			case R.id.addEventLoadExistingProfileButton:
                 if (!isUseExistingProfileButtonClicked){
                     savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
-                    addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<String>(
+                    addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<>(
                             this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
                     ));
                     addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
