@@ -14,7 +14,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
 	//Variables
     SharedPreferencesSavingAndLoading savingAndLoading;
-    boolean isTutorialCompleted;
+    SavingAndLoadingEvents savingAndLoadingEvents;
     Button mainMenuSkiJudgingButton, mainMenuSnowboardJudgingButton, mainMenuSettingsButton;
     Intent openTutorial, openSkiJudging, openSnowboardJudging, openSettings;
 	String[] eventTypes, competitorsUse;
@@ -37,6 +37,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
     public void variables(){
         intents();
 		arrays();
+        eventsSavingAndLoading();
         sharedPreferences();
         buttons();
     }
@@ -61,6 +62,14 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 		competitorsUse = getResources().getStringArray(R.array.competitors_use_list_array);
 	}
 
+    //Everything regarding savingAndLoadingEvents are defined here.
+    public void eventsSavingAndLoading(){
+
+        //savingAndLoadingEvents is initialized here. Or well, let's be simple.
+        //Just add this, even you don't know what it means. It just works.
+        savingAndLoadingEvents = new SavingAndLoadingEvents();
+    }
+
     //Everything regarding SharedPreferences are defined here.
     public void sharedPreferences(){
 
@@ -76,31 +85,53 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         //you need to tell, what kind of value you want to save. So in this case, that would be a string array.
         //so we are at "savingAndLoading.saveStringArray" now. After that, You need to add brackets, if the IDE you are using
         //doesn't add them automatically. Also, remember to add ";" to the end of the line to avoid errors.
-        //in the brackets, three values are needed. First is the context. this, in simple mans language means what class you are in.
+        //in the brackets, three values are needed and they are separated with commas. First is the context. this, in simple mans language means what class you are in.
         //the easiest way to handle this is by just typing "this", as has been done below, since it refers to THIS current class.
-        //Second
+        //Second is the name for the value. so if you later look in to the SharedPreferences file(if you can read it on your device),
+        //in this case eventTypes is the name for the variable that you will see.
+        //It's generally good to use a name that is the same, or similar to the variable name in the third parameter, if exists.
+        //In to the third parameter, you have to enter a value. in this case, a string array.
+        //In this case, a string array that was defined earlier with the name eventTypes is used.
 		savingAndLoading.saveStringArray(this, "eventTypes", eventTypes);
+
+        //This is basically the same as below, but with different values.
 		savingAndLoading.saveStringArray(this, "competitorsUse", competitorsUse);
 
 
-        savingAndLoading.preferenceFilename = "Events";
+        //sets the preferenceFilename to the original eventDetailsFilename.
+        savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
 
+        //if the user hasn't created events before, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
+
+            //A value will be saved stating that the user hasn't created events before.
             savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
         }
+
+        //sets the preferenceFilename to the original preferenceFilename.
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-        isTutorialCompleted = savingAndLoading.loadBoolean(this, "isTutorialCompleted");
-        if (!isTutorialCompleted){
+
+        //if the user hasn't completed the tutorial, this will be true
+        if (!savingAndLoading.loadBoolean(this, "isTutorialCompleted")){
+
+            //this will start the tutorial with the help of an intent that was defined earlier
             startActivity(openTutorial);
         }
     }
 
     //Everything regarding buttons are defined here.
     public void buttons(){
+
+        //here the buttons are "linked" to the ones in the .xml files, in this case, activity_main_menu.xml
+        //in the layout file, the buttons have been given IDs, and those are used here.
         mainMenuSkiJudgingButton = (Button) findViewById(R.id.mainMenuSkiJudgingButton);
         mainMenuSnowboardJudgingButton = (Button) findViewById(R.id.mainMenuSnowboardJudgingButton);
         mainMenuSettingsButton = (Button) findViewById(R.id.mainmenuAppSettingsButton);
 
+        //Here the OnClickListeners are been set to the buttons. if "this" is used as an argument,
+        //the OnClickListener has to be implemented.
+        //This means that every time a button with an OnClickListener is clicked, it will call a method
+        //with the name "onClick". It can be found below.
         mainMenuSkiJudgingButton.setOnClickListener(this);
         mainMenuSnowboardJudgingButton.setOnClickListener(this);
         mainMenuSettingsButton.setOnClickListener(this);
@@ -111,11 +142,13 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 	//The two following methods are for the options menu.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_menu, menu);
         return true;
     }
 
+    //this is the second method for the options menu.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -143,6 +176,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
             //if the button that says Ski Juding is pressed this case will be true.
             case R.id.mainMenuSkiJudgingButton:
+
                 //starts an activity using an intent that has been defined in the intents method
                 startActivity(openSkiJudging);
                 break;

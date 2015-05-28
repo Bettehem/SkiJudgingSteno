@@ -8,6 +8,8 @@ public class SavingAndLoadingEvents {
     public String eventDetailsFileName = "Events";
     public String eventListName = "event_list";
 
+    public static final String originalEventDetailsFilename = "Events";
+
     private static final String eventTypeKey = "event_type";
     private static final String competitorsUseKey = "competitors_use";
     private static final String eventLocationKey = "event_location";
@@ -17,7 +19,7 @@ public class SavingAndLoadingEvents {
 
     public boolean saveEvent(Context context, String eventName, String eventType, String whatCompetitorsUse, String eventLocation){
 		SavingAndLoadingProfiles savingAndLoadingProfiles = new SavingAndLoadingProfiles();
-		savingAndLoading.preferenceFilename = "Settings";
+		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         if (eventName.contentEquals(eventDetailsFileName) || eventName.contentEquals(savingAndLoading.preferenceFilename) || eventName.contentEquals("") || eventName.contentEquals(savingAndLoadingProfiles.profileDetailsFileName)){
             Toast.makeText(context, context.getString(R.string.invalid_event_name), Toast.LENGTH_LONG).show();
 			isInvalidEventName = true;

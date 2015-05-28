@@ -26,7 +26,7 @@ public class SharedPreferencesSavingAndLoading extends Activity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     public String preferenceFilename = "Settings";
-    public final String originalPreferenceFilename = "Settings";
+    public static final String originalPreferenceFilename = "Settings";
 
 
 
