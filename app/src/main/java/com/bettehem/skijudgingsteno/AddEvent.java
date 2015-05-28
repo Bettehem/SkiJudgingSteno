@@ -85,16 +85,16 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
         //sets the savingAndLoading preferenceFilename to the original preferenceFilename
         //more details aout this can be found above.
-        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+        savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
 
-        //if the user has created events, this will be true
+        //if the user hasn't created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
 
             //same with every TextView, just setting the text to something new.
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
 
 
-        //if the user hasn't created events, the code above is skipped, and this will be executed
+        //if the user has created events, the code above is skipped, and this will be executed
         }else{
 
             //sets the visibility of this TextView to gone.

@@ -23,8 +23,7 @@ import java.util.*;
 public class SavingAndLoadingEvents {
     public String eventDetailsFileName = "Events";
     public String eventListName = "event_list";
-
-    public static final String originalEventDetailsFilename = "Events";
+    public final String originalEventDetailsFilename = "Events";
 
     private static final String eventTypeKey = "event_type";
     private static final String competitorsUseKey = "competitors_use";
