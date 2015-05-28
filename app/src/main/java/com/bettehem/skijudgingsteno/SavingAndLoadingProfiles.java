@@ -25,6 +25,7 @@ public class SavingAndLoadingProfiles
 {
 	public String profileDetailsFileName = "Profiles";
 	public String profileListName = "profile_list";
+	public final String originalProfileDetailsFileName = "Profiles";
 
 	private static final String eventTypeKey = "event_type";
 	private static final String competitorsUseKey = "competitors_use";

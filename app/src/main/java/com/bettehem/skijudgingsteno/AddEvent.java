@@ -292,10 +292,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 				
 			case R.id.addEventLoadExistingProfileButton:
                 if (!isUseExistingProfileButtonClicked){
-                    savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
+                    savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
                     addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<>(
-                            this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "profile_list")
+                            this, android.R.layout.simple_spinner_dropdown_item, new String[]{savingAndLoading.loadString(this, "profile_list") + getString(R.string.dont_use_existing_profile_text)}
                     ));
+                    addEventLoadExistingProfileButton.setVisibility(View.GONE);
                     addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
                     isUseExistingProfileButtonClicked = true;
                 }
@@ -384,23 +385,37 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.addNewEventLoadExistingProfileSelectionSpinner:
                 profileDetails = savingAndLoadingProfiles.loadProfile(this, savingAndLoading.loadStringArray(this, "profile_list")[p3]);
 
-                loadedEventTypeFromProfile = profileDetails[0];
-                if (loadedEventTypeFromProfile.contentEquals("Slopestyle")) {
-                    addNewEventSelectEventTypeSpinner.setSelection(0);
-                }else if (loadedEventTypeFromProfile.contentEquals("Half Pipe")){
-                    addNewEventSelectEventTypeSpinner.setSelection(1);
+                switch (p3){
+                    case 2:
+                        addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
+                        addNewEventLoadExistingProfileSelectionSpinner.setSelection(0);
+                        addNewEventSelectEventTypeSpinner.setSelection(0);
+                        addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        eventEventLocationEditText.setText("");
+                        addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
+                        break;
+
+                    default:
+                        loadedEventTypeFromProfile = profileDetails[0];
+                        if (loadedEventTypeFromProfile.contentEquals("Slopestyle")) {
+                            addNewEventSelectEventTypeSpinner.setSelection(0);
+                        }else if (loadedEventTypeFromProfile.contentEquals("Half Pipe")){
+                            addNewEventSelectEventTypeSpinner.setSelection(1);
+                        }
+
+                        loadedCompetitorsUseFromProfile = profileDetails[1];
+                        if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSkis))){
+                            addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                        }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSnowboards))){
+                            addNewEventSelectWhatCompetitorsUseSpinner.setSelection(1);
+                        }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseBoth))){
+                            addNewEventSelectWhatCompetitorsUseSpinner.setSelection(2);
+                        }
+
+                        eventEventLocationEditText.setText(profileDetails[2]);
+                        break;
                 }
 
-                loadedCompetitorsUseFromProfile = profileDetails[1];
-                if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSkis))){
-                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
-                }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseSnowboards))){
-                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(1);
-                }else if (loadedCompetitorsUseFromProfile.contentEquals(getString(R.string.competitorsUseBoth))){
-                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(2);
-                }
-
-                eventEventLocationEditText.setText(profileDetails[2]);
                 break;
 		}
 	}
