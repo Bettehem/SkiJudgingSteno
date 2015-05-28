@@ -294,7 +294,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 if (!isUseExistingProfileButtonClicked){
                     savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
                     addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<>(
-                            this, android.R.layout.simple_spinner_dropdown_item, new String[]{savingAndLoading.loadString(this, "profile_list") + getString(R.string.dont_use_existing_profile_text)}
+                            this, android.R.layout.simple_spinner_dropdown_item, new String[]{savingAndLoading.loadString(this, "profile_list"), getString(R.string.dont_use_existing_profile_text)}
                     ));
                     addEventLoadExistingProfileButton.setVisibility(View.GONE);
                     addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
