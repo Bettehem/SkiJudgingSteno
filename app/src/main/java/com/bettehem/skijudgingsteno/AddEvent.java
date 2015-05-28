@@ -306,7 +306,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 String[] eventList = savingAndLoading.loadStringArray(this, "eventTypes");
                 String[] whatCompetitorsUse = savingAndLoading.loadStringArray(this, "competitorsUse");
                 isInvalidEventName = savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
-                if (!isInvalidProfileName){
+                if (!isInvalidEventName){
 					savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
                     savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
 					startActivity(goBack);
