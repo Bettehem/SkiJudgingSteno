@@ -1,5 +1,8 @@
 package com.bettehem.skijudgingsteno;
 
+
+//imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
+//Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,7 +19,7 @@ import android.widget.*;
 
 public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
-	
+	//variables
     SharedPreferencesSavingAndLoading savingAndLoading;
 	SavingAndLoadingProfiles savingAndLoadingProfiles;
     SavingAndLoadingEvents savingAndLoadingEvents;
@@ -32,37 +35,85 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	boolean isInvalidProfileName = false;
 	boolean isInvalidEventName = false;
 
+    //Called when the activity is launched/created
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        //calls the "variables" method
         variables();
+
+        //calls the "startup" method
         startup();
     }
 
+    //this method is for setting things for when the activity is opened.
+    //in this case, this method checks if the user has created profiles and events before, and does
+    //modifications to the view regarding that.
     public void startup(){
+        //sets the savingAndLoading preferenceFilename to the default name that is used with profile details.
+        //setting the savingAndloading preferencefilename is required every time when a method in that class is used,
+        //so that needed details are saved to, and loaded from the right place, so that things don't get messed up.
 		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
+
+        //if the user has created profiles, this will be true
 		if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
+
+            //sets the displayed child to 1. It's good to notice that the ViewFlipper starts counting from 0.
+            //It means that when this is set to 1, it will show the second child in the list. you can check
+            //activity_add_event.xml to see what this means
 			addEventViewFlipper.setDisplayedChild(1);
-			addProfileInEventScreen.setText("Create new event");
+
+            //this shouldn't even need explaining, but basically this just sets the text in a TextView to whatever the
+            //value is.
+			addProfileInEventScreen.setText(getString(R.string.create_new_event_text));
 		}
-		
+
+        //sets the savingAndLoading preferenceFilename to the original preferenceFilename
+        //more details aout this can be found above.
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+
+        //if the user has created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
+
+            //same with every TextView, just setting the text to something new.
             addingEventText.setText(getString(R.string.creatingfirsteventtext));
+
+
+        //if the user hasn't created events, the code above is skipped, and this will be executed
         }else{
+
+            //sets the visibility of this TextView to gone.
+            //what it will basically look like, when in the app, is that the TextView would be deleted.
+            //the difference between invisible and gone is, that if this would be set to invisible, the TextView
+            //would still take the space on the screen, you just cant see it. when it's set to gone, it will be invisible
+            //and it wont take space on the screen either
             addingEventText.setVisibility(View.GONE);
         }
 
+        //checks if the event type is Slopestyle that you are adding, and if it is this will be true
         if (eventType.contentEquals("Slopestyle")){
+
+            //sets the currently selected items in these spinners to 0. Spinners start counting from 0,
+            //so this means that the first item in the spinners list is selected.
 			addNewProfileSelectEventTypeSpinner.setSelection(0);
             addNewEventSelectEventTypeSpinner.setSelection(0);
+
+
+        //if the event type is not Slopestyle(It will then be Half pipe), the code above will be skipped
+        //and this will be executed
         }else{
+
+            //sets the selection to 1. 1 is the second item in the spinner's list, since counting starts from 0.
 			addNewProfileSelectEventTypeSpinner.setSelection(1);
             addNewEventSelectEventTypeSpinner.setSelection(1);
         }
     }
 
+    //this method is for setting up all of the variables.
+    //All different types of variables are been set up in different methods, to make them easier to find,
+    //and makes the code easier to understand.
     public void variables(){
         intents();
         sharedPreferences();
@@ -76,6 +127,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         eventSaverAndLoader();
     }
 
+    //Everything regarding intents are defined here.
     public void intents(){
 		
         intent = getIntent();
