@@ -30,7 +30,7 @@
     <string name="skijudginghalfpipebuttontext">Half Pipe</string>
     <string name="amountofjudgedeventstext">Amount of judged events:</string>
     <string name="title_activity_add_event">AddEvent</string>
-    <string name="creatingfirsteventtext">Now you will create your first event. Since this is the first time, you will also create a profile that you can use later to make creating similar events faster and easier. You can give an event any name, and then fill in other details, and when you are done, press the save button at the bottom.\n</string>
+    <string name="creating_first_event_and_profile_text">Now you will create your first event. Since this is the first time, you will also create a profile that you can use later to make creating similar events faster and easier. You can give an event any name, and then fill in other details, and when you are done, press the save button at the bottom.\n</string>
     <string name="createnewprofilebutton">Create a new Profile</string>
     <string name="neweventbuttontext">Add new event</string>
     <string name="addingProfileText">Please fill in all of the details below</string>
@@ -61,4 +61,5 @@
     <string name="select_existing_event_text">Select an existing event below:</string>
     <string name="create_new_event_text">Create new event</string>
     <string name="dont_use_existing_profile_text">Don\'t use existing profile</string>
+    <string name="creating_first_event_text">Now you will create your first event.You can give an event any name, and then fill in other details, and when you are done, press the save button at the bottom.\n</string>
 </resources>

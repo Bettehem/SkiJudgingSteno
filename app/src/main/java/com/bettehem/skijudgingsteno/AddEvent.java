@@ -91,7 +91,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
 
             //same with every TextView, just setting the text to something new.
-            addingEventText.setText(getString(R.string.creatingfirsteventtext));
+            addingEventText.setText(getString(R.string.creating_first_event_and_profile_text));
 
 
         //if the user has created events, the code above is skipped, and this will be executed
@@ -287,6 +287,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
 					addProfileInEventScreen.setText("Create new event");
 					addProfileInEventScreen.setVisibility(View.VISIBLE);
+                    addingEventText.setText(getString(R.string.create_new_event_text));
 				}
                 break;
 				
