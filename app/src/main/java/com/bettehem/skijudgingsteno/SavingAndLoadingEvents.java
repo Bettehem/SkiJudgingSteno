@@ -28,7 +28,7 @@ public class SavingAndLoadingEvents {
     private static final String eventTypeKey = "event_type";
     private static final String competitorsUseKey = "competitors_use";
     private static final String eventLocationKey = "event_location";
-	private boolean isInvalidEventName = false;
+	private boolean isInvalidEventName = true;
 
     SharedPreferencesSavingAndLoading savingAndLoading = new SharedPreferencesSavingAndLoading();
 
