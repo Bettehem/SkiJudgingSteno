@@ -324,6 +324,15 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 FragmentManager manager = getFragmentManager();
                 DynamicConfirmationDialog confirmationDialog = new DynamicConfirmationDialog();
                 confirmationDialog.show(manager, "confirmationDialog");
+                savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+                if (savingAndLoading.loadBoolean(this, "notUsingExistingProfiles")){
+                    addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
+                    addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
+                    addEventCancelLoadExistingButton.setVisibility(View.GONE);
+                    addNewEventSelectEventTypeSpinner.setSelection(0);
+                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                    eventEventLocationEditText.setText("");
+                }
                 break;
         }
 

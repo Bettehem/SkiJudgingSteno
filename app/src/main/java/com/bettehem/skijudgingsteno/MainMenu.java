@@ -28,6 +28,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 	//Variables
     SharedPreferencesSavingAndLoading savingAndLoading;
     SavingAndLoadingEvents savingAndLoadingEvents;
+    SavingAndLoadingProfiles savingAndLoadingProfiles;
     Button mainMenuSkiJudgingButton, mainMenuSnowboardJudgingButton, mainMenuSettingsButton;
     Intent openTutorial, openSkiJudging, openSnowboardJudging, openSettings;
 	String[] eventTypes, competitorsUse;
@@ -51,6 +52,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         intents();
 		arrays();
         eventsSavingAndLoading();
+        profileSaverAndLoader();
         sharedPreferences();
         buttons();
     }
@@ -81,6 +83,13 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         //savingAndLoadingEvents is initialized here. Or well, let's be simple.
         //Just add this, even you don't know what it means. It just works.
         savingAndLoadingEvents = new SavingAndLoadingEvents();
+    }
+
+    //Everything regarding savingAndLoadingProfiles are defined here.
+    public void profileSaverAndLoader(){
+
+        //savingAndLoadingProfiles is initialized here.
+        savingAndLoadingProfiles = new SavingAndLoadingProfiles();
     }
 
     //Everything regarding SharedPreferences are defined here.
@@ -119,6 +128,16 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
             //A value will be saved stating that the user hasn't created events before.
             savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
+        }
+
+        //sets the preferenceFilename to the original eventDetailsFilename.
+        savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+
+        //if the user hasn't created profiles, and tried to cancel using existing ones, this will be true
+        if (!savingAndLoading.loadBoolean(this, "notUsingExistingProfiles")) {
+
+            //A value will be saved stating that the user hasn't done this previously
+            savingAndLoading.saveBoolean(this, "notUsingExistingProfiles", false);
         }
 
         //sets the preferenceFilename to the original preferenceFilename.
