@@ -387,7 +387,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 profileDetails = savingAndLoadingProfiles.loadProfile(this, savingAndLoading.loadStringArray(this, "profile_list")[p3]);
 
                 switch (p3){
-                    case 2:
+                    case 1:
                         addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
                         addNewEventLoadExistingProfileSelectionSpinner.setSelection(0);
                         addNewEventSelectEventTypeSpinner.setSelection(0);
