@@ -17,7 +17,9 @@ package com.bettehem.skijudgingsteno;
 //imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
 //Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
 
+import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -324,15 +326,33 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 FragmentManager manager = getFragmentManager();
                 DynamicConfirmationDialog confirmationDialog = new DynamicConfirmationDialog();
                 confirmationDialog.show(manager, "confirmationDialog");
-                savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
-                if (savingAndLoading.loadBoolean(this, "notUsingExistingProfiles")){
-                    addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
-                    addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
-                    addEventCancelLoadExistingButton.setVisibility(View.GONE);
-                    addNewEventSelectEventTypeSpinner.setSelection(0);
-                    addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
-                    eventEventLocationEditText.setText("");
-                }
+
+
+                confirmationDialog.onDismiss(new DialogInterface() {
+                    @Override
+                    public void cancel() {
+                            if (savingAndLoading.loadBoolean(getApplication(), "notUsingExistingProfiles")){
+                                addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
+                                addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
+                                addEventCancelLoadExistingButton.setVisibility(View.GONE);
+                                addNewEventSelectEventTypeSpinner.setSelection(0);
+                                addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                                eventEventLocationEditText.setText("");
+                            }
+                    }
+
+                    @Override
+                    public void dismiss() {
+                        if (savingAndLoading.loadBoolean(getApplication(), "notUsingExistingProfiles")){
+                            addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
+                            addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
+                            addEventCancelLoadExistingButton.setVisibility(View.GONE);
+                            addNewEventSelectEventTypeSpinner.setSelection(0);
+                            addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+                            eventEventLocationEditText.setText("");
+                        }
+                    }
+                });
                 break;
         }
 

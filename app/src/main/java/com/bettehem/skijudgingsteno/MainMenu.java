@@ -137,7 +137,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         if (!savingAndLoading.loadBoolean(this, "notUsingExistingProfiles")) {
 
             //A value will be saved stating that the user hasn't done this previously
-            savingAndLoading.saveBoolean(this, "notUsingExistingProfiles", true);
+            savingAndLoading.saveBoolean(this, "notUsingExistingProfiles", false);
         }
 
         //sets the preferenceFilename to the original preferenceFilename.

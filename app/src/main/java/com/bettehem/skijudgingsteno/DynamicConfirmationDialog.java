@@ -4,8 +4,14 @@ import android.app.DialogFragment;
 import android.os.*;
 import android.app.*;
 import android.content.*;
-import android.widget.Toast;
 
+/*
+This Dialog is dynamic. or adaptive. whatever you want to call it. What does it do?
+It is able to adapt to whatever is needed, so For example, you want to open a dialog to ask the
+user if they want to delete a picture, you can do it with this. DynamicConfirmationDialog uses
+the help of SharedPreferencesSavingAndLoading, to accomplish this. You can this way define the question,
+and the two answers that the user can select from. You can also define, what each answer will do.
+ */
 public class DynamicConfirmationDialog extends DialogFragment{
 
 	SharedPreferencesSavingAndLoading savingAndLoading;
