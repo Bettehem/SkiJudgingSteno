@@ -325,10 +325,22 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.addEventCancelLoadExistingProfileButton:
                 FragmentManager manager = getFragmentManager();
                 DynamicConfirmationDialog confirmationDialog = new DynamicConfirmationDialog();
-                confirmationDialog.show(manager, "confirmationDialog");
+                confirmationDialog.setDynamicDialogAction(getClass(), "dynamicConfirmationDialogActionFinished");
+                confirmationDialog.showDynamicDialog(manager, "confirmationDialog", "testi", "juu", "ei", false);
                 break;
         }
 
+    }
+
+    public void dynamicConfirmationDialogActionFinished(boolean isAnswerPositive){
+        if (isAnswerPositive){
+            addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
+            addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
+            addEventCancelLoadExistingButton.setVisibility(View.GONE);
+            addNewEventSelectEventTypeSpinner.setSelection(0);
+            addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
+            eventEventLocationEditText.setText("");
+        }
     }
 
 
