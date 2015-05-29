@@ -17,7 +17,7 @@ and if the user will be able to cancel the dialog.
  */
 public class DynamicConfirmationDialog extends DialogFragment{
 	private String messageText, positiveButtonText, negativeButtonText, userMethod;
-	private boolean isCancellable = false;
+	boolean isCancellable = false;
 	private Object userObject;
 
 
@@ -32,6 +32,7 @@ public class DynamicConfirmationDialog extends DialogFragment{
 		messageText = dynamicConfirmationDialogMessage;
 		positiveButtonText = dynamicConfirmationDialogPositiveButtonText;
 		negativeButtonText = dynamicConfirmationDialogNegativeButtonText;
+		isCancellable = dialogIsCancellable;
 		show(manager, tag);
 	}
 
@@ -64,7 +65,7 @@ public class DynamicConfirmationDialog extends DialogFragment{
 	private void performAction(boolean isAnswerPositive){
 		Method method;
 		try {
-			method = userObject.getClass().getMethod(userMethod);
+			method = userObject.getClass().getMethod(userMethod, boolean.class);
 			try {
 				method.invoke(userMethod, isAnswerPositive);
 			} catch (IllegalAccessException e) {
