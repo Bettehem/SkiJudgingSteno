@@ -60,6 +60,9 @@
     <string name="invalid_event_name">You can\'t use this as an event name! Try something else!</string>
     <string name="select_existing_event_text">Select an existing event below:</string>
     <string name="create_new_event_text">Create new event</string>
-    <string name="dont_use_existing_profile_text">Don\'t use existing profile</string>
+    <string name="dont_use_existing_profile_text">Don\'t use an existing profile</string>
     <string name="creating_first_event_text">Now you will create your first event.You can give an event any name, and then fill in other details, and when you are done, press the save button at the bottom.\n</string>
+	<string name="dont_use_existing_profile_dialog_question">Are you sure that you don\'t want to use an existing profile?\nSelecting Don\'t use, will clear all of the details to their default state.</string>
+	<string name="dont_use_existing_profile_dialog_confirm_text">Don\'t use</string>
+	<string name="dont_use_existing_profile_dialog_cancel_text">Cancel</string>
 </resources>

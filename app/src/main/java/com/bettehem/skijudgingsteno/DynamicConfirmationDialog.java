@@ -13,18 +13,18 @@ public class DynamicConfirmationDialog extends DialogFragment{
 		setCancelable(false);
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Onko es Hyvää")
-			.setPositiveButton("Jooo" , new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.dont_use_existing_profile_dialog_question))
+			.setPositiveButton(getString(R.string.dont_use_existing_profile_dialog_confirm_text) , new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					Toast.makeText(getActivity(), "kek", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Selected don\'t use", Toast.LENGTH_SHORT).show();
 				}
 			})
-			.setNegativeButton("nope", new DialogInterface.OnClickListener() {
+			.setNegativeButton(getString(R.string.dont_use_existing_profile_dialog_cancel_text), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					Toast.makeText(getActivity(), "lel", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
 				}
 			});
-        // Create the AlertDialog object and return it
+        //This Creates the Dialog
         return builder.create();
     }
 	
