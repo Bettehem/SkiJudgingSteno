@@ -37,11 +37,19 @@
         android:id="@+id/addNewEventLoadExistingProfileSelectionSpinner"
         android:visibility="gone"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addEventCancelLoadExistingProfileButton"
+        android:text="@string/dont_use_existing_profile_text"
+        android:layout_below="@+id/addNewEventLoadExistingProfileSelectionSpinner"
+        android:visibility="gone"/>
+
     <EditText
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_width="match_parent"
-        android:layout_below="@id/addNewEventLoadExistingProfileSelectionSpinner"
+        android:layout_below="@id/addEventCancelLoadExistingProfileButton"
         android:id="@+id/addEventNewEventNameEditText"
         android:singleLine="true"
         android:hint="@string/addNewEventEditText"/>
