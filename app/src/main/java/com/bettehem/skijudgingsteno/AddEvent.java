@@ -302,6 +302,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                     ));
                     addEventLoadExistingProfileButton.setVisibility(View.GONE);
                     addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.VISIBLE);
+                    addEventCancelLoadExistingButton.setVisibility(View.VISIBLE);
                     isUseExistingProfileButtonClicked = true;
                 }
                 break;
