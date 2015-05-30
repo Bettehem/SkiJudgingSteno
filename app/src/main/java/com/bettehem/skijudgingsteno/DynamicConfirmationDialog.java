@@ -7,6 +7,9 @@ import android.content.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import android.widget.*;
+import java.lang.reflect.*;
+import java.io.*;
 
 /*
 This Dialog is dynamic. or adaptive. whatever you want to call it. What does it do?
@@ -16,16 +19,34 @@ and the two answers that the user can select from. You can also define, what eac
 and if the user will be able to cancel the dialog.
  */
 public class DynamicConfirmationDialog extends DialogFragment{
-	private String messageText, positiveButtonText, negativeButtonText, userMethod;
+	private String messageText, positiveButtonText, negativeButtonText;
 	boolean isCancellable = false;
-	private Object userObject;
 
 
+	Class callerClass;
+	Method callerClassActionMethod;
+	Object variableConstruction;
+	Context jeh;
+	
 	//Here you will have to tell DynamicConfirmationDialog, what method you want to use,
 	//when a button is clicked.
-	public void setDynamicDialogAction(Class className, String methodName){
-		userObject = className;
-		userMethod = methodName;
+	public void setDynamicDialogAction(Context context, String className, String methodName){
+		jeh = context;
+		try
+		{
+			callerClass = Class.forName(className);
+		}
+		catch (ClassNotFoundException e)
+		{}
+		Toast.makeText(context, "Class is: " + callerClass.getName(), Toast.LENGTH_LONG).show();
+		
+		try
+		{
+			callerClassActionMethod = callerClass.getMethod(methodName, boolean.class);
+		}
+		catch (NoSuchMethodException e)
+		{}
+		Toast.makeText(context, "Method is: " + callerClassActionMethod.getName(), Toast.LENGTH_LONG).show();
 	}
 
 	public void showDynamicDialog(FragmentManager manager, String tag, String dynamicConfirmationDialogMessage, String dynamicConfirmationDialogPositiveButtonText, String dynamicConfirmationDialogNegativeButtonText, boolean dialogIsCancellable){
@@ -33,6 +54,7 @@ public class DynamicConfirmationDialog extends DialogFragment{
 		positiveButtonText = dynamicConfirmationDialogPositiveButtonText;
 		negativeButtonText = dynamicConfirmationDialogNegativeButtonText;
 		isCancellable = dialogIsCancellable;
+		
 		show(manager, tag);
 	}
 
@@ -57,25 +79,33 @@ public class DynamicConfirmationDialog extends DialogFragment{
 				}
 			});
 
-
         //This Creates the Dialog
         return builder.create();
     }
 
 	private void performAction(boolean isAnswerPositive){
-		Method method;
-		try {
-			method = userObject.getClass().getMethod(userMethod, boolean.class);
-			try {
-				method.invoke(userMethod, isAnswerPositive);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		try
+		{
+			variableConstruction = callerClass.getConstructor(boolean.class).newInstance(isAnswerPositive);
 		}
+		catch (NoSuchMethodException | SecurityException e) {
+				            // Exceptions thrown
+				            e.printStackTrace();
+				        } catch (InstantiationException e) {
+				            
+				            e.printStackTrace();
+				        } catch (IllegalAccessException e) {
+				            
+				            e.printStackTrace();
+				        } catch (IllegalArgumentException e) {
+				            
+				            e.printStackTrace();
+				        } catch (InvocationTargetException e) {
+				            // TODO Auto-generated catch block
+				            e.printStackTrace();
+				        }
+		Toast.makeText(jeh, "Answer is: " + isAnswerPositive, Toast.LENGTH_LONG).show();
+		Toast.makeText(jeh, "VariableConstruction is: " + variableConstruction.toString(), Toast.LENGTH_LONG).show();
 	}
 
 }
