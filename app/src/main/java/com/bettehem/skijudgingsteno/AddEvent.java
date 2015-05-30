@@ -17,9 +17,7 @@ package com.bettehem.skijudgingsteno;
 //imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
 //Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
 
-import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -135,12 +133,12 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         sharedPreferences();
         strings();
         textViews();
-        buttons();
         viewFlippers();
         editTexts();
         spinners();
         profileSaverAndLoader();
         eventSaverAndLoader();
+        buttons();
     }
 
     //Everything regarding intents are defined here.
@@ -333,7 +331,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 
     public void dynamicConfirmationDialogActionFinished(boolean isAnswerPositive){
-        Toast.makeText(this, "isAnswerPositive is: " + isAnswerPositive, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "isAnswerPositive is: " + isAnswerPositive, Toast.LENGTH_SHORT).show();
 		if (isAnswerPositive){
             addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
             addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);

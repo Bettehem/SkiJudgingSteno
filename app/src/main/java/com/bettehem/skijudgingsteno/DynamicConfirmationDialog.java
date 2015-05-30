@@ -84,7 +84,9 @@ public class DynamicConfirmationDialog extends DialogFragment{
     }
 
 	private void performAction(boolean isAnswerPositive){
-
+		AddEvent addEvent = new AddEvent();
+		addEvent.dynamicConfirmationDialogActionFinished(isAnswerPositive);
+		/*
 		try {
 			booleanConstructor = callerClass.getConstructor(new Class[]{boolean.class});
 			variableConstruction = callerClass.getConstructor(boolean.class).newInstance(isAnswerPositive);
@@ -99,6 +101,7 @@ public class DynamicConfirmationDialog extends DialogFragment{
 		}
 		Toast.makeText(jeh, "Answer is: " + isAnswerPositive, Toast.LENGTH_LONG).show();
 		//Toast.makeText(jeh, "VariableConstruction is: " + variableConstruction.toString(), Toast.LENGTH_LONG).show();
+		*/
 	}
 
 }
