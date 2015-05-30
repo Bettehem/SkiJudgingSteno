@@ -5,11 +5,10 @@ import android.os.*;
 import android.app.*;
 import android.content.*;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import android.widget.*;
-import java.lang.reflect.*;
-import java.io.*;
 
 /*
 This Dialog is dynamic. or adaptive. whatever you want to call it. What does it do?
@@ -27,25 +26,26 @@ public class DynamicConfirmationDialog extends DialogFragment{
 	Method callerClassActionMethod;
 	Object variableConstruction;
 	Context jeh;
+	Constructor booleanConstructor;
+	String userMethodname;
 	
 	//Here you will have to tell DynamicConfirmationDialog, what method you want to use,
 	//when a button is clicked.
 	public void setDynamicDialogAction(Context context, String className, String methodName){
 		jeh = context;
-		try
-		{
+		userMethodname = methodName;
+		try{
 			callerClass = Class.forName(className);
+		}catch (ClassNotFoundException e){
+			e.printStackTrace();
 		}
-		catch (ClassNotFoundException e)
-		{}
 		Toast.makeText(context, "Class is: " + callerClass.getName(), Toast.LENGTH_LONG).show();
 		
-		try
-		{
+		try{
 			callerClassActionMethod = callerClass.getMethod(methodName, boolean.class);
+		}catch (NoSuchMethodException e){
+			e.printStackTrace();
 		}
-		catch (NoSuchMethodException e)
-		{}
 		Toast.makeText(context, "Method is: " + callerClassActionMethod.getName(), Toast.LENGTH_LONG).show();
 	}
 
@@ -84,28 +84,21 @@ public class DynamicConfirmationDialog extends DialogFragment{
     }
 
 	private void performAction(boolean isAnswerPositive){
-		try
-		{
+
+		try {
+			booleanConstructor = callerClass.getConstructor(new Class[]{boolean.class});
 			variableConstruction = callerClass.getConstructor(boolean.class).newInstance(isAnswerPositive);
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (java.lang.InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		catch (NoSuchMethodException | SecurityException e) {
-				            // Exceptions thrown
-				            e.printStackTrace();
-				        } catch (InstantiationException e) {
-				            
-				            e.printStackTrace();
-				        } catch (IllegalAccessException e) {
-				            
-				            e.printStackTrace();
-				        } catch (IllegalArgumentException e) {
-				            
-				            e.printStackTrace();
-				        } catch (InvocationTargetException e) {
-				            // TODO Auto-generated catch block
-				            e.printStackTrace();
-				        }
 		Toast.makeText(jeh, "Answer is: " + isAnswerPositive, Toast.LENGTH_LONG).show();
-		Toast.makeText(jeh, "VariableConstruction is: " + variableConstruction.toString(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(jeh, "VariableConstruction is: " + variableConstruction.toString(), Toast.LENGTH_LONG).show();
 	}
 
 }

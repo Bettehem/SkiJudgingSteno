@@ -333,7 +333,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 
     public void dynamicConfirmationDialogActionFinished(boolean isAnswerPositive){
-        Toast.makeText(this, "jara", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "isAnswerPositive is: " + isAnswerPositive, Toast.LENGTH_SHORT).show();
 		if (isAnswerPositive){
             addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
             addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
