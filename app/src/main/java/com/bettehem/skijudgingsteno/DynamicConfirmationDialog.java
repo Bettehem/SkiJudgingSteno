@@ -1,14 +1,28 @@
 package com.bettehem.skijudgingsteno;
 
-import android.app.DialogFragment;
-import android.os.*;
-import android.app.*;
-import android.content.*;
+/*
+ Copyright 2015 Chris Mustola
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import android.widget.*;
+//imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
+//Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
+import android.app.DialogFragment;
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 
 /*
 This Dialog is dynamic. or adaptive. whatever you want to call it. What does it do?
@@ -21,32 +35,13 @@ public class DynamicConfirmationDialog extends DialogFragment{
 	private String messageText, positiveButtonText, negativeButtonText;
 	boolean isCancellable = false;
 
-
-	Class callerClass;
-	Method callerClassActionMethod;
-	Object variableConstruction;
-	Context jeh;
-	Constructor booleanConstructor;
-	String userMethodname;
+	PerformDynamicDialogAction performAction;
 	
-	//Here you will have to tell DynamicConfirmationDialog, what method you want to use,
-	//when a button is clicked.
-	public void setDynamicDialogAction(Context context, String className, String methodName){
-		jeh = context;
-		userMethodname = methodName;
-		try{
-			callerClass = Class.forName(className);
-		}catch (ClassNotFoundException e){
-			e.printStackTrace();
-		}
-		Toast.makeText(context, "Class is: " + callerClass.getName(), Toast.LENGTH_LONG).show();
-		
-		try{
-			callerClassActionMethod = callerClass.getMethod(methodName, boolean.class);
-		}catch (NoSuchMethodException e){
-			e.printStackTrace();
-		}
-		Toast.makeText(context, "Method is: " + callerClassActionMethod.getName(), Toast.LENGTH_LONG).show();
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
+		performAction = (PerformDynamicDialogAction) activity;
 	}
 
 	public void showDynamicDialog(FragmentManager manager, String tag, String dynamicConfirmationDialogMessage, String dynamicConfirmationDialogPositiveButtonText, String dynamicConfirmationDialogNegativeButtonText, boolean dialogIsCancellable){
@@ -69,39 +64,22 @@ public class DynamicConfirmationDialog extends DialogFragment{
 
 			.setPositiveButton(positiveButtonText , new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					performAction(true);
+					performAction.onDynamicDialogButtonClicked(true);
 				}
 			})
 
 			.setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					performAction(false);
+					performAction.onDynamicDialogButtonClicked(false);
 				}
 			});
 
         //This Creates the Dialog
         return builder.create();
     }
-
-	private void performAction(boolean isAnswerPositive){
-		AddEvent addEvent = new AddEvent();
-		addEvent.dynamicConfirmationDialogActionFinished(isAnswerPositive);
-		/*
-		try {
-			booleanConstructor = callerClass.getConstructor(new Class[]{boolean.class});
-			variableConstruction = callerClass.getConstructor(boolean.class).newInstance(isAnswerPositive);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (java.lang.InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		Toast.makeText(jeh, "Answer is: " + isAnswerPositive, Toast.LENGTH_LONG).show();
-		//Toast.makeText(jeh, "VariableConstruction is: " + variableConstruction.toString(), Toast.LENGTH_LONG).show();
-		*/
+	
+	interface PerformDynamicDialogAction{
+		public void onDynamicDialogButtonClicked(boolean isAnswerPositive);
 	}
 
 }

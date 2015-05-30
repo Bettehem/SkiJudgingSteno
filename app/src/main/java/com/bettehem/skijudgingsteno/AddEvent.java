@@ -32,7 +32,8 @@ import android.widget.ViewFlipper;
 import android.widget.*;
 
 
-public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction
+{
     //variables
     SharedPreferencesSavingAndLoading savingAndLoading;
     SavingAndLoadingProfiles savingAndLoadingProfiles;
@@ -323,15 +324,15 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.addEventCancelLoadExistingProfileButton:
                 FragmentManager manager = getFragmentManager();
                 DynamicConfirmationDialog confirmationDialog = new DynamicConfirmationDialog();
-                confirmationDialog.setDynamicDialogAction(this, getPackageName() + ".AddEvent", "dynamicConfirmationDialogActionFinished");
-				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", "testi", "juu", "ei", false);
+				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", getString(R.string.dont_use_existing_profile_dialog_question), getString(R.string.dont_use_existing_profile_dialog_confirm_text), getString(R.string.dont_use_existing_profile_dialog_cancel_text), false);
                 break;
         }
 
     }
-
-    public void dynamicConfirmationDialogActionFinished(boolean isAnswerPositive){
-        //Toast.makeText(this, "isAnswerPositive is: " + isAnswerPositive, Toast.LENGTH_SHORT).show();
+	
+	@Override
+	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
+	{
 		if (isAnswerPositive){
             addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
             addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
@@ -339,9 +340,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             addNewEventSelectEventTypeSpinner.setSelection(0);
             addNewEventSelectWhatCompetitorsUseSpinner.setSelection(0);
             eventEventLocationEditText.setText("");
+			isUseExistingProfileButtonClicked = false;
         }
-    }
-
+	}
 
     @Override
     public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
