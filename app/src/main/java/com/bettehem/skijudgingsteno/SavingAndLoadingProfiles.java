@@ -38,7 +38,7 @@ public class SavingAndLoadingProfiles
 	{
 		SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
 		savingAndLoading.preferenceFilename = "Settings";
-		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName)){
+		if (profileName.contentEquals(profileDetailsFileName) || profileName.contentEquals(savingAndLoading.preferenceFilename) || profileName.contentEquals("") || profileName.contentEquals(savingAndLoadingEvents.eventDetailsFileName) || profileName.contains(",")){
 			Toast.makeText(context, context.getString(R.string.invalid_profile_name), Toast.LENGTH_LONG).show();
 			isInvalidProfileName = true;
 		}else{
