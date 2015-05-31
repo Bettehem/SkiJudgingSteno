@@ -65,6 +65,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         //and in place of INTENT, one of the intent variables below, will be used.
         openTutorial = new Intent(this, Tutorial.class);
         openSkiJudging = new Intent(this, SkiJudging.class);
+        openSettings = new Intent(this, Settings.class);
     }
 
     //Everything regarding arrays are defined here.
