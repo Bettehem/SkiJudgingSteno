@@ -86,12 +86,13 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         }
 
         //sets the savingAndLoading preferenceFilename to the original preferenceFilename
-        //more details aout this can be found above.
+        //more details about this can be found above.
         savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
 
         //if the user hasn't created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
 
+            savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
             //if the user has created profiles, but hasn't yet created an event, this will be true
             if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
 
