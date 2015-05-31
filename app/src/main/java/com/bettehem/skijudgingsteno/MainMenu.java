@@ -188,14 +188,14 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 		//and if it matches any of the cases, a corresponding action will be performed
         switch (v.getId()){
 
-            //if the button that says Ski Juding is pressed this case will be true.
+            //if the button that says Ski Judging is pressed this case will be true.
             case R.id.mainMenuSkiJudgingButton:
 
                 //starts an activity using an intent that has been defined in the intents method
                 startActivity(openSkiJudging);
                 break;
 
-            //if the button that says Snowboard Juding is pressed this case will be true.
+            //if the button that says Snowboard Judging is pressed this case will be true.
             case R.id.mainMenuSnowboardJudgingButton:
 
                 break;

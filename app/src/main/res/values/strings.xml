@@ -65,4 +65,5 @@
 	<string name="dont_use_existing_profile_dialog_question">Are you sure that you don\'t want to use an existing profile?\nSelecting Don\'t use, will clear all of the details to their default state.</string>
 	<string name="dont_use_existing_profile_dialog_confirm_text">Don\'t use</string>
 	<string name="dont_use_existing_profile_dialog_cancel_text">Cancel</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
