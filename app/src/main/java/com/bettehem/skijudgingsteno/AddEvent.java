@@ -92,9 +92,16 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         //if the user hasn't created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
 
-            //same with every TextView, just setting the text to something new.
-            addingEventText.setText(getString(R.string.creating_first_event_and_profile_text));
+            //if the user has created profiles, but hasn't yet created an event, this will be true
+            if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
 
+                //same with every TextView, just setting the text to something new.
+                addingEventText.setText(getString(R.string.creating_first_event_text));
+            }else{
+
+                //same with every TextView, just setting the text to something new.
+                addingEventText.setText(getString(R.string.creating_first_event_and_profile_text));
+            }
 
             //if the user has created events, the code above is skipped, and this will be executed
         } else {
@@ -431,6 +438,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 
     //This method is called when nothing is selected, but it's useless in this case, where this will never happen.
+    //When the OnItemSelectedListener is implemented, this is required to exist in the class though
     @Override
     public void onNothingSelected(AdapterView<?> p1) {
 
