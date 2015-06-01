@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
+import android.widget.RelativeLayout;
 
 
 public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles
@@ -22,6 +23,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     //ViewFlipper that switches between different settings
     private ViewFlipper settingsViewFlipper;
+	
+	private FragmentManager manager = getFragmentManager();
+	private AddProfiles addProfiles = new AddProfiles();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +72,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
                 break;
 
             case R.id.settingsAddProfileButton:
-                FragmentManager manager = getFragmentManager();
-                AddProfiles addProfiles = new AddProfiles();
+				settingsViewFlipper.setVisibility(View.GONE);
 				addProfiles.setRestrictions(this, true, null, null);
                 manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
                 break;
@@ -101,7 +104,10 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation)
 	{
-		
+		if (!isInvalidProfilename){
+			manager.beginTransaction().remove(addProfiles).commit();
+			settingsViewFlipper.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
