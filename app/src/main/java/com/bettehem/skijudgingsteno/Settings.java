@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.ViewFlipper;
 
 
-public class Settings extends ActionBarActivity implements View.OnClickListener{
-
+public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles
+{
     //Intents
     private Intent openAddProfile;
 
@@ -70,7 +70,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
             case R.id.settingsAddProfileButton:
                 FragmentManager manager = getFragmentManager();
                 AddProfiles addProfiles = new AddProfiles();
-                manager.beginTransaction().add(addProfiles, "AddProfiles");
+				addProfiles.setRestrictions(this, true, null, null);
+                manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
                 break;
 
             case R.id.settingsModifyExistingProfilesButton:
@@ -95,4 +96,24 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
                 break;
         }
     }
+	
+	
+	@Override
+	public void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation)
+	{
+		
+	}
+
+	@Override
+	public void onEventTypeSelected(boolean isAllowedEventType)
+	{
+		
+	}
+
+	@Override
+	public void onCompetitorsUseSelected(boolean isAllowedCompetitorsUseType)
+	{
+		
+	}
+	
 }

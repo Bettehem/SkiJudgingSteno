@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.content.Context;
 
 public class AddProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
@@ -40,23 +41,27 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     private boolean isInvalidProfileName, isAllowedEventType;
     private AddingProfiles addingProfiles;
     private String[] allowedProfileEventTypes, allowedProfileCompetitorsUse;
+	private Activity userActivity;
+	private View fragmentView;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         addingProfiles = (AddingProfiles) activity;
+		userActivity = activity;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        variables();
-        return inflater.inflate(R.layout.add_new_profile, container, false);
+        fragmentView = inflater.inflate(R.layout.add_new_profile, container, false);
+		variables();
+        return fragmentView;
     }
 
-    public void setRestrictions(boolean allOptionsAllowed, String[] allowedEventTypes, String[] allowedCompetitorsUsing){
+    public void setRestrictions(Context context, boolean allOptionsAllowed, String[] allowedEventTypes, String[] allowedCompetitorsUsing){
         if (allOptionsAllowed) {
-            allowedProfileEventTypes = savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "eventTypes");
-            allowedProfileCompetitorsUse = savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "competitorsUse");
+            allowedEventTypes = context.getResources().getStringArray(R.array.events_list_array);
+			allowedProfileCompetitorsUse = context.getResources().getStringArray(R.array.competitors_use_list_array);
         }else{
             allowedProfileEventTypes = allowedEventTypes;
             allowedProfileCompetitorsUse = allowedCompetitorsUsing;
@@ -80,29 +85,29 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     }
 
     private void editTexts(){
-        profileNameEditText = (EditText) getView().findViewById(R.id.profileNameEditText);
-        profileEventLocationEditText = (EditText) getView().findViewById(R.id.profileEventLocationEditText);
+        profileNameEditText = (EditText) fragmentView.findViewById(R.id.profileNameEditText);
+        profileEventLocationEditText = (EditText) fragmentView.findViewById(R.id.profileEventLocationEditText);
     }
 
     private void spinners(){
-        addNewProfileSelectEventTypeSpinner = (Spinner) getView().findViewById(R.id.addNewProfileSelectEventTypeSpinner);
-        addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) getView().findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
+        addNewProfileSelectEventTypeSpinner = (Spinner) fragmentView.findViewById(R.id.addNewProfileSelectEventTypeSpinner);
+        addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) fragmentView.findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
 
         addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
-                getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "eventTypes")
+			userActivity, android.R.layout.simple_spinner_dropdown_item, userActivity.getResources().getStringArray(R.array.events_list_array)
         ));
 
         addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<>(
-                getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "competitorsUse")
+			userActivity, android.R.layout.simple_spinner_dropdown_item, userActivity.getResources().getStringArray(R.array.competitors_use_list_array)
         ));
     }
 
     private void buttons(){
-        saveProfile = (Button) getActivity().findViewById(R.id.saveProfileButton);
+        saveProfile = (Button) fragmentView.findViewById(R.id.saveProfileButton);
 
         saveProfile.setOnClickListener(this);
     }
@@ -128,6 +133,7 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
         switch (parent.getId()) {
             case R.id.addNewProfileSelectEventTypeSpinner:
 
+				/*
                 for (int i = 0; i < allowedProfileEventTypes.length; i++){
                     if (addNewProfileSelectEventTypeSpinner.getSelectedItem().equals(allowedProfileEventTypes[i])){
                         isAllowedEventType = true;
@@ -148,7 +154,7 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
                 }else{
                     addingProfiles.onEventTypeSelected(isAllowedEventType);
                 }
-
+				*/
                 break;
 
             case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
