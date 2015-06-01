@@ -51,7 +51,7 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
 
     public void getDetails(){
         callerActivity =  getIntent().getExtras().getParcelable("Activity");
-        Toast.makeText(this, callerActivity.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, String.valueOf(callerActivity), Toast.LENGTH_LONG).show();
     }
 
     private void variables(){
