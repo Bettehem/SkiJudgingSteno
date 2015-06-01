@@ -3,6 +3,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/settingsAddProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/settings_add_new_profile_button_text"/>
 
+    <Button
+        android:id="@+id/settingsModifyExistingProfilesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsAddProfileButton"
+        android:text="@string/settings_modify_existing_profiles_button_text"/>
 
 </RelativeLayout>

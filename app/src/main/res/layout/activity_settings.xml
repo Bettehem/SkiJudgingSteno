@@ -16,7 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/settingsViewFlipper">
 
+                <include
+                    layout="@layout/settings_options"/>
+
+                <include
+                    layout="@layout/profile_settings"/>
+
+            </ViewFlipper>
 
         </RelativeLayout>
 

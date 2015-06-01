@@ -4,35 +4,79 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ViewFlipper;
 
 
-public class Settings extends ActionBarActivity {
+public class Settings extends ActionBarActivity implements View.OnClickListener{
+
+    //Buttons for settings_options.xml
+    private Button profileSettingsButton;
+
+    //Buttons for profile_settings.xml
+    private Button settingsAddProfileButton, settingsModifyExistingProfilesButton;
+
+    //ViewFlipper that switches between different settings
+    private ViewFlipper settingsViewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        variables();
+
+    }
+
+    private void variables(){
+        buttons();
+        viewFlippers();
+    }
+
+    private void buttons(){
+        profileSettingsButton = (Button) findViewById(R.id.settingsProfileSettingsButton);
+
+        settingsAddProfileButton = (Button) findViewById(R.id.settingsAddProfileButton);
+        settingsModifyExistingProfilesButton = (Button) findViewById(R.id.settingsModifyExistingProfilesButton);
+
+        profileSettingsButton.setOnClickListener(this);
+
+        settingsAddProfileButton.setOnClickListener(this);
+        settingsModifyExistingProfilesButton.setOnClickListener(this);
+    }
+
+    private void viewFlippers(){
+        settingsViewFlipper = (ViewFlipper) findViewById(R.id.settingsViewFlipper);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
-        return true;
-    }
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.settingsProfileSettingsButton:
+                settingsViewFlipper.setDisplayedChild(1);
+                break;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            case R.id.settingsAddProfileButton:
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                break;
+
+            case R.id.settingsModifyExistingProfilesButton:
+
+                break;
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void onBackPressed() {
+        switch (settingsViewFlipper.getDisplayedChild()){
+            case 0:
+
+                break;
+
+            default:
+                settingsViewFlipper.setDisplayedChild(0);
+                break;
+        }
     }
 }

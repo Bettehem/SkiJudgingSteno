@@ -66,4 +66,7 @@
 	<string name="dont_use_existing_profile_dialog_confirm_text">Don\'t use</string>
 	<string name="dont_use_existing_profile_dialog_cancel_text">Cancel</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="profile_settings_button_text">Profile Settings</string>
+    <string name="settings_add_new_profile_button_text">Add a new profile</string>
+    <string name="settings_modify_existing_profiles_button_text">Modify existing profiles</string>
 </resources>
