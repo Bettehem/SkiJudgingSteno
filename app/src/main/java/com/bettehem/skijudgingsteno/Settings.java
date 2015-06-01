@@ -1,11 +1,9 @@
 package com.bettehem.skijudgingsteno;
 
 import android.content.Intent;
-import android.os.Parcelable;
+import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
@@ -42,7 +40,6 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 
     private void intents(){
         openAddProfile = new Intent(this, AddProfiles.class);
-        openAddProfile.putExtra("Activity", (Parcelable) getParent());
     }
 
     private void buttons(){
@@ -71,7 +68,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
                 break;
 
             case R.id.settingsAddProfileButton:
-                startActivity(openAddProfile);
+                FragmentManager manager = getFragmentManager();
+                AddProfiles addProfiles = new AddProfiles();
+                manager.beginTransaction().add(addProfiles, "AddProfiles");
                 break;
 
             case R.id.settingsModifyExistingProfilesButton:

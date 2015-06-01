@@ -17,10 +17,11 @@ package com.bettehem.skijudgingsteno;
 //imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
 //Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +29,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AddProfiles extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class AddProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
@@ -36,22 +37,30 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
     private Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
     private Button saveProfile;
     private String profileName, eventLocation, eventType, competitorsUse;
-    private boolean isInvalidProfileName;
-    private SavingProfiles savingProfiles;
-    private Activity callerActivity;
+    private boolean isInvalidProfileName, isAllowedEventType;
+    private AddingProfiles addingProfiles;
+    private String[] allowedProfileEventTypes, allowedProfileCompetitorsUse;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_new_profile);
-
-        getDetails();
-        variables();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        addingProfiles = (AddingProfiles) activity;
     }
 
-    public void getDetails(){
-        callerActivity =  getIntent().getExtras().getParcelable("Activity");
-        Toast.makeText(this, String.valueOf(callerActivity), Toast.LENGTH_LONG).show();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        variables();
+        return inflater.inflate(R.layout.add_new_profile, container, false);
+    }
+
+    public void setRestrictions(boolean allOptionsAllowed, String[] allowedEventTypes, String[] allowedCompetitorsUsing){
+        if (allOptionsAllowed) {
+            allowedProfileEventTypes = savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "eventTypes");
+            allowedProfileCompetitorsUse = savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "competitorsUse");
+        }else{
+            allowedProfileEventTypes = allowedEventTypes;
+            allowedProfileCompetitorsUse = allowedCompetitorsUsing;
+        }
     }
 
     private void variables(){
@@ -71,29 +80,29 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
     }
 
     private void editTexts(){
-        profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
-        profileEventLocationEditText = (EditText) findViewById(R.id.profileEventLocationEditText);
+        profileNameEditText = (EditText) getView().findViewById(R.id.profileNameEditText);
+        profileEventLocationEditText = (EditText) getView().findViewById(R.id.profileEventLocationEditText);
     }
 
     private void spinners(){
-        addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
-        addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
+        addNewProfileSelectEventTypeSpinner = (Spinner) getView().findViewById(R.id.addNewProfileSelectEventTypeSpinner);
+        addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) getView().findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
 
         addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
+                getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "eventTypes")
         ));
 
         addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
+                getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(getActivity().getApplicationContext(), "competitorsUse")
         ));
     }
 
     private void buttons(){
-        saveProfile = (Button) findViewById(R.id.saveProfileButton);
+        saveProfile = (Button) getActivity().findViewById(R.id.saveProfileButton);
 
         saveProfile.setOnClickListener(this);
     }
@@ -104,11 +113,12 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
             case R.id.saveProfileButton:
                 profileName = profileNameEditText.getText().toString();
                 eventLocation = profileEventLocationEditText.getText().toString();
-                isInvalidProfileName = savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
+                isInvalidProfileName = savingAndLoadingProfiles.addProfile(getActivity(), profileName, eventType, competitorsUse, eventLocation);
                 if (!isInvalidProfileName) {
                     savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
-                    savingAndLoading.saveBoolean(this, "has_created_profiles", true);
+                    savingAndLoading.saveBoolean(getActivity(), "has_created_profiles", true);
                 }
+                addingProfiles.onProfileSaved(isInvalidProfileName, eventType, competitorsUse, eventLocation);
                 break;
         }
     }
@@ -117,15 +127,28 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.addNewProfileSelectEventTypeSpinner:
-                switch (position) {
-                    case 0:
 
+                for (int i = 0; i < allowedProfileEventTypes.length; i++){
+                    if (addNewProfileSelectEventTypeSpinner.getSelectedItem().equals(allowedProfileEventTypes[i])){
+                        isAllowedEventType = true;
                         break;
-                    case 1:
-                        addNewProfileSelectEventTypeSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
-                        break;
+                    }
                 }
+                if (isAllowedEventType){
+                    switch (position){
+                        case 0:
+                            eventType = "Slopestyle";
+                            break;
+
+                        case 1:
+                            eventType = "Half Pipe";
+                            break;
+                    }
+                    addingProfiles.onEventTypeSelected(isAllowedEventType);
+                }else{
+                    addingProfiles.onEventTypeSelected(isAllowedEventType);
+                }
+
                 break;
 
             case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
@@ -135,11 +158,11 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
                         break;
                     case 1:
                         addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                     case 2:
                         addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
                         break;
                 }
                 break;
@@ -151,8 +174,10 @@ public class AddProfiles extends ActionBarActivity implements View.OnClickListen
 
     }
 
-    interface SavingProfiles{
-        void onProfileSaved(boolean isInvalidProfilename);
+    interface AddingProfiles{
+        void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation);
+        void onEventTypeSelected(boolean isAllowedEventType);
+        void onCompetitorsUseSelected(boolean isAllowedCompetitorsUseType);
     }
 
 }
