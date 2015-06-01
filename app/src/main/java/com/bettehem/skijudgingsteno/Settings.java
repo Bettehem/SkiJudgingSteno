@@ -71,7 +71,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
     public void onBackPressed() {
         switch (settingsViewFlipper.getDisplayedChild()){
             case 0:
-
+                finish();
                 break;
 
             default:
