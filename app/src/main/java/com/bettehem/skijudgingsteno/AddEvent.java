@@ -32,7 +32,7 @@ import android.widget.ViewFlipper;
 import android.widget.*;
 
 
-public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction
+public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction, AddProfiles.AddingProfiles
 {
     //variables
     SharedPreferencesSavingAndLoading savingAndLoading;
@@ -41,14 +41,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile, eventLocation;
     Intent intent, goBack;
     TextView addingEventText, newEventAddInfoTextView;
-    ViewFlipper addEventViewFlipper;
-    Button addProfileInEventScreen, saveProfile, addEventLoadExistingProfileButton, saveEventButton, addEventCancelLoadExistingButton;
+    Button addProfileInEventScreen, addEventLoadExistingProfileButton, saveEventButton, addEventCancelLoadExistingButton;
     boolean isUseExistingProfileButtonClicked = false;
     EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText, addEventNewEventNameEditText;
-    Spinner addNewProfileSelectEventTypeSpinner, addNewEventLoadExistingProfileSelectionSpinner, addNewProfileSelectWhatCompetitorsUseSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
+    Spinner addNewEventLoadExistingProfileSelectionSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
     boolean isInvalidProfileName = false;
     boolean isInvalidEventName = false;
+	AddProfiles addProfiles;
 
     //Called when the activity is launched/created
     @Override
@@ -78,7 +78,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             //sets the displayed child to 1. It's good to notice that the ViewFlipper starts counting from 0.
             //It means that when this is set to 1, it will show the second child in the list. you can check
             //activity_add_event.xml to see what this means
-            addEventViewFlipper.setDisplayedChild(1);
+            //addEventViewFlipper.setDisplayedChild(1);
 
             //this shouldn't even need explaining, but basically this just sets the text in a TextView to whatever the
             //value is.
@@ -119,8 +119,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         if (eventType.contentEquals("Slopestyle")) {
 
             //sets the currently selected items in these spinners to 0. Spinners start counting from 0,
-            //so this means that the first item in the spinners list is selected.
-            addNewProfileSelectEventTypeSpinner.setSelection(0);
+            //so this means that the first item in the spinner's list is selected.
             addNewEventSelectEventTypeSpinner.setSelection(0);
 
 
@@ -129,7 +128,6 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         } else {
 
             //sets the selection to 1. 1 is the second item in the spinner's list, since counting starts from 0.
-            addNewProfileSelectEventTypeSpinner.setSelection(1);
             addNewEventSelectEventTypeSpinner.setSelection(1);
         }
     }
@@ -138,17 +136,21 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     //All different types of variables are been set up in different methods, to make them easier to find,
     //and makes the code easier to understand.
     public void variables() {
+		addingProfiles();
         intents();
         sharedPreferences();
         strings();
         textViews();
-        viewFlippers();
         editTexts();
         spinners();
         profileSaverAndLoader();
         eventSaverAndLoader();
         buttons();
     }
+	
+	public void addingProfiles(){
+		addProfiles = new AddProfiles();
+	}
 
     //Everything regarding intents are defined here.
     public void intents() {
@@ -176,49 +178,27 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     public void buttons() {
         addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
-        saveProfile = (Button) findViewById(R.id.saveProfileButton);
         addEventLoadExistingProfileButton = (Button) findViewById(R.id.addEventLoadExistingProfileButton);
         saveEventButton = (Button) findViewById(R.id.saveEventButton);
         addEventCancelLoadExistingButton = (Button) findViewById(R.id.addEventCancelLoadExistingProfileButton);
 
         addProfileInEventScreen.setOnClickListener(this);
-        saveProfile.setOnClickListener(this);
         addEventLoadExistingProfileButton.setOnClickListener(this);
         saveEventButton.setOnClickListener(this);
         addEventCancelLoadExistingButton.setOnClickListener(this);
     }
 
-    public void viewFlippers() {
-        addEventViewFlipper = (ViewFlipper) findViewById(R.id.addEventViewFlipper);
-    }
-
     public void editTexts() {
-        profileNameEditText = (EditText) findViewById(R.id.profileNameEditText);
         eventEventLocationEditText = (EditText) findViewById(R.id.eventEventLocationEditText);
-        profileEventLocationEditText = (EditText) findViewById(R.id.profileEventLocationEditText);
         addEventNewEventNameEditText = (EditText) findViewById(R.id.addEventNewEventNameEditText);
     }
 
     public void spinners() {
-        addNewProfileSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewProfileSelectEventTypeSpinner);
         addNewEventLoadExistingProfileSelectionSpinner = (Spinner) findViewById(R.id.addNewEventLoadExistingProfileSelectionSpinner);
-        addNewProfileSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewProfileSelectWhatCompetitorsUseSpinner);
         addNewEventSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewEventSelectEventTypeSpinner);
         addNewEventSelectWhatCompetitorsUseSpinner = (Spinner) findViewById(R.id.addNewEventSelectWhatCompetitorsUseSpinner);
 
-
-        addNewProfileSelectEventTypeSpinner.setOnItemSelectedListener(this);
-        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-        addNewProfileSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
-        ));
-
         addNewEventLoadExistingProfileSelectionSpinner.setOnItemSelectedListener(this);
-
-        addNewProfileSelectWhatCompetitorsUseSpinner.setOnItemSelectedListener(this);
-        addNewProfileSelectWhatCompetitorsUseSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "competitorsUse")
-        ));
 
         addNewEventSelectEventTypeSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
@@ -267,40 +247,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addProfileInEventScreenButton:
-
-                switch (addEventViewFlipper.getDisplayedChild()) {
-                    case 0:
-                        addEventViewFlipper.setVisibility(View.VISIBLE);
-                        addEventViewFlipper.setDisplayedChild(0);
-                        addProfileInEventScreen.setVisibility(View.GONE);
-                        break;
-
-                    case 1:
-                        addEventViewFlipper.setVisibility(View.VISIBLE);
-                        addEventViewFlipper.setDisplayedChild(1);
-                        addProfileInEventScreen.setVisibility(View.GONE);
-                        break;
-                }
-
-                break;
-
-            case R.id.saveProfileButton:
-                profileName = profileNameEditText.getText().toString();
-                eventLocation = profileEventLocationEditText.getText().toString();
-                isInvalidProfileName = savingAndLoadingProfiles.addProfile(this, profileName, eventType, competitorsUse, eventLocation);
-                if (!isInvalidProfileName) {
-                    savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
-                    savingAndLoading.saveBoolean(this, "has_created_profiles", true);
-
-
-                    addEventViewFlipper.setVisibility(View.GONE);
-                    addEventViewFlipper.setDisplayedChild(1);
-
-
-                    addProfileInEventScreen.setText("Create new event");
-                    addProfileInEventScreen.setVisibility(View.VISIBLE);
-                    addingEventText.setText(getString(R.string.create_new_event_text));
-                }
+                addProfileInEventScreen.setVisibility(View.GONE);
                 break;
 
             case R.id.addEventLoadExistingProfileButton:
@@ -355,36 +302,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     @Override
     public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
         switch (p1.getId()) {
-            case R.id.addNewProfileSelectEventTypeSpinner:
-                switch (p3) {
-                    case 0:
-
-                        break;
-                    case 1:
-                        addNewProfileSelectEventTypeSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
-                        break;
-                }
-                break;
-
-            case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
-                switch (p3) {
-                    case 0:
-
-                        break;
-                    case 1:
-                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
-                        break;
-                    case 2:
-                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
-                        break;
-                }
-                break;
-
-
-            case R.id.addNewEventSelectEventTypeSpinner:
+        	case R.id.addNewEventSelectEventTypeSpinner:
                 switch (p3) {
                     case 0:
 
@@ -437,6 +355,49 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 break;
         }
     }
+	
+	@Override
+	public void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation)
+	{
+		if (!isInvalidProfilename){
+			
+			addProfileInEventScreen.setText("Create new event");
+			addProfileInEventScreen.setVisibility(View.VISIBLE);
+			addingEventText.setText(getString(R.string.create_new_event_text));
+		}
+	}
+
+	@Override
+	public void onEventTypeSelected(int selectedItemPosition)
+	{
+		switch (selectedItemPosition){
+			case 0:
+
+				break;
+			case 1:
+				addProfiles.addNewProfileSelectEventTypeSpinner.setSelection(0);
+				Toast.makeText(this, getString(R.string.new_profile_slopestyle_only), Toast.LENGTH_LONG).show();
+				break;
+		}
+	}
+
+	@Override
+	public void onCompetitorsUseSelected(int selectedItemPosition)
+	{
+		switch (selectedItemPosition){
+			case 0:
+
+				break;
+			case 1:
+				addProfiles.addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
+				Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+				break;
+			case 2:
+				addProfiles.addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
+				Toast.makeText(this, getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
+				break;
+		}
+	}
 
     //This method is called when nothing is selected, but it's useless in this case, where this will never happen.
     //When the OnItemSelectedListener is implemented, this is required to exist in the class though

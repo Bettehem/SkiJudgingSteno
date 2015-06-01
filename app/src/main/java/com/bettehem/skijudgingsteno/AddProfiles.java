@@ -35,7 +35,7 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
     private EditText profileNameEditText, profileEventLocationEditText;
-    private Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
+    public Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
     private Button saveProfile;
     private String profileName, eventLocation, eventType, competitorsUse;
     private boolean isInvalidProfileName;

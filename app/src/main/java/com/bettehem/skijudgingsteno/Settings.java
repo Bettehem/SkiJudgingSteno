@@ -45,6 +45,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	
 	private FragmentManager manager = getFragmentManager();
 	private AddProfiles addProfiles = new AddProfiles();
+	
+	private boolean isInAddProfileScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
             case R.id.settingsAddProfileButton:
 				settingsViewFlipper.setVisibility(View.GONE);
                 manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
+				isInAddProfileScreen = true;
                 break;
 
             case R.id.settingsModifyExistingProfilesButton:
@@ -125,6 +128,12 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 				}else{
 					manager.beginTransaction().remove(addProfiles).commit();
 					settingsViewFlipper.setVisibility(View.VISIBLE);
+					if (isInAddProfileScreen){
+						settingsViewFlipper.setDisplayedChild(1);
+						isInAddProfileScreen = false;
+					}else{
+						settingsViewFlipper.setDisplayedChild(0);
+					}
 				}
                 break;
         }
