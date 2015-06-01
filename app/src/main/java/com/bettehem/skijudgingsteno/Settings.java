@@ -1,5 +1,7 @@
 package com.bettehem.skijudgingsteno;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,9 @@ import android.widget.ViewFlipper;
 
 
 public class Settings extends ActionBarActivity implements View.OnClickListener{
+
+    //Intents
+    private Intent openAddProfile;
 
     //Buttons for settings_options.xml
     private Button profileSettingsButton;
@@ -30,8 +35,14 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
     }
 
     private void variables(){
+        intents();
         buttons();
         viewFlippers();
+    }
+
+    private void intents(){
+        openAddProfile = new Intent(this, AddProfiles.class);
+        openAddProfile.putExtra("Activity", (Parcelable) getParent());
     }
 
     private void buttons(){
@@ -60,7 +71,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
                 break;
 
             case R.id.settingsAddProfileButton:
-
+                startActivity(openAddProfile);
                 break;
 
             case R.id.settingsModifyExistingProfilesButton:
