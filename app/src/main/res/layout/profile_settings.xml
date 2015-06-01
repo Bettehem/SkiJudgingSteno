@@ -17,4 +17,11 @@
         android:layout_below="@+id/settingsAddProfileButton"
         android:text="@string/settings_modify_existing_profiles_button_text"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsModifyExistingProfilesButton"
+        android:id="@+id/settingsDeleteProfilesButton"
+        android:text="@string/settings_delete_profiles_button_text"/>
+
 </RelativeLayout>

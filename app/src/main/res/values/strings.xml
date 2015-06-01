@@ -69,4 +69,5 @@
     <string name="profile_settings_button_text">Profile Settings</string>
     <string name="settings_add_new_profile_button_text">Add a new profile</string>
     <string name="settings_modify_existing_profiles_button_text">Modify existing profiles</string>
+    <string name="settings_delete_profiles_button_text">Delete profiles</string>
 </resources>

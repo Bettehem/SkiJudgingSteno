@@ -15,7 +15,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
     private Button profileSettingsButton;
 
     //Buttons for profile_settings.xml
-    private Button settingsAddProfileButton, settingsModifyExistingProfilesButton;
+    private Button settingsAddProfileButton, settingsModifyExistingProfilesButton, settingsDeleteProfilesButton;
 
     //ViewFlipper that switches between different settings
     private ViewFlipper settingsViewFlipper;
@@ -39,11 +39,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
 
         settingsAddProfileButton = (Button) findViewById(R.id.settingsAddProfileButton);
         settingsModifyExistingProfilesButton = (Button) findViewById(R.id.settingsModifyExistingProfilesButton);
+        settingsDeleteProfilesButton = (Button) findViewById(R.id.settingsDeleteProfilesButton);
 
         profileSettingsButton.setOnClickListener(this);
 
         settingsAddProfileButton.setOnClickListener(this);
         settingsModifyExistingProfilesButton.setOnClickListener(this);
+        settingsDeleteProfilesButton.setOnClickListener(this);
     }
 
     private void viewFlippers(){
@@ -62,6 +64,10 @@ public class Settings extends ActionBarActivity implements View.OnClickListener{
                 break;
 
             case R.id.settingsModifyExistingProfilesButton:
+
+                break;
+
+            case R.id.settingsDeleteProfilesButton:
 
                 break;
         }
