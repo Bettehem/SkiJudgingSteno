@@ -38,9 +38,8 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     private Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
     private Button saveProfile;
     private String profileName, eventLocation, eventType, competitorsUse;
-    private boolean isInvalidProfileName, isAllowedEventType;
+    private boolean isInvalidProfileName;
     private AddingProfiles addingProfiles;
-    private String[] allowedProfileEventTypes, allowedProfileCompetitorsUse;
 	private Activity userActivity;
 	private View fragmentView;
 
@@ -56,16 +55,6 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
         fragmentView = inflater.inflate(R.layout.add_new_profile, container, false);
 		variables();
         return fragmentView;
-    }
-
-    public void setRestrictions(Context context, boolean allOptionsAllowed, String[] allowedEventTypes, String[] allowedCompetitorsUsing){
-        if (allOptionsAllowed) {
-            allowedEventTypes = context.getResources().getStringArray(R.array.events_list_array);
-			allowedProfileCompetitorsUse = context.getResources().getStringArray(R.array.competitors_use_list_array);
-        }else{
-            allowedProfileEventTypes = allowedEventTypes;
-            allowedProfileCompetitorsUse = allowedCompetitorsUsing;
-        }
     }
 
     private void variables(){
@@ -122,6 +111,10 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
                 if (!isInvalidProfileName) {
                     savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
                     savingAndLoading.saveBoolean(getActivity(), "has_created_profiles", true);
+					profileNameEditText.setText("");
+					profileEventLocationEditText.setText("");
+					addNewProfileSelectEventTypeSpinner.setSelection(0);
+					addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
                 }
                 addingProfiles.onProfileSaved(isInvalidProfileName, eventType, competitorsUse, eventLocation);
                 break;
@@ -132,45 +125,11 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.addNewProfileSelectEventTypeSpinner:
-
-				/*
-                for (int i = 0; i < allowedProfileEventTypes.length; i++){
-                    if (addNewProfileSelectEventTypeSpinner.getSelectedItem().equals(allowedProfileEventTypes[i])){
-                        isAllowedEventType = true;
-                        break;
-                    }
-                }
-                if (isAllowedEventType){
-                    switch (position){
-                        case 0:
-                            eventType = "Slopestyle";
-                            break;
-
-                        case 1:
-                            eventType = "Half Pipe";
-                            break;
-                    }
-                    addingProfiles.onEventTypeSelected(isAllowedEventType);
-                }else{
-                    addingProfiles.onEventTypeSelected(isAllowedEventType);
-                }
-				*/
+				addingProfiles.onEventTypeSelected(position);
                 break;
 
             case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
-                switch (position) {
-                    case 0:
-
-                        break;
-                    case 1:
-                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(getActivity(), getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
-                        break;
-                    case 2:
-                        addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
-                        Toast.makeText(getActivity(), getString(R.string.new_profile_skis_only), Toast.LENGTH_LONG).show();
-                        break;
-                }
+                addingProfiles.onCompetitorsUseSelected(position);
                 break;
         }
     }
@@ -182,8 +141,8 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
 
     interface AddingProfiles{
         void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation);
-        void onEventTypeSelected(boolean isAllowedEventType);
-        void onCompetitorsUseSelected(boolean isAllowedCompetitorsUseType);
+        void onEventTypeSelected(int selectedItemPosition);
+        void onCompetitorsUseSelected(int selectedItemPosition);
     }
 
 }

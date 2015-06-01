@@ -1,5 +1,21 @@
 package com.bettehem.skijudgingsteno;
 
+/*
+ Copyright 2015 Chris Mustola
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see http://www.gnu.org/licenses/.
+ */
+
+//imports. Depending on the IDE that is used, imports are, or aren't added automatically when needed.
+//Android Studio, Eclipse and AIDE suggests imports automatically, and with a simple tap, or click, an import can be added
 import android.content.Intent;
 import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +28,9 @@ import android.widget.RelativeLayout;
 
 public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles
 {
+	//SharedPreferences
+	private SharedPreferencesSavingAndLoading savingAndLoading;
+	
     //Intents
     private Intent openAddProfile;
 
@@ -37,10 +56,16 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
     }
 
     private void variables(){
+		sharedPreferences();
         intents();
         buttons();
         viewFlippers();
     }
+	private void sharedPreferences(){
+		savingAndLoading = new SharedPreferencesSavingAndLoading();
+		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+		savingAndLoading.saveBoolean(this, "hasSavedProfile", false);
+	}
 
     private void intents(){
         openAddProfile = new Intent(this, AddProfiles.class);
@@ -73,7 +98,6 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
             case R.id.settingsAddProfileButton:
 				settingsViewFlipper.setVisibility(View.GONE);
-				addProfiles.setRestrictions(this, true, null, null);
                 manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
                 break;
 
@@ -95,7 +119,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
                 break;
 
             default:
-                settingsViewFlipper.setDisplayedChild(0);
+				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+				if (savingAndLoading.loadBoolean(this, "hasSavedProfile")){
+					settingsViewFlipper.setDisplayedChild(0);
+				}else{
+					manager.beginTransaction().remove(addProfiles).commit();
+					settingsViewFlipper.setVisibility(View.VISIBLE);
+				}
                 break;
         }
     }
@@ -107,17 +137,19 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		if (!isInvalidProfilename){
 			manager.beginTransaction().remove(addProfiles).commit();
 			settingsViewFlipper.setVisibility(View.VISIBLE);
+			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+			savingAndLoading.saveBoolean(this, "hasSavedProfile", true);
 		}
 	}
 
 	@Override
-	public void onEventTypeSelected(boolean isAllowedEventType)
+	public void onEventTypeSelected(int selectedItemPosition)
 	{
 		
 	}
 
 	@Override
-	public void onCompetitorsUseSelected(boolean isAllowedCompetitorsUseType)
+	public void onCompetitorsUseSelected(int selectedItemPosition)
 	{
 		
 	}
