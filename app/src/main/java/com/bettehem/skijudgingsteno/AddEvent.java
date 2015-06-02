@@ -24,31 +24,33 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 import android.widget.*;
 
 
-public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction, AddProfiles.AddingProfiles
-{
+public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction, AddProfiles.AddingProfiles {
     //variables
     SharedPreferencesSavingAndLoading savingAndLoading;
     SavingAndLoadingProfiles savingAndLoadingProfiles;
     SavingAndLoadingEvents savingAndLoadingEvents;
-    String eventType, profileName, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile, eventLocation;
+    String eventType, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile;
     Intent intent, goBack;
     TextView addingEventText, newEventAddInfoTextView;
     Button addProfileInEventScreen, addEventLoadExistingProfileButton, saveEventButton, addEventCancelLoadExistingButton;
     boolean isUseExistingProfileButtonClicked = false;
-    EditText profileNameEditText, eventEventLocationEditText, profileEventLocationEditText, addEventNewEventNameEditText;
+    EditText eventEventLocationEditText, addEventNewEventNameEditText;
     Spinner addNewEventLoadExistingProfileSelectionSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
-    boolean isInvalidProfileName = false;
     boolean isInvalidEventName = false;
 	AddProfiles addProfiles;
+    private boolean isInAddEventScreen;
+    FrameLayout addProfileContainer;
+    ViewStub addEventEventCreationLayout;
+    boolean canAddEvents;
 
     //Called when the activity is launched/created
     @Override
@@ -68,7 +70,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     //modifications to the view regarding that.
     public void startup() {
         //sets the savingAndLoading preferenceFilename to the default name that is used with profile details.
-        //setting the savingAndloading preferencefilename is required every time when a method in that class is used,
+        //setting the savingAndLoading preferenceFilename is required every time when a method in that class is used,
         //so that needed details are saved to, and loaded from the right place, so that things don't get messed up.
         savingAndLoading.preferenceFilename = savingAndLoadingProfiles.profileDetailsFileName;
 
@@ -83,6 +85,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             //this shouldn't even need explaining, but basically this just sets the text in a TextView to whatever the
             //value is.
             addProfileInEventScreen.setText(getString(R.string.create_new_event_text));
+
+            canAddEvents = true;
+            addProfileContainer.setVisibility(View.GONE);
+            addingEventText.setVisibility(View.VISIBLE);
+            addProfileInEventScreen.setVisibility(View.VISIBLE);
         }
 
         //sets the savingAndLoading preferenceFilename to the original preferenceFilename
@@ -91,6 +98,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
         //if the user hasn't created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
+
+            canAddEvents = false;
 
             savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
             //if the user has created profiles, but hasn't yet created an event, this will be true
@@ -130,12 +139,17 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             //sets the selection to 1. 1 is the second item in the spinner's list, since counting starts from 0.
             addNewEventSelectEventTypeSpinner.setSelection(1);
         }
+
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+        savingAndLoading.saveBoolean(this, "hasSavedEvent", false);
+
     }
 
     //this method is for setting up all of the variables.
     //All different types of variables are been set up in different methods, to make them easier to find,
     //and makes the code easier to understand.
     public void variables() {
+        viewStubs();
 		addingProfiles();
         intents();
         sharedPreferences();
@@ -147,10 +161,18 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         eventSaverAndLoader();
         buttons();
     }
+
+    public void viewStubs(){
+        addEventEventCreationLayout = (ViewStub) findViewById(R.id.addEventEventCreationLayout);
+        addEventEventCreationLayout.setLayoutResource(R.layout.add_new_event_layout);
+        addEventEventCreationLayout.inflate();
+    }
 	
 	public void addingProfiles(){
 		addProfiles = new AddProfiles();
-	}
+        addProfileContainer = (FrameLayout) findViewById(R.id.addProfileContainer);
+        addProfileContainer.setVisibility(View.GONE);
+    }
 
     //Everything regarding intents are defined here.
     public void intents() {
@@ -247,7 +269,11 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addProfileInEventScreenButton:
-                addProfileInEventScreen.setVisibility(View.GONE);
+                if (canAddEvents){
+                    addProfileContainer.setVisibility(View.GONE);
+                    addingEventText.setVisibility(View.VISIBLE);
+                    addProfileInEventScreen.setVisibility(View.GONE);
+                }
                 break;
 
             case R.id.addEventLoadExistingProfileButton:
@@ -271,6 +297,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 if (!isInvalidEventName) {
                     savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
                     savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
+                    savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+                    savingAndLoading.saveBoolean(this, "hasSavedEvent", true);
                     startActivity(goBack);
                     finish();
                 }
@@ -357,9 +385,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     }
 	
 	@Override
-	public void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation)
+	public void onProfileSaved(boolean isInvalidProfileName, String eventType, String competitorsUse, String EventLocation)
 	{
-		if (!isInvalidProfilename){
+		if (!isInvalidProfileName){
 			
 			addProfileInEventScreen.setText("Create new event");
 			addProfileInEventScreen.setVisibility(View.VISIBLE);

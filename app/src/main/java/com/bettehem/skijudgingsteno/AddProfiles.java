@@ -27,15 +27,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-import android.content.Context;
 
 public class AddProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+
+    public Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
 
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
     private EditText profileNameEditText, profileEventLocationEditText;
-    public Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
     private Button saveProfile;
     private String profileName, eventLocation, eventType, competitorsUse;
     private boolean isInvalidProfileName;
@@ -140,7 +139,7 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     }
 
     interface AddingProfiles{
-        void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation);
+        void onProfileSaved(boolean isInvalidProfileName, String eventType, String competitorsUse, String EventLocation);
         void onEventTypeSelected(int selectedItemPosition);
         void onCompetitorsUseSelected(int selectedItemPosition);
     }

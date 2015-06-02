@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
-import android.widget.RelativeLayout;
 
 
 public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles
@@ -141,9 +140,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	
 	
 	@Override
-	public void onProfileSaved(boolean isInvalidProfilename, String eventType, String competitorsUse, String EventLocation)
+	public void onProfileSaved(boolean isInvalidProfileName, String eventType, String competitorsUse, String EventLocation)
 	{
-		if (!isInvalidProfilename){
+		if (!isInvalidProfileName){
 			manager.beginTransaction().remove(addProfiles).commit();
 			settingsViewFlipper.setVisibility(View.VISIBLE);
 			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
