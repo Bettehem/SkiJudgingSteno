@@ -46,11 +46,12 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     Spinner addNewEventLoadExistingProfileSelectionSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
     String[] profileDetails;
     boolean isInvalidEventName = false;
-	AddProfiles addProfiles;
     private boolean isInAddEventScreen;
     FrameLayout addProfileContainer;
     ViewStub addEventEventCreationLayout;
     boolean canAddEvents;
+    private FragmentManager manager = getFragmentManager();
+    private AddProfiles addProfiles = new AddProfiles();
 
     //Called when the activity is launched/created
     @Override
@@ -97,7 +98,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         //if the user hasn't created profiles, this will be executed.
         }else{
             canAddEvents = false;
-            addingEventText.setVisibility(View.GONE);
+            addingEventText.setVisibility(View.VISIBLE);
             addProfileInEventScreen.setVisibility(View.VISIBLE);
             addEventEventCreationLayout.setVisibility(View.GONE);
 
@@ -284,6 +285,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                     addProfileContainer.setVisibility(View.GONE);
                     addingEventText.setVisibility(View.VISIBLE);
                     addProfileInEventScreen.setVisibility(View.GONE);
+                }else{
+                    manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
+                    isInAddEventScreen = true;
                 }
                 break;
 
