@@ -69,6 +69,9 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
     //in this case, this method checks if the user has created profiles and events before, and does
     //modifications to the view regarding that.
     public void startup() {
+
+        addProfileContainer.setVisibility(View.GONE);
+
         //sets the savingAndLoading preferenceFilename to the default name that is used with profile details.
         //setting the savingAndLoading preferenceFilename is required every time when a method in that class is used,
         //so that needed details are saved to, and loaded from the right place, so that things don't get messed up.
@@ -87,9 +90,17 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             addProfileInEventScreen.setText(getString(R.string.create_new_event_text));
 
             canAddEvents = true;
-            addProfileContainer.setVisibility(View.GONE);
             addingEventText.setVisibility(View.VISIBLE);
             addProfileInEventScreen.setVisibility(View.GONE);
+            addEventEventCreationLayout.setVisibility(View.VISIBLE);
+
+        //if the user hasn't created profiles, this will be executed.
+        }else{
+            canAddEvents = false;
+            addingEventText.setVisibility(View.GONE);
+            addProfileInEventScreen.setVisibility(View.VISIBLE);
+            addEventEventCreationLayout.setVisibility(View.GONE);
+
         }
 
         //sets the savingAndLoading preferenceFilename to the original preferenceFilename
