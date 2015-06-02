@@ -408,7 +408,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 		if (!isInvalidProfileName){
             manager.beginTransaction().remove(addProfiles).commit();
             addProfileContainer.setVisibility(View.GONE);
-			addProfileInEventScreen.setText("Create new event");
+			addProfileInEventScreen.setText(getString(R.string.create_new_event_text));
 			addProfileInEventScreen.setVisibility(View.VISIBLE);
 			addingEventText.setText(getString(R.string.create_new_event_text));
 		}
