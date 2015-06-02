@@ -89,7 +89,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             canAddEvents = true;
             addProfileContainer.setVisibility(View.GONE);
             addingEventText.setVisibility(View.VISIBLE);
-            addProfileInEventScreen.setVisibility(View.VISIBLE);
+            addProfileInEventScreen.setVisibility(View.GONE);
         }
 
         //sets the savingAndLoading preferenceFilename to the original preferenceFilename
