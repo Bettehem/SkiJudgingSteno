@@ -182,7 +182,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 	
 	public void addingProfiles(){
 		addProfiles = new AddProfiles();
-        addProfileContainer = (FrameLayout) findViewById(R.id.addProfileContainer);
+        addProfileContainer = (FrameLayout) findViewById(R.id.profileContainer);
         addProfileContainer.setVisibility(View.GONE);
     }
 
@@ -289,7 +289,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                     addProfileInEventScreen.setVisibility(View.GONE);
                     addingEventText.setVisibility(View.GONE);
                     addProfileContainer.setVisibility(View.VISIBLE);
-                    manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
+                    manager.beginTransaction().add(R.id.profileContainer, addProfiles, "AddProfiles").commit();
                     isInAddEventScreen = true;
                 }
                 break;

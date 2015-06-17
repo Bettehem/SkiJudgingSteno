@@ -44,6 +44,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	
 	private FragmentManager manager = getFragmentManager();
 	private AddProfiles addProfiles = new AddProfiles();
+    private DeleteProfiles deleteProfiles = new DeleteProfiles();
 	
 	private boolean isInAddProfileScreen;
 
@@ -100,7 +101,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
             case R.id.settingsAddProfileButton:
 				settingsViewFlipper.setVisibility(View.GONE);
-                manager.beginTransaction().add(R.id.addProfileContainer, addProfiles, "AddProfiles").commit();
+                manager.beginTransaction().add(R.id.profileContainer, addProfiles, "AddProfiles").commit();
 				isInAddProfileScreen = true;
                 break;
 
@@ -109,7 +110,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
                 break;
 
             case R.id.settingsDeleteProfilesButton:
-
+                settingsViewFlipper.setVisibility(View.GONE);
+                manager.beginTransaction().add(R.id.profileContainer, deleteProfiles, "DeleteProfiles").commit();
+                isInAddProfileScreen = true;
                 break;
         }
     }
