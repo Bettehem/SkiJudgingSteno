@@ -70,4 +70,10 @@
     <string name="settings_add_new_profile_button_text">Add a new profile</string>
     <string name="settings_modify_existing_profiles_button_text">Modify existing profiles</string>
     <string name="settings_delete_profiles_button_text">Delete profiles</string>
+    <string name="delete_profile_instruction_text">Select the profile below that you want to delete, and then press the \"Delete Selected Profile\" button below</string>
+    <string name="profile_details_text">PROFILE DETAILS:</string>
+    <string name="event_type_text">Event type:</string>
+    <string name="competitors_use_text">Competitors use:</string>
+    <string name="event_location_text">Event location:</string>
+    <string name="delete_profile_confirmation_button">Delete Selected Profile</string>
 </resources>
