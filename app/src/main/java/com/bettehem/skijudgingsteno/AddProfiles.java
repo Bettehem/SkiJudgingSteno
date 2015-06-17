@@ -57,11 +57,15 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     }
 
     private void variables(){
+        trackers();
         sharedPreferences();
         profileSaverAndLoader();
         editTexts();
         spinners();
         buttons();
+    }
+    private void trackers(){
+
     }
 
     private void sharedPreferences(){
