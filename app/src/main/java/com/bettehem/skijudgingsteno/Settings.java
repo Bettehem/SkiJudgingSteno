@@ -31,7 +31,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	private SharedPreferencesSavingAndLoading savingAndLoading;
 	
     //Intents
-    private Intent openAddProfile;
+    private Intent openAddProfile, openDeleteProfile;
 
     //Buttons for settings_options.xml
     private Button profileSettingsButton;
@@ -70,6 +70,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     private void intents(){
         openAddProfile = new Intent(this, AddProfiles.class);
+        openDeleteProfile = new Intent(this, DeleteProfiles.class);
     }
 
     private void buttons(){

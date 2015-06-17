@@ -100,6 +100,6 @@ public class SavingAndLoadingProfiles
 		CharSequence charSequence = profileName + ",";
 		String profileList = savingAndLoading.loadString(context, profileListName);
 		String newProfileList = profileList.replace(charSequence, "");
-		savingAndLoading.saveString(context, profileListName, profileList);
+		savingAndLoading.saveString(context, profileListName, newProfileList);
 	}
 }
