@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.ViewFlipper;
 
 
-public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles
+public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles, DeleteProfiles.DeletingProfiles
 {
 	//SharedPreferences
 	private SharedPreferencesSavingAndLoading savingAndLoading;
@@ -165,5 +165,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	{
 		
 	}
-	
+
+    @Override
+    public void onProfileDeleted(boolean profileDeleted) {
+
+    }
 }
