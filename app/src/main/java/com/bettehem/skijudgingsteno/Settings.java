@@ -47,6 +47,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
     private DeleteProfiles deleteProfiles = new DeleteProfiles();
 	
 	private boolean isInAddProfileScreen;
+	private boolean isInDeleteProfileScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		savingAndLoading = new SharedPreferencesSavingAndLoading();
 		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 		savingAndLoading.saveBoolean(this, "hasSavedProfile", false);
+		savingAndLoading.saveBoolean(this, "hasDeletedProfile", false);
 	}
 
     private void intents(){
@@ -112,7 +114,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
             case R.id.settingsDeleteProfilesButton:
                 settingsViewFlipper.setVisibility(View.GONE);
                 manager.beginTransaction().add(R.id.profileContainer, deleteProfiles, "DeleteProfiles").commit();
-                isInAddProfileScreen = true;
+                isInDeleteProfileScreen = true;
                 break;
         }
     }
@@ -121,19 +123,34 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
     public void onBackPressed() {
         switch (settingsViewFlipper.getDisplayedChild()){
             case 0:
+				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+				savingAndLoading.deleteIndividualValue(this, "hasSavedProfile");
+				savingAndLoading.deleteIndividualValue(this, "hasDeleteddProfile");
                 finish();
                 break;
 
             default:
+				//setting savingAndLoading preferenceFilename to the original value
 				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-				if (savingAndLoading.loadBoolean(this, "hasSavedProfile")){
+				
+				//if the user has saved the profile, set the displayed child in the viewflipper to 0,
+				//which is thi first one in the list
+				if (savingAndLoading.loadBoolean(this, "hasSavedProfile") || savingAndLoading.loadBoolean(this, "hasDeletedProfile")){
+					
 					settingsViewFlipper.setDisplayedChild(0);
+					
 				}else{
-					manager.beginTransaction().remove(addProfiles).commit();
-					settingsViewFlipper.setVisibility(View.VISIBLE);
+					
 					if (isInAddProfileScreen){
+						manager.beginTransaction().remove(addProfiles).commit();
+						settingsViewFlipper.setVisibility(View.VISIBLE);
 						settingsViewFlipper.setDisplayedChild(1);
 						isInAddProfileScreen = false;
+					}else if (isInDeleteProfileScreen){
+						manager.beginTransaction().remove(deleteProfiles).commit();
+						settingsViewFlipper.setVisibility(View.VISIBLE);
+						settingsViewFlipper.setDisplayedChild(1);
+						isInDeleteProfileScreen = false;
 					}else{
 						settingsViewFlipper.setDisplayedChild(0);
 					}

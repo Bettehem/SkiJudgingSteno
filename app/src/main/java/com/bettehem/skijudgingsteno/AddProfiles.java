@@ -27,11 +27,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.google.android.gms.analytics.*;
 
 public class AddProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
 
     public Spinner addNewProfileSelectEventTypeSpinner, addNewProfileSelectWhatCompetitorsUseSpinner;
-
+	
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
     private EditText profileNameEditText, profileEventLocationEditText;
@@ -41,6 +42,8 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     private AddingProfiles addingProfiles;
 	private Activity userActivity;
 	private View fragmentView;
+	private GoogleAnalytics analytics;
+	private Tracker tracker;
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,8 +68,22 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
         buttons();
     }
     private void trackers(){
+		analytics = GoogleAnalytics.getInstance(userActivity);
+		tracker = analytics.newTracker("UA-64258106-1"); // Send hits to tracker id UA-XXXX-Y
 
-    }
+		// All subsequent hits will be send with screen name = "Add Profiles screen"
+		tracker.setScreenName("Add Profiles screen");
+
+// Builder parameters can overwrite the screen name set on the tracker.
+		/*
+		tracker.send(new HitBuilders.EventBuilder()
+					 .setCategory("UX")
+					 .setAction("click")
+					 .setLabel("help popup")
+					 .setScreenName("help popup dialog")
+					 .build());
+		*/
+	}
 
     private void sharedPreferences(){
         savingAndLoading = new SharedPreferencesSavingAndLoading();
@@ -119,6 +136,12 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
 					addNewProfileSelectEventTypeSpinner.setSelection(0);
 					addNewProfileSelectWhatCompetitorsUseSpinner.setSelection(0);
                 }
+				tracker.send(new HitBuilders.EventBuilder()
+							 .setCategory("Profiles")
+							 .setAction("Adding profiles")
+							 .setLabel("Profile added")
+							 .build());
+				
                 addingProfiles.onProfileSaved(isInvalidProfileName, eventType, competitorsUse, eventLocation);
                 break;
         }
