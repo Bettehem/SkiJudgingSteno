@@ -29,21 +29,20 @@ import android.widget.TextView;
 import android.widget.*;
 import android.app.*;
 
-public class DeleteProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction
+public class DeleteProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener
 {
 
     private Spinner deleteProfileProfileSelectionListSpinner;
     private TextView deleteProfileEventTypeTextView, deleteProfileWhatCompetitorsUseTextView, deleteProfileEventLocationTextView;
     private Button deleteProfileConfirmationButton;
-    private DeletingProfiles deletingProfiles;
+    public DeletingProfiles deletingProfiles;
     private Activity userActivity;
     private View fragmentView;
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
-	private String[] profileList, profileDetails;
+	public String[] profileList, profileDetails;
 	private FragmentManager manager;
-	private DynamicConfirmationDialog confirmationDialog;
-	private int selectedProfilePosition;
+	public int selectedProfilePosition;
 
     @Override
     public void onAttach(Activity activity) {
@@ -58,6 +57,13 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
         variables();
         return fragmentView;
     }
+	
+	private void startup(){
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+		if (savingAndLoading.loadString(userActivity, "profile_list").contentEquals("")){
+			deletingProfiles.onProfilesNotFound();
+		}
+	}
 
     private void variables(){
 		profileSaverAndLoader();
@@ -66,8 +72,8 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
         spinners();
         textViews();
 		fragmentManagers();
-		confirmationDialogs();
 		buttons();
+		startup();
     }
 	
 	private void profileSaverAndLoader() {
@@ -100,11 +106,7 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
     }
 	
 	private void fragmentManagers(){
-		manager = userActivity.getFragmentManager();
-	}
-	
-	private void confirmationDialogs(){
-		confirmationDialog = new DynamicConfirmationDialog();
+		manager = getChildFragmentManager();
 	}
 	
 	private void buttons(){
@@ -116,7 +118,7 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
     public void onClick(View v) {
 		switch (v.getId()){
 			case R.id.deleteProfileConfirmationButton:
-				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", stringHelper(3, profileList[selectedProfilePosition]), userActivity.getResources().getString(R.string.delete_profile_dialog_confirm_text), userActivity.getResources().getString(R.string.dialog_cancel_text), false);
+				deletingProfiles.onDeleteButtonPressed();
 				break;
 		}
     }
@@ -140,7 +142,7 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
 
     }
 	
-	private String stringHelper(int helpPos, String string){
+	public String stringHelper(int helpPos, String string){
 		String readyString = "Error! Correct information not found with detail " + helpPos + "!";
 		
 		switch (helpPos){
@@ -160,17 +162,10 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
 		
 		return readyString;
 	}
-	
-	@Override
-	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
-	{
-		if (isAnswerPositive){
-			savingAndLoadingProfiles.deleteProfile(userActivity, profileList[selectedProfilePosition]);
-			deletingProfiles.onProfileDeleted(true);
-		}
-	}
 
     interface DeletingProfiles{
         void onProfileDeleted(boolean profileDeleted);
+		void onDeleteButtonPressed();
+		void onProfilesNotFound();
     }
 }

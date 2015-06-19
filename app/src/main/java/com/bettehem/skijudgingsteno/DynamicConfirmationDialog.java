@@ -32,7 +32,7 @@ and the two answers that the user can select from. You can also define, what eac
 and if the user will be able to cancel the dialog.
  */
 public class DynamicConfirmationDialog extends DialogFragment{
-	private String messageText, positiveButtonText, negativeButtonText;
+	public String messageText, positiveButtonText, negativeButtonText;
 	boolean isCancellable = false;
 
 	PerformDynamicDialogAction performAction;

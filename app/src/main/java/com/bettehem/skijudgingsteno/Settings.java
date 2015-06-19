@@ -23,9 +23,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
+import android.widget.*;
 
 
-public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles, DeleteProfiles.DeletingProfiles
+public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles, DeleteProfiles.DeletingProfiles, DynamicConfirmationDialog.PerformDynamicDialogAction
 {
 	//SharedPreferences
 	private SharedPreferencesSavingAndLoading savingAndLoading;
@@ -49,6 +50,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	
 	private boolean isInAddProfileScreen;
 	private boolean isInDeleteProfileScreen;
+	
+	private DynamicConfirmationDialog confirmationDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
         intents();
         buttons();
         viewFlippers();
+		dialogs();
     }
 	private void sharedPreferences(){
 		savingAndLoading = new SharedPreferencesSavingAndLoading();
@@ -99,6 +103,10 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
     private void viewFlippers(){
         settingsViewFlipper = (ViewFlipper) findViewById(R.id.settingsViewFlipper);
     }
+	
+	private void dialogs(){
+		confirmationDialog = new DynamicConfirmationDialog();
+	}
 
     @Override
     public void onClick(View v) {
@@ -131,7 +139,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
             case 0:
 				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 				savingAndLoading.deleteIndividualValue(this, "hasSavedProfile");
-				savingAndLoading.deleteIndividualValue(this, "hasDeleteddProfile");
+				savingAndLoading.deleteIndividualValue(this, "hasDeletedProfile");
                 finish();
                 break;
 
@@ -143,7 +151,23 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 				//which is thi first one in the list
 				if (savingAndLoading.loadBoolean(this, "hasSavedProfile") || savingAndLoading.loadBoolean(this, "hasDeletedProfile")){
 					
-					settingsViewFlipper.setDisplayedChild(0);
+					savingAndLoading.saveBoolean(this, "hasSavedProfile", false);
+					savingAndLoading.saveBoolean(this, "hasDeletedProfile", false);
+					
+					if (isInAddProfileScreen){
+						manager.beginTransaction().remove(addProfiles).commit();
+						settingsViewFlipper.setVisibility(View.VISIBLE);
+						settingsViewFlipper.setDisplayedChild(1);
+						isInAddProfileScreen = false;
+					}else if (isInDeleteProfileScreen){
+						manager.beginTransaction().remove(deleteProfiles).commit();
+						settingsViewFlipper.setVisibility(View.VISIBLE);
+						settingsViewFlipper.setDisplayedChild(1);
+						isInDeleteProfileScreen = false;
+					}else{
+						settingsViewFlipper.setVisibility(View.VISIBLE);
+						settingsViewFlipper.setDisplayedChild(0);
+					}
 					
 				}else{
 					
@@ -158,6 +182,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 						settingsViewFlipper.setDisplayedChild(1);
 						isInDeleteProfileScreen = false;
 					}else{
+						settingsViewFlipper.setVisibility(View.VISIBLE);
 						settingsViewFlipper.setDisplayedChild(0);
 					}
 				}
@@ -174,6 +199,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 			settingsViewFlipper.setVisibility(View.VISIBLE);
 			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 			savingAndLoading.saveBoolean(this, "hasSavedProfile", true);
+			onBackPressed();
 		}
 	}
 
@@ -194,10 +220,37 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		if (profileDeleted){
 			manager.beginTransaction().remove(deleteProfiles).commit();
 			settingsViewFlipper.setVisibility(View.VISIBLE);
+			isInDeleteProfileScreen = false;
 			savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
-			if (savingAndLoading.loadStringArray(this, savingAndLoadingProfiles.profileListName).length == 0){
+			if (savingAndLoading.loadString(this, savingAndLoadingProfiles.profileListName).contentEquals("")){
 				savingAndLoading.saveBoolean(this, "has_created_profiles", false);
 			}
 		}
     }
+	
+	@Override
+	public void onDeleteButtonPressed()
+	{
+		confirmationDialog.showDynamicDialog(manager, "confirmationDialog", deleteProfiles.stringHelper(3, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]), getString(R.string.delete_profile_dialog_confirm_text), getString(R.string.dialog_cancel_text), false);
+	}
+	
+	@Override
+	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
+	{
+		if (isAnswerPositive){
+			savingAndLoadingProfiles.deleteProfile(this, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]);
+			deleteProfiles.deletingProfiles.onProfileDeleted(true);
+			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+			savingAndLoading.saveBoolean(this, "hasDeletedProfile", true);
+			Toast.makeText(this, getString(R.string.profile_deleted_message), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void onProfilesNotFound()
+	{
+		manager.beginTransaction().remove(deleteProfiles).commit();
+		settingsViewFlipper.setVisibility(View.VISIBLE);
+		Toast.makeText(this, getString(R.string.no_profiles_found_text), Toast.LENGTH_SHORT).show();
+	}
 }

@@ -80,4 +80,6 @@
 	<string name="delete_profile_warning_part2">will be lost!</string>
 	<string name="dialog_cancel_text">Cancel</string>
 	<string name="delete_profile_dialog_confirm_text">Delete Profile</string>
+	<string name="profile_deleted_message">Profile Deleted.</string>
+	<string name="no_profiles_found_text">No Profiles Found!</string>
 </resources>
