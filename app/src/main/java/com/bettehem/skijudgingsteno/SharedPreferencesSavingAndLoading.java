@@ -19,6 +19,7 @@ package com.bettehem.skijudgingsteno;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import java.io.*;
 
 public class SharedPreferencesSavingAndLoading extends Activity {
 
@@ -173,6 +174,14 @@ public class SharedPreferencesSavingAndLoading extends Activity {
         editor.clear();
 
         editor.apply();
+		
+		File file = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".xml");
+		file.delete();
+		
+		File fileBak = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".bak");
+		if (fileBak.exists()){
+			fileBak.delete();
+		}
     }
 
 

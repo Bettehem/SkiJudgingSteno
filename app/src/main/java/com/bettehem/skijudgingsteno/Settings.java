@@ -249,6 +249,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onProfilesNotFound()
 	{
+		onBackPressed();
 		manager.beginTransaction().remove(deleteProfiles).commit();
 		settingsViewFlipper.setVisibility(View.VISIBLE);
 		Toast.makeText(this, getString(R.string.no_profiles_found_text), Toast.LENGTH_SHORT).show();
