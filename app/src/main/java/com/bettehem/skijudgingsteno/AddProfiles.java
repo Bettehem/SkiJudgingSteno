@@ -152,10 +152,12 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
         switch (parent.getId()) {
             case R.id.addNewProfileSelectEventTypeSpinner:
 				addingProfiles.onEventTypeSelected(position);
+				eventType = userActivity.getResources().getStringArray(R.array.events_list_array)[position];
                 break;
 
             case R.id.addNewProfileSelectWhatCompetitorsUseSpinner:
                 addingProfiles.onCompetitorsUseSelected(position);
+				competitorsUse = userActivity.getResources().getStringArray(R.array.competitors_use_list_array)[position];
                 break;
         }
     }

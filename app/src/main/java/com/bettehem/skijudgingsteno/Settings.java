@@ -29,6 +29,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 {
 	//SharedPreferences
 	private SharedPreferencesSavingAndLoading savingAndLoading;
+	private SavingAndLoadingProfiles savingAndLoadingProfiles;
 	
     //Intents
     private Intent openAddProfile, openDeleteProfile;
@@ -60,6 +61,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     private void variables(){
 		sharedPreferences();
+		profileSaverAndLoader();
         intents();
         buttons();
         viewFlippers();
@@ -69,6 +71,10 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 		savingAndLoading.saveBoolean(this, "hasSavedProfile", false);
 		savingAndLoading.saveBoolean(this, "hasDeletedProfile", false);
+	}
+	
+	private void profileSaverAndLoader(){
+		savingAndLoadingProfiles = new SavingAndLoadingProfiles();
 	}
 
     private void intents(){
@@ -185,6 +191,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     @Override
     public void onProfileDeleted(boolean profileDeleted) {
-
+		if (profileDeleted){
+			manager.beginTransaction().remove(deleteProfiles).commit();
+			settingsViewFlipper.setVisibility(View.VISIBLE);
+			savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+			if (savingAndLoading.loadStringArray(this, savingAndLoadingProfiles.profileListName).length == 0){
+				savingAndLoading.saveBoolean(this, "has_created_profiles", false);
+			}
+		}
     }
 }

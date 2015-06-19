@@ -26,8 +26,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.*;
+import android.app.*;
 
-public class DeleteProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener{
+public class DeleteProfiles extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction
+{
 
     private Spinner deleteProfileProfileSelectionListSpinner;
     private TextView deleteProfileEventTypeTextView, deleteProfileWhatCompetitorsUseTextView, deleteProfileEventLocationTextView;
@@ -37,6 +40,10 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
     private View fragmentView;
     private SharedPreferencesSavingAndLoading savingAndLoading;
     private SavingAndLoadingProfiles savingAndLoadingProfiles;
+	private String[] profileList, profileDetails;
+	private FragmentManager manager;
+	private DynamicConfirmationDialog confirmationDialog;
+	private int selectedProfilePosition;
 
     @Override
     public void onAttach(Activity activity) {
@@ -53,40 +60,78 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
     }
 
     private void variables(){
+		profileSaverAndLoader();
         sharedPreferences();
-        profileSaverAndLoader();
+		strings();
         spinners();
         textViews();
-        buttons();
+		fragmentManagers();
+		confirmationDialogs();
+		buttons();
+    }
+	
+	private void profileSaverAndLoader() {
+        savingAndLoadingProfiles = new SavingAndLoadingProfiles();
     }
 
     private void sharedPreferences(){
         savingAndLoading = new SharedPreferencesSavingAndLoading();
     }
-
-    private void profileSaverAndLoader() {
-        savingAndLoadingProfiles = new SavingAndLoadingProfiles();
-    }
+	
+	private void strings(){
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+		profileList = savingAndLoading.loadStringArray(userActivity, "profile_list");
+	}
 
     private void spinners(){
-
+		deleteProfileProfileSelectionListSpinner = (Spinner) fragmentView.findViewById(R.id.deleteProfileProfileSelectionListSpinner);
+		
+		deleteProfileProfileSelectionListSpinner.setOnItemSelectedListener(this);
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+        deleteProfileProfileSelectionListSpinner.setAdapter(new ArrayAdapter<>(
+														   userActivity, android.R.layout.simple_spinner_dropdown_item, profileList
+													   ));
     }
 
     private void textViews(){
-
+		deleteProfileEventTypeTextView = (TextView) fragmentView.findViewById(R.id.deleteProfileEventTypeTextView);
+		deleteProfileWhatCompetitorsUseTextView = (TextView) fragmentView.findViewById(R.id.deleteProfileWhatCompetitorsUseTextView);
+		deleteProfileEventLocationTextView = (TextView) fragmentView.findViewById(R.id.deleteProfileEventLocationTextView);
     }
-
-    private void buttons(){
-
+	
+	private void fragmentManagers(){
+		manager = userActivity.getFragmentManager();
+	}
+	
+	private void confirmationDialogs(){
+		confirmationDialog = new DynamicConfirmationDialog();
+	}
+	
+	private void buttons(){
+		deleteProfileConfirmationButton = (Button) fragmentView.findViewById(R.id.deleteProfileConfirmationButton);
+		deleteProfileConfirmationButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+		switch (v.getId()){
+			case R.id.deleteProfileConfirmationButton:
+				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", stringHelper(3, profileList[selectedProfilePosition]), userActivity.getResources().getString(R.string.delete_profile_dialog_confirm_text), userActivity.getResources().getString(R.string.dialog_cancel_text), false);
+				break;
+		}
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		switch (parent.getId()){
+			case R.id.deleteProfileProfileSelectionListSpinner:
+				selectedProfilePosition = position;
+				profileDetails = savingAndLoadingProfiles.loadProfile(userActivity, profileList[position]);
+				deleteProfileEventTypeTextView.setText(stringHelper(0, profileDetails[0]));
+				deleteProfileWhatCompetitorsUseTextView.setText(stringHelper(1, profileDetails[1]));
+				deleteProfileEventLocationTextView.setText(stringHelper(2, profileDetails[2]));
+				break;
+		}
 
     }
 
@@ -94,6 +139,36 @@ public class DeleteProfiles extends Fragment implements View.OnClickListener, Ad
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+	
+	private String stringHelper(int helpPos, String string){
+		String readyString = "Error! Correct information not found with detail " + helpPos + "!";
+		
+		switch (helpPos){
+			case 0:
+				readyString = userActivity.getResources().getString(R.string.event_type_text) + " " + string;
+				break;
+			case 1:
+				readyString = userActivity.getResources().getString(R.string.competitors_use_text) + " " + string;
+				break;
+			case 2:
+				readyString = userActivity.getResources().getString(R.string.event_location_text) + " " + string;
+				break;
+			case 3:
+				readyString = userActivity.getResources().getString(R.string.delete_profile_warning_part1) + " " + string + " " + userActivity.getResources().getString(R.string.delete_profile_warning_part2);
+				break;
+		}
+		
+		return readyString;
+	}
+	
+	@Override
+	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
+	{
+		if (isAnswerPositive){
+			savingAndLoadingProfiles.deleteProfile(userActivity, profileList[selectedProfilePosition]);
+			deletingProfiles.onProfileDeleted(true);
+		}
+	}
 
     interface DeletingProfiles{
         void onProfileDeleted(boolean profileDeleted);

@@ -98,6 +98,7 @@ public class SavingAndLoadingProfiles
 		savingAndLoading.preferenceFilename = profileName;
 		savingAndLoading.deleteAllValues(context);
 		CharSequence charSequence = profileName + ",";
+		savingAndLoading.preferenceFilename = originalProfileDetailsFileName;
 		String profileList = savingAndLoading.loadString(context, profileListName);
 		String newProfileList = profileList.replace(charSequence, "");
 		savingAndLoading.saveString(context, profileListName, newProfileList);
