@@ -23,13 +23,29 @@ public class ResetApp {
 
     public void resetAppdata(Context context){
         profileDeletion(context);
+        eventDeletion(context);
+        settingsDeletion(context);
     }
 
     private void profileDeletion(Context context){
         savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
-        String[] profileList = savingAndLoading.loadStringArray(context, savingAndLoadingProfiles.profileListName);
         while (!savingAndLoading.loadString(context, savingAndLoadingProfiles.profileListName).contentEquals("")){
-            savingAndLoadingProfiles.deleteProfile(context, profileList[profileList.length]);
+            String[] profileList = savingAndLoading.loadStringArray(context, savingAndLoadingProfiles.profileListName);
+            savingAndLoadingProfiles.deleteProfile(context, profileList[profileList.length-1]);
         }
+
+    }
+
+    private void eventDeletion(Context context){
+        savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
+        while (!savingAndLoading.loadString(context, savingAndLoadingEvents.eventListName).contentEquals("")){
+            String[] eventList = savingAndLoading.loadStringArray(context, savingAndLoadingEvents.eventListName);
+            savingAndLoadingEvents.deleteEvent(context, eventList[eventList.length - 1]);
+        }
+    }
+
+    private void settingsDeletion(Context context){
+        savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+        savingAndLoading.deleteAllValues(context);
     }
 }

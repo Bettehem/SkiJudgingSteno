@@ -34,7 +34,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	private ResetApp resetApp;
 	
     //Intents
-    private Intent openAddProfile, openDeleteProfile;
+    private Intent openAddProfile, openDeleteProfile, goBack, goToMainMenu;
 
     //Buttons for settings_options.xml
     private Button profileSettingsButton, resetAppButton;
@@ -89,7 +89,11 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
     private void intents(){
         openAddProfile = new Intent(this, AddProfiles.class);
         openDeleteProfile = new Intent(this, DeleteProfiles.class);
-    }
+		if (getIntent().getExtras().getString("whatClass").contentEquals("MainMenu")) {
+			goBack = new Intent(this, MainMenu.class);
+		}
+		goToMainMenu = new Intent(this, MainMenu.class);
+	}
 
     private void buttons(){
         profileSettingsButton = (Button) findViewById(R.id.settingsProfileSettingsButton);
@@ -156,6 +160,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 				savingAndLoading.deleteIndividualValue(this, "hasSavedProfile");
 				savingAndLoading.deleteIndividualValue(this, "hasDeletedProfile");
+				startActivity(goBack);
                 finish();
                 break;
 
@@ -259,6 +264,10 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 			switch (confirmationDialogCaller){
 				case 1:
 					resetApp.resetAppdata(this);
+					confirmationDialogCaller = 0;
+					startActivity(goToMainMenu);
+					Toast.makeText(this, getString(R.string.reset_app_complete), Toast.LENGTH_SHORT).show();
+					finish();
 					break;
 
 				case 2:
@@ -267,9 +276,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 					savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 					savingAndLoading.saveBoolean(this, "hasDeletedProfile", true);
 					Toast.makeText(this, getString(R.string.profile_deleted_message), Toast.LENGTH_SHORT).show();
+					confirmationDialogCaller = 0;
 					break;
 			}
-			confirmationDialogCaller = 0;
 
 		}
 	}

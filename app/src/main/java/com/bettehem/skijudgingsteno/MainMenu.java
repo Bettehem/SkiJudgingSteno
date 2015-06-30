@@ -202,7 +202,9 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
             //if the button that says Settings is pressed this case will be true.
             case R.id.mainmenuAppSettingsButton:
+                openSettings.putExtra("whatClass", "MainMenu");
                 startActivity(openSettings);
+                finish();
                 break;
         }
     }

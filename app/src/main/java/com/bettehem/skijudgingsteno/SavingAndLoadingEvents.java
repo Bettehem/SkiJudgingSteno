@@ -79,4 +79,15 @@ public class SavingAndLoadingEvents {
         }
 		return isInvalidEventName;
     }
+
+    public void deleteEvent(Context context, String eventName)
+    {
+        savingAndLoading.preferenceFilename = eventName;
+        savingAndLoading.deleteAllValues(context);
+        CharSequence charSequence = eventName + ",";
+        savingAndLoading.preferenceFilename = originalEventDetailsFilename;
+        String profileList = savingAndLoading.loadString(context, eventListName);
+        String newProfileList = profileList.replace(charSequence, "");
+        savingAndLoading.saveString(context, eventListName, newProfileList);
+    }
 }
