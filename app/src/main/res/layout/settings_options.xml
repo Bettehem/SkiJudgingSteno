@@ -28,6 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/settingsProfileSettingsButton"
-        android:text="@string/profile_settings_button_text"/>
+        android:text="@string/reset_app_dialog_confirm_text"/>
 
 </RelativeLayout>

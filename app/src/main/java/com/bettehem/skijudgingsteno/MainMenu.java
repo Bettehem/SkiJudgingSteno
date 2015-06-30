@@ -126,6 +126,8 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 
             //A value will be saved stating that the user hasn't created events before.
             savingAndLoading.saveBoolean(this, "hasCreatedEvents", false);
+
+            savingAndLoading.saveString(this, savingAndLoadingEvents.eventListName, "");
         }
 
         //sets the preferenceFilename to the original preferenceFilename.

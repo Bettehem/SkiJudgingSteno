@@ -263,7 +263,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
 			switch (confirmationDialogCaller){
 				case 1:
-					resetApp.resetAppdata(this);
+					resetApp.resetAppData(this);
 					confirmationDialogCaller = 0;
 					Toast.makeText(this, getString(R.string.reset_app_complete), Toast.LENGTH_SHORT).show();
 					startActivity(goToMainMenu);

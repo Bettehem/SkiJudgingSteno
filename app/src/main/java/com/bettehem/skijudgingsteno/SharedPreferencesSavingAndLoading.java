@@ -187,9 +187,6 @@ public class SharedPreferencesSavingAndLoading extends Activity {
 	
 	//-----     Checking if file exists      ------
 	public boolean checkIfFileExists(Context context){
-		sharedPreferences = context.getSharedPreferences(preferenceFilename, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        editor.apply();
 		File file = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".xml");
 		return file.exists();
 	}
