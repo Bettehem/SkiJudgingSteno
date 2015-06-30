@@ -23,4 +23,11 @@
         android:layout_alignParentTop="true"
         android:text="@string/profile_settings_button_text"/>
 
+    <Button
+        android:id="@+id/settingsResetAppButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/settingsProfileSettingsButton"
+        android:text="@string/profile_settings_button_text"/>
+
 </RelativeLayout>

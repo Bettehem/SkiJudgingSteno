@@ -31,12 +31,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	//SharedPreferences
 	private SharedPreferencesSavingAndLoading savingAndLoading;
 	private SavingAndLoadingProfiles savingAndLoadingProfiles;
+	private ResetApp resetApp;
 	
     //Intents
     private Intent openAddProfile, openDeleteProfile;
 
     //Buttons for settings_options.xml
-    private Button profileSettingsButton;
+    private Button profileSettingsButton, resetAppButton;
 
     //Buttons for profile_settings.xml
     private Button settingsAddProfileButton, settingsModifyExistingProfilesButton, settingsDeleteProfilesButton;
@@ -52,6 +53,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	private boolean isInDeleteProfileScreen;
 	
 	private DynamicConfirmationDialog confirmationDialog;
+
+	private int confirmationDialogCaller = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,9 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
         buttons();
         viewFlippers();
 		dialogs();
+		resettingApp();
     }
+
 	private void sharedPreferences(){
 		savingAndLoading = new SharedPreferencesSavingAndLoading();
 		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
@@ -88,12 +93,14 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     private void buttons(){
         profileSettingsButton = (Button) findViewById(R.id.settingsProfileSettingsButton);
+		resetAppButton = (Button) findViewById(R.id.settingsResetAppButton);
 
         settingsAddProfileButton = (Button) findViewById(R.id.settingsAddProfileButton);
         settingsModifyExistingProfilesButton = (Button) findViewById(R.id.settingsModifyExistingProfilesButton);
         settingsDeleteProfilesButton = (Button) findViewById(R.id.settingsDeleteProfilesButton);
 
         profileSettingsButton.setOnClickListener(this);
+		resetAppButton.setOnClickListener(this);
 
         settingsAddProfileButton.setOnClickListener(this);
         settingsModifyExistingProfilesButton.setOnClickListener(this);
@@ -108,12 +115,21 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		confirmationDialog = new DynamicConfirmationDialog();
 	}
 
+	private void resettingApp(){
+		resetApp = new ResetApp();
+	}
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.settingsProfileSettingsButton:
                 settingsViewFlipper.setDisplayedChild(1);
                 break;
+
+			case R.id.settingsResetAppButton:
+				confirmationDialogCaller = 1;
+				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", getString(R.string.reset_app_warning_text), getString(R.string.reset_app_dialog_confirm_text), getString(R.string.dialog_cancel_text), false);
+				break;
 
             case R.id.settingsAddProfileButton:
 				settingsViewFlipper.setVisibility(View.GONE);
@@ -231,6 +247,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onDeleteButtonPressed()
 	{
+		confirmationDialogCaller = 2;
 		confirmationDialog.showDynamicDialog(manager, "confirmationDialog", deleteProfiles.stringHelper(3, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]), getString(R.string.delete_profile_dialog_confirm_text), getString(R.string.dialog_cancel_text), false);
 	}
 	
@@ -238,11 +255,22 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
 	{
 		if (isAnswerPositive){
-			savingAndLoadingProfiles.deleteProfile(this, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]);
-			deleteProfiles.deletingProfiles.onProfileDeleted(true);
-			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
-			savingAndLoading.saveBoolean(this, "hasDeletedProfile", true);
-			Toast.makeText(this, getString(R.string.profile_deleted_message), Toast.LENGTH_SHORT).show();
+
+			switch (confirmationDialogCaller){
+				case 1:
+					resetApp.resetAppdata(this);
+					break;
+
+				case 2:
+					savingAndLoadingProfiles.deleteProfile(this, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]);
+					deleteProfiles.deletingProfiles.onProfileDeleted(true);
+					savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+					savingAndLoading.saveBoolean(this, "hasDeletedProfile", true);
+					Toast.makeText(this, getString(R.string.profile_deleted_message), Toast.LENGTH_SHORT).show();
+					break;
+			}
+			confirmationDialogCaller = 0;
+
 		}
 	}
 

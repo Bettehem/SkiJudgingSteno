@@ -82,4 +82,6 @@
 	<string name="delete_profile_dialog_confirm_text">Delete Profile</string>
 	<string name="profile_deleted_message">Profile Deleted.</string>
 	<string name="no_profiles_found_text">No Profiles Found!</string>
+    <string name="reset_app_warning_text">Are you sure you want to reset the app? Doing this will delete all of the app data(Profiles, Events etc.) and it will not be recoverable!</string>
+    <string name="reset_app_dialog_confirm_text">Reset App</string>
 </resources>
