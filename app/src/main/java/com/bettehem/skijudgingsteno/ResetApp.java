@@ -22,9 +22,22 @@ public class ResetApp {
     private SavingAndLoadingEvents savingAndLoadingEvents = new SavingAndLoadingEvents();
 
     public void resetAppdata(Context context){
-        profileDeletion(context);
-        eventDeletion(context);
-        settingsDeletion(context);
+		
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+		if (savingAndLoading.checkIfFileExists(context)){
+        	profileDeletion(context);
+		}
+		
+		savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
+		if (savingAndLoading.checkIfFileExists(context)){
+			eventDeletion(context);
+		}
+		
+		savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+		if (savingAndLoading.checkIfFileExists(context)){
+			settingsDeletion(context);
+		}
+			
     }
 
     private void profileDeletion(Context context){
@@ -40,7 +53,7 @@ public class ResetApp {
         savingAndLoading.preferenceFilename = savingAndLoadingEvents.originalEventDetailsFilename;
         while (!savingAndLoading.loadString(context, savingAndLoadingEvents.eventListName).contentEquals("")){
             String[] eventList = savingAndLoading.loadStringArray(context, savingAndLoadingEvents.eventListName);
-            savingAndLoadingEvents.deleteEvent(context, eventList[eventList.length - 1]);
+            savingAndLoadingEvents.deleteEvent(context, eventList[eventList.length-1]);
         }
     }
 

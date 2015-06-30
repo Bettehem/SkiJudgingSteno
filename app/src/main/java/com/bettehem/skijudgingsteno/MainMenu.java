@@ -28,6 +28,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
 	//Variables
     SharedPreferencesSavingAndLoading savingAndLoading;
     SavingAndLoadingEvents savingAndLoadingEvents;
+	SavingAndLoadingProfiles savingAndLoadingProfiles;
     Button mainMenuSkiJudgingButton, mainMenuSnowboardJudgingButton, mainMenuSettingsButton;
     Intent openTutorial, openSkiJudging, openSnowboardJudging, openSettings;
 	String[] eventTypes, competitorsUse;
@@ -51,6 +52,7 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         intents();
 		arrays();
         eventsSavingAndLoading();
+		profileSavingAndLoading();
         sharedPreferences();
         buttons();
     }
@@ -83,6 +85,10 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
         //Just add this, even you don't know what it means. It just works.
         savingAndLoadingEvents = new SavingAndLoadingEvents();
     }
+	
+	public void profileSavingAndLoading(){
+		savingAndLoadingProfiles = new SavingAndLoadingProfiles();
+	}
 
     //Everything regarding SharedPreferences are defined here.
     public void sharedPreferences(){
@@ -131,6 +137,12 @@ public class MainMenu extends ActionBarActivity implements View.OnClickListener{
             //this will start the tutorial with the help of an intent that was defined earlier
             startActivity(openTutorial);
         }
+		
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+		if (!savingAndLoading.loadBoolean(this, "has_created_profiles")){
+			savingAndLoading.saveString(this, savingAndLoadingProfiles.profileListName, "");
+		}
+		
     }
 
     //Everything regarding buttons are defined here.
