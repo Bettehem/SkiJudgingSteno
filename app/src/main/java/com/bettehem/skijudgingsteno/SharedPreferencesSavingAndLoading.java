@@ -178,7 +178,7 @@ public class SharedPreferencesSavingAndLoading extends Activity {
 		File file = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".xml");
 		file.delete();
 		
-		File fileBak = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".bak");
+		File fileBak = new File(context.getFilesDir().getParent() + File.separator + "shared_prefs" + File.separator + preferenceFilename + ".xml.bak");
 		if (fileBak.exists()){
 			fileBak.delete();
 		}
