@@ -25,8 +25,12 @@ public class ResetApp {
 
     private int profileAmount, profileFileAmount, eventAmount, eventFileAmount, settingsFileAmount, totalFilesToDelete;
     private ProgressDialog progressDialog;
+	
+	private AppResetting appResetting;
 
     public void resetAppData(Context context){
+		
+		appResetting = (AppResetting) context;
 
         calculateData(context);
 
@@ -142,8 +146,13 @@ public class ResetApp {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+			appResetting.onAppResetionComplete();
             progressDialog.dismiss();
         }
     }
+	
+	public interface AppResetting{
+		void onAppResetionComplete();
+	}
 
 }

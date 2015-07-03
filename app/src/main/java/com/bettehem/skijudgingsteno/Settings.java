@@ -23,15 +23,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ViewFlipper;
-import android.widget.*;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
-public class Settings extends ActionBarActivity implements View.OnClickListener, AddProfiles.AddingProfiles, DeleteProfiles.DeletingProfiles, DynamicConfirmationDialog.PerformDynamicDialogAction
+public class Settings extends ActionBarActivity implements View.OnClickListener, View.OnLongClickListener, AddProfiles.AddingProfiles, DeleteProfiles.DeletingProfiles, DynamicConfirmationDialog.PerformDynamicDialogAction, ResetApp.AppResetting, ProfileSpam.ProfileSpamming
 {
 	//SharedPreferences
 	private SharedPreferencesSavingAndLoading savingAndLoading;
 	private SavingAndLoadingProfiles savingAndLoadingProfiles;
 	private ResetApp resetApp;
+	private ProfileSpam profileSpam;
 	
     //Intents
     private Intent openAddProfile, openDeleteProfile, goBack, goToMainMenu;
@@ -44,6 +46,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     //ViewFlipper that switches between different settings
     private ViewFlipper settingsViewFlipper;
+	
+	private TextView profileAmountTextView;
 	
 	private FragmentManager manager = getFragmentManager();
 	private AddProfiles addProfiles = new AddProfiles();
@@ -73,6 +77,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
         viewFlippers();
 		dialogs();
 		resettingApp();
+		textViews();
+		spammingProfiles();
     }
 
 	private void sharedPreferences(){
@@ -109,6 +115,8 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
         settingsAddProfileButton.setOnClickListener(this);
         settingsModifyExistingProfilesButton.setOnClickListener(this);
         settingsDeleteProfilesButton.setOnClickListener(this);
+		
+		settingsAddProfileButton.setOnLongClickListener(this);
     }
 
     private void viewFlippers(){
@@ -122,9 +130,19 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	private void resettingApp(){
 		resetApp = new ResetApp();
 	}
+	
+	private void textViews(){
+		profileAmountTextView = (TextView) findViewById(R.id.settingsProfileAmountTextView);
+		updateProfileAmount();
+	}
+	
+	private void spammingProfiles(){
+		profileSpam = new ProfileSpam();
+	}
 
     @Override
     public void onClick(View v) {
+		updateProfileAmount();
         switch (v.getId()){
             case R.id.settingsProfileSettingsButton:
                 settingsViewFlipper.setDisplayedChild(1);
@@ -152,9 +170,22 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
                 break;
         }
     }
+	
+	@Override
+	public boolean onLongClick(View v)
+	{
+		switch (v.getId()){
+			case R.id.settingsAddProfileButton:
+				confirmationDialogCaller = 3;
+				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", "This is a hidden feature, and not intended for a normal user. This will rapidly add 1000 profiles. If you want to do this, click Proceed, otherwise click Cancel", "Proceed", getString(R.string.dialog_cancel_text), false);
+				break;
+		}
+		return true;
+	}
 
     @Override
     public void onBackPressed() {
+		updateProfileAmount();
         switch (settingsViewFlipper.getDisplayedChild()){
             case 0:
 				savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
@@ -238,6 +269,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 
     @Override
     public void onProfileDeleted(boolean profileDeleted) {
+		updateProfileAmount();
 		if (profileDeleted){
 			manager.beginTransaction().remove(deleteProfiles).commit();
 			settingsViewFlipper.setVisibility(View.VISIBLE);
@@ -252,6 +284,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onDeleteButtonPressed()
 	{
+		updateProfileAmount();
 		confirmationDialogCaller = 2;
 		confirmationDialog.showDynamicDialog(manager, "confirmationDialog", deleteProfiles.stringHelper(3, deleteProfiles.profileList[deleteProfiles.selectedProfilePosition]), getString(R.string.delete_profile_dialog_confirm_text), getString(R.string.dialog_cancel_text), false);
 	}
@@ -259,15 +292,13 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
 	{
+		updateProfileAmount();
 		if (isAnswerPositive){
 
 			switch (confirmationDialogCaller){
 				case 1:
 					resetApp.resetAppData(this);
 					confirmationDialogCaller = 0;
-					Toast.makeText(this, getString(R.string.reset_app_complete), Toast.LENGTH_SHORT).show();
-					startActivity(goToMainMenu);
-					finish();
 					break;
 
 				case 2:
@@ -276,6 +307,11 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 					savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 					savingAndLoading.saveBoolean(this, "hasDeletedProfile", true);
 					Toast.makeText(this, getString(R.string.profile_deleted_message), Toast.LENGTH_SHORT).show();
+					confirmationDialogCaller = 0;
+					break;
+				
+				case 3:
+					profileSpam.spamProfiles(this, "", "Slopestyle", "Skis", "");
 					confirmationDialogCaller = 0;
 					break;
 			}
@@ -290,5 +326,26 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 		manager.beginTransaction().remove(deleteProfiles).commit();
 		settingsViewFlipper.setVisibility(View.VISIBLE);
 		Toast.makeText(this, getString(R.string.no_profiles_found_text), Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
+	public void onAppResetionComplete(){
+		Toast.makeText(this, getString(R.string.reset_app_complete), Toast.LENGTH_SHORT).show();
+		startActivity(goToMainMenu);
+		finish();
+	}
+	
+	private void updateProfileAmount(){
+		savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+		if (savingAndLoading.loadString(this, savingAndLoadingProfiles.profileListName).contentEquals("")){
+			profileAmountTextView.setText(getString(R.string.profile_amount_text) + " " + 0);
+		}else{
+			profileAmountTextView.setText(getString(R.string.profile_amount_text) + " " + savingAndLoading.loadStringArray(this, savingAndLoadingProfiles.profileListName).length);
+		}
+	}
+	@Override
+	public void onProfileSpammingFinished()
+	{
+		updateProfileAmount();
 	}
 }

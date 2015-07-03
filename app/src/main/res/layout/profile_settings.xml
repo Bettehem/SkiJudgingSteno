@@ -15,12 +15,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+				
+	<TextView
+		android:id="@+id/settingsProfileAmountTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:text="@string/profile_amount_text"/>
 
     <Button
         android:id="@+id/settingsAddProfileButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/settingsProfileAmountTextView"
         android:text="@string/settings_add_new_profile_button_text"/>
 
     <Button

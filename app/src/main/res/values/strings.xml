@@ -85,4 +85,5 @@
     <string name="reset_app_warning_text">Are you sure you want to reset the app? Doing this will delete all of the app data(Profiles, Events etc.) and it will not be recoverable!</string>
     <string name="reset_app_dialog_confirm_text">Reset App</string>
     <string name="reset_app_complete">App data resetting completed.</string>
+	<string name="profile_amount_text">Amount of profiles:</string>
 </resources>
