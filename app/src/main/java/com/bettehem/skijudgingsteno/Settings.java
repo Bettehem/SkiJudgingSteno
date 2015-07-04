@@ -343,6 +343,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 			profileAmountTextView.setText(getString(R.string.profile_amount_text) + " " + savingAndLoading.loadStringArray(this, savingAndLoadingProfiles.profileListName).length);
 		}
 	}
+	
 	@Override
 	public void onProfileSpammingFinished()
 	{
