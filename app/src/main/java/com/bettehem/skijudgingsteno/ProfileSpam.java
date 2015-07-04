@@ -32,11 +32,11 @@ public class ProfileSpam{
         progressDialog = new ProgressDialog(context);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setTitle("Please wait...");
-        progressDialog.setMessage("Resetting app data...");
+        progressDialog.setMessage("Adding Profiles...");
         progressDialog.setProgress(0);
         progressDialog.setMax(amountOfProfilesToAdd);
         progressDialog.setCancelable(false);
-        //progressDialog.show();
+        progressDialog.show();
     }
 	
 	private class MultipleProfiles extends AsyncTask<Context, Integer, Boolean>{
@@ -45,9 +45,12 @@ public class ProfileSpam{
 			addProfiles(spamContext);
             return null;
         }
-		
-		public void test(int i){
-			publishProgress(i);
+
+		private void addProfiles(Context context){
+			for (int i = 0; i < 1000; i++){
+				savingAndLoadingProfiles.addProfile(context, spamProfileName + i, spamEventType, spamCompetitorsUse, spamEventLocation);
+				publishProgress(i);
+			}
 		}
 
         @Override
@@ -61,13 +64,6 @@ public class ProfileSpam{
 			profileSpamming.onProfileSpammingFinished();
         }
     }
-	
-	private void addProfiles(Context context){
-		for (int i = 0; i < 1000; i++){
-			savingAndLoadingProfiles.addProfile(context, spamProfileName + i, spamEventType, spamCompetitorsUse, spamEventLocation);
-			new MultipleProfiles().test(i);
-		}
-	}
 	
 	public interface ProfileSpamming{
 		void onProfileSpammingFinished();

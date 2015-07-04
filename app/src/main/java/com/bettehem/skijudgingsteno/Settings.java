@@ -252,6 +252,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 			savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
 			savingAndLoading.saveBoolean(this, "hasSavedProfile", true);
 			onBackPressed();
+			Toast.makeText(this, getString(R.string.profile_saved_text), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -347,6 +348,7 @@ public class Settings extends ActionBarActivity implements View.OnClickListener,
 	@Override
 	public void onProfileSpammingFinished()
 	{
+		Toast.makeText(this, "Adding profiles completed", Toast.LENGTH_SHORT).show();
 		updateProfileAmount();
 	}
 }
