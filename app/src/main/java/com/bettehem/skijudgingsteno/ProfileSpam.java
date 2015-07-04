@@ -46,11 +46,8 @@ public class ProfileSpam{
             return null;
         }
 		
-		private void addProfiles(Context context){
-			for (int i = 0; i < 1000; i++){
-				savingAndLoadingProfiles.addProfile(context, spamProfileName + i, spamEventType, spamCompetitorsUse, spamEventLocation);
-				publishProgress(i);
-			}
+		public void test(int i){
+			publishProgress(i);
 		}
 
         @Override
@@ -64,6 +61,13 @@ public class ProfileSpam{
 			profileSpamming.onProfileSpammingFinished();
         }
     }
+	
+	private void addProfiles(Context context){
+		for (int i = 0; i < 1000; i++){
+			savingAndLoadingProfiles.addProfile(context, spamProfileName + i, spamEventType, spamCompetitorsUse, spamEventLocation);
+			new MultipleProfiles().test(i);
+		}
+	}
 	
 	public interface ProfileSpamming{
 		void onProfileSpammingFinished();
