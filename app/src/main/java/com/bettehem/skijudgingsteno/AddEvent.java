@@ -34,22 +34,21 @@ import android.widget.*;
 
 public class AddEvent extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, DynamicConfirmationDialog.PerformDynamicDialogAction, AddProfiles.AddingProfiles {
     //variables
-    SharedPreferencesSavingAndLoading savingAndLoading;
-    SavingAndLoadingProfiles savingAndLoadingProfiles;
-    SavingAndLoadingEvents savingAndLoadingEvents;
-    String eventType, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile;
-    Intent intent, goBack;
-    TextView addingEventText, newEventAddInfoTextView;
-    Button addProfileInEventScreen, addEventLoadExistingProfileButton, saveEventButton, addEventCancelLoadExistingButton;
-    boolean isUseExistingProfileButtonClicked = false;
-    EditText eventEventLocationEditText, addEventNewEventNameEditText;
-    Spinner addNewEventLoadExistingProfileSelectionSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
-    String[] profileDetails;
-    boolean isInvalidEventName = false;
-    private boolean isInAddEventScreen;
-    FrameLayout addProfileContainer;
-    ViewStub addEventEventCreationLayout;
-    boolean canAddEvents;
+    private SharedPreferencesSavingAndLoading savingAndLoading;
+    private SavingAndLoadingProfiles savingAndLoadingProfiles;
+    private SavingAndLoadingEvents savingAndLoadingEvents;
+    private String eventType, competitorsUse, loadedEventTypeFromProfile, loadedCompetitorsUseFromProfile;
+    private Intent intent, goBack;
+    private TextView addingEventText, newEventAddInfoTextView;
+    private Button addProfileInEventScreen, addEventLoadExistingProfileButton, saveEventButton, addEventCancelLoadExistingButton;
+    private boolean isUseExistingProfileButtonClicked = false;
+    private EditText eventEventLocationEditText, addEventNewEventNameEditText;
+    private Spinner addNewEventLoadExistingProfileSelectionSpinner, addNewEventSelectEventTypeSpinner, addNewEventSelectWhatCompetitorsUseSpinner;
+    private String[] profileDetails;
+    private boolean isInvalidEventName = false;
+    private FrameLayout addProfileContainer;
+    private ViewStub addEventEventCreationLayout;
+    private boolean canAddEvents, isInAddEventScreen;
     private FragmentManager manager = getFragmentManager();
     private AddProfiles addProfiles = new AddProfiles();
 
@@ -90,14 +89,21 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             //value is.
             addProfileInEventScreen.setText(getString(R.string.create_new_event_text));
 
+            //sets canAddEvents to true, so that the user will be able to add events
             canAddEvents = true;
+
+            //changes the visibility of certain items in the layout
             addingEventText.setVisibility(View.VISIBLE);
             addProfileInEventScreen.setVisibility(View.GONE);
             addEventEventCreationLayout.setVisibility(View.VISIBLE);
 
+
         //if the user hasn't created profiles, this will be executed.
         }else{
+            //sets canAddEvents to false, so that the user will be able to add events
             canAddEvents = false;
+
+            //changes the visibility of certain items in the layout
             addingEventText.setVisibility(View.VISIBLE);
             addProfileInEventScreen.setVisibility(View.VISIBLE);
             addEventEventCreationLayout.setVisibility(View.GONE);
@@ -111,8 +117,10 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         //if the user hasn't created events, this will be true
         if (!savingAndLoading.loadBoolean(this, "hasCreatedEvents")) {
 
+            //sets canAddEvents to false, so that the user will be able to add events
             canAddEvents = false;
 
+            //sets the preferenceFilename to the originalProfileDetailsFileName.
             savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
             //if the user has created profiles, but hasn't yet created an event, this will be true
             if (savingAndLoading.loadBoolean(this, "has_created_profiles")){
@@ -152,6 +160,7 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             addNewEventSelectEventTypeSpinner.setSelection(1);
         }
 
+        //sets the preferenceFilename to the original one.
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         savingAndLoading.saveBoolean(this, "hasSavedEvent", false);
 
@@ -174,42 +183,50 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         buttons();
     }
 
+    //ViewStubs are defined here.
     public void viewStubs(){
         addEventEventCreationLayout = (ViewStub) findViewById(R.id.addEventEventCreationLayout);
         addEventEventCreationLayout.setLayoutResource(R.layout.add_new_event_layout);
         addEventEventCreationLayout.inflate();
     }
-	
+
+    //AddProfiles is defined here.
 	public void addingProfiles(){
 		addProfiles = new AddProfiles();
         addProfileContainer = (FrameLayout) findViewById(R.id.profileContainer);
         addProfileContainer.setVisibility(View.GONE);
     }
 
-    //Everything regarding intents are defined here.
+    //Intents are defined here.
     public void intents() {
 
         intent = getIntent();
+        //checks for the class that called this one, so when an activity using the intent "goBack" is started,
+        //it will know where to take you.
         if (intent.getExtras().getString("whatClass").contentEquals("SkiSlopestyleEvent")) {
             goBack = new Intent(this, SkiSlopestyleEvent.class);
         }
     }
 
+    //Strings are defined here.
     public void strings() {
         eventType = intent.getExtras().getString("eventType");
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
         competitorsUse = savingAndLoading.loadString(this, "competitorsUseCurrent");
     }
 
+    //SharedPreferencesSavingAndLoading is defined here.
     public void sharedPreferences() {
         savingAndLoading = new SharedPreferencesSavingAndLoading();
     }
 
+    //TextViews are defined here.
     public void textViews() {
         addingEventText = (TextView) findViewById(R.id.addingEventText);
         newEventAddInfoTextView = (TextView) findViewById(R.id.newEventAddInfoTextView);
     }
 
+    //Buttons are defined here.
     public void buttons() {
         addProfileInEventScreen = (Button) findViewById(R.id.addProfileInEventScreenButton);
         addEventLoadExistingProfileButton = (Button) findViewById(R.id.addEventLoadExistingProfileButton);
@@ -222,11 +239,13 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         addEventCancelLoadExistingButton.setOnClickListener(this);
     }
 
+    //EditTexts are defined here.
     public void editTexts() {
         eventEventLocationEditText = (EditText) findViewById(R.id.eventEventLocationEditText);
         addEventNewEventNameEditText = (EditText) findViewById(R.id.addEventNewEventNameEditText);
     }
 
+    //Spinners are defined here.
     public void spinners() {
         addNewEventLoadExistingProfileSelectionSpinner = (Spinner) findViewById(R.id.addNewEventLoadExistingProfileSelectionSpinner);
         addNewEventSelectEventTypeSpinner = (Spinner) findViewById(R.id.addNewEventSelectEventTypeSpinner);
@@ -236,6 +255,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
         addNewEventSelectEventTypeSpinner.setOnItemSelectedListener(this);
         savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
+
+        //sets an adapter for this spinner from a String array.
         addNewEventSelectEventTypeSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, "eventTypes")
         ));
@@ -247,13 +268,16 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
 
     }
 
+    //SavingAndLoadingProfiles is defined here.
     public void profileSaverAndLoader() {
         savingAndLoadingProfiles = new SavingAndLoadingProfiles();
     }
 
+    //SavingAndLoadingEvents is defined here.
     public void eventSaverAndLoader() {
         savingAndLoadingEvents = new SavingAndLoadingEvents();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -277,10 +301,19 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         return super.onOptionsItemSelected(item);
     }
 
+    //when an item with an OnClickListener is clicked, this method will be called.
     @Override
     public void onClick(View v) {
+
+        //this switch checks for what item was clicked, based on it's id in this case, hence "getId()"
         switch (v.getId()) {
+            //inside the switch statement, cases are defined. so first the switch gets the id of the clicked item.
+            //then it checks below for if any of the cases matches the id of the clicked item, and executes that.
+
+
             case R.id.addProfileInEventScreenButton:
+
+                //checks if the user can add events
                 if (canAddEvents){
                     addProfileContainer.setVisibility(View.GONE);
                     addingEventText.setVisibility(View.VISIBLE);
@@ -295,6 +328,8 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 break;
 
             case R.id.addEventLoadExistingProfileButton:
+
+                //checks if the UseExistingProfileButton is not clicked.
                 if (!isUseExistingProfileButtonClicked) {
                     savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
                     addNewEventLoadExistingProfileSelectionSpinner.setAdapter(new ArrayAdapter<>(
@@ -308,16 +343,24 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 break;
 
             case R.id.saveEventButton:
+                //handles the saving of an event
                 savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
                 String[] eventList = savingAndLoading.loadStringArray(this, "eventTypes");
                 String[] whatCompetitorsUse = savingAndLoading.loadStringArray(this, "competitorsUse");
+                //sends all of the data to the event saver and will get back the information on if the event name was invalid.
+                //if the event name isn't invalid, the event will be saved.
                 isInvalidEventName = savingAndLoadingEvents.saveEvent(this, addEventNewEventNameEditText.getText().toString(), eventList[addNewEventSelectEventTypeSpinner.getSelectedItemPosition()], whatCompetitorsUse[addNewEventSelectWhatCompetitorsUseSpinner.getSelectedItemPosition()], eventEventLocationEditText.getText().toString());
+
+                //if the event name wasn't invalid, this will be true and hasCreatedEvents and hasSavedEvent will be set to true
                 if (!isInvalidEventName) {
                     savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
                     savingAndLoading.saveBoolean(this, "hasCreatedEvents", true);
                     savingAndLoading.preferenceFilename = savingAndLoading.originalPreferenceFilename;
                     savingAndLoading.saveBoolean(this, "hasSavedEvent", true);
+
+                    //starts the activity "goBack", which will take the user back to the previous Activity.
                     startActivity(goBack);
+                    //last, the current activity will be finished.
                     finish();
                 }
                 break;
@@ -325,15 +368,19 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
             case R.id.addEventCancelLoadExistingProfileButton:
                 FragmentManager manager = getFragmentManager();
                 DynamicConfirmationDialog confirmationDialog = new DynamicConfirmationDialog();
+                //this will ask the user to confirm to not use an existing profile, because inputted data will be lost.
 				confirmationDialog.showDynamicDialog(manager, "confirmationDialog", getString(R.string.dont_use_existing_profile_dialog_question), getString(R.string.dont_use_existing_profile_dialog_confirm_text), getString(R.string.dont_use_existing_profile_dialog_cancel_text), false);
                 break;
         }
 
     }
-	
+
+    //called when the user clicks a button within the dialog.
 	@Override
 	public void onDynamicDialogButtonClicked(boolean isAnswerPositive)
 	{
+        //if the answer is positive, this will be true and the following code will be executed.
+        //Positive meaning affirmative.
 		if (isAnswerPositive){
             addEventLoadExistingProfileButton.setVisibility(View.VISIBLE);
             addNewEventLoadExistingProfileSelectionSpinner.setVisibility(View.GONE);
@@ -345,9 +392,14 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
         }
 	}
 
+    //in this case, this method will only be called when selecting items in spinners,
+    //since the spinners are the only things with OnItemSelectedListeners attached to them.
     @Override
     public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
+
+        //same as the switch within the onClick method. Just that this checks for which spinner was clicked.
         switch (p1.getId()) {
+
         	case R.id.addNewEventSelectEventTypeSpinner:
                 switch (p3) {
                     case 0:
@@ -376,8 +428,41 @@ public class AddEvent extends ActionBarActivity implements View.OnClickListener,
                 }
                 break;
 
+            //when an existing profile is selected from the list, the following will be executed.
             case R.id.addNewEventLoadExistingProfileSelectionSpinner:
-                profileDetails = savingAndLoadingProfiles.loadProfile(this, savingAndLoading.loadStringArray(this, "profile_list")[p3]);
+                savingAndLoading.preferenceFilename = savingAndLoadingProfiles.originalProfileDetailsFileName;
+                //saves all of the profile details in to a String array.
+                //the [p3] at the end is for loading the details from the selected profile.
+                //the way this works is the following:
+                //   All of the profiles are in a String array. to demonstrate this, let's think that
+                //   the user has created 4 profiles, with the names profile1, profile2, profile3 and profile4.
+                //   profiles will be saved in to a list named "profile_list", in order of creation.
+                //   in this case, profile_list would look like this: "profile1,profile2,profile3,profile4"
+                //   now the user decides to use an existing profile when creating an event. When the "Use existing profile" -button is pressed,
+                //   all items in the profile_list are loaded in to the spinner. So the spinner would display all of the profiles
+                //   from 1 to 4. let's think that the user selects profile2. this method (OnItemSelected) will be called, and the switch statement
+                //   will direct to this case. now let's break the following line of code in to pieces.
+                //      1. whatever we get from this line of code, will be set as the value of a String array called profileDetails.
+                //      2. savingAndLoadingProfiles.loadProfile requires context and the profile name to be able to give the correct details.
+                //         In this case "this" is passed in as the context, just like normal, and then the profile name part is interesting.
+                //      3. savingAndLoading.loadStringArray loads the list of the profiles in to an array. But how to know which profile to select?
+                //         Well, its quite simple, actually. When OnItemSelectedListener is called an int value of the selected items position is passed as p3 in this case.
+                //         so, since the user selected profile2, the value of p3 will be 1. (profile1 is at position 0, profile2 at 1, profile3 at 2 and profile4 at 3)
+                //         Now that we know that the position of the selected item is stored in p3,
+                //         we can use it to select the correct profile from the profile list. to visualize this,
+                //         all of the values will be shown:
+                //         profile_list contains "profile1,profile2,profile3,profile4" and we want the profile name at position 1, since that is the value of p3.
+                //         So, savingAndLoading.loadStringArray will return the selected profile name with the help of p3.
+                //      4. Now let's simplify this a bit, since now we know how we get the profile name, and we know that the selected profile is profile2,
+                //         we can think of the following line of code as:
+                //         profileDetails = savingAndLoadingProfiles.loadProfile(this, "profile2");
+                //         Makes it look pretty simple, right? so, now all of the details are loaded from profile2.
+                //      5. As mentioned before, all of the profile details will be saved in to an array (profileDetails).
+                //         the first item in the array will be the event type, second will be the information on what competitors will be using, last will be the event location.
+                //         Let's think that the event type in profile2 is Slopestyle and competitors use both, and there isn't any location specified,
+                //         profileDetails would look like this when examined: {"Slopestyle","Both",""}, just as should be expected.
+                //  That's it.
+                profileDetails = savingAndLoadingProfiles.loadProfile(this, savingAndLoading.loadStringArray(this, savingAndLoadingProfiles.profileListName)[p3]);
 
                 loadedEventTypeFromProfile = profileDetails[0];
                 if (loadedEventTypeFromProfile.contentEquals("Slopestyle")) {
