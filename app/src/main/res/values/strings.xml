@@ -86,4 +86,5 @@
     <string name="reset_app_dialog_confirm_text">Reset App</string>
     <string name="reset_app_complete">App data resetting completed.</string>
 	<string name="profile_amount_text">Amount of profiles:</string>
+    <string name="select_an_item_text">Select an item</string>
 </resources>

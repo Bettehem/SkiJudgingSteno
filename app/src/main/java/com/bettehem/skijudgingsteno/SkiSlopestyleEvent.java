@@ -53,9 +53,11 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
         savingAndLoading.preferenceFilename = savingAndLoadingEvents.eventDetailsFileName;
         if (savingAndLoading.loadBoolean(this, "hasCreatedEvents")){
             skiSlopestyleExistingEventTextView.setVisibility(View.VISIBLE);
+
+            String string = getString(R.string.select_an_item_text) + "," + savingAndLoading.loadString(this, savingAndLoadingEvents.eventListName);
 			
 			skiSlopestyleEventSelectExistingEventSpinner.setAdapter(new ArrayAdapter<>(
-                    this, android.R.layout.simple_spinner_dropdown_item, savingAndLoading.loadStringArray(this, savingAndLoadingEvents.eventListName)
+                    this, android.R.layout.simple_spinner_dropdown_item, string.split(",")
             ));
             skiSlopestyleEventSelectExistingEventSpinner.setVisibility(View.VISIBLE);
         }
@@ -148,7 +150,14 @@ public class SkiSlopestyleEvent extends ActionBarActivity implements View.OnClic
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
             case R.id.skiSlopestyleEventSelectExistingEventSpinner:
+                switch (position){
+                    case 0:
 
+                        break;
+                    default:
+
+                        break;
+                }
                 break;
         }
     }
