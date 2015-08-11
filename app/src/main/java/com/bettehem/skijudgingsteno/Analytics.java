@@ -4,6 +4,7 @@ public class Analytics {
     /*
 
     private GoogleAnalytics analytics;
+    private Tracker tracker;
 
     private void trackers(){
         analytics = GoogleAnalytics.getInstance(userActivity);

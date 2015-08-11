@@ -42,7 +42,6 @@ public class AddProfiles extends Fragment implements View.OnClickListener, Adapt
     private AddingProfiles addingProfiles;
 	private Activity userActivity;
 	private View fragmentView;
-	private Tracker tracker;
 
     @Override
     public void onAttach(Activity activity) {
